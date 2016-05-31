@@ -1,0 +1,7 @@
+### eclipse files
+/.buildpath
+/.project
+/.settings
+
+ignore backups
+*.bak

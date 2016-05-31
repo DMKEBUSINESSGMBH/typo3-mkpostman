@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file source-language="en" datatype="plaintext" original="messages" product-name="mkpostman">
+		<header/>
+		<body>
+			<trans-unit id="plugin.mkpostman.label" xml:space="preserve">
+				<source>MK Postman</source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.description" xml:space="preserve">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.flexform.tab.common" xml:space="preserve">
+				<source>Common</source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.tab.tssetup" xml:space="preserve">
+				<source>TypoScript Setup</source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.flexform.action" xml:space="preserve">
+				<source>View</source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.flexform.action.subscribe" xml:space="preserve">
+				<source>Subscribe Form</source>
+			</trans-unit>
+			<trans-unit id="plugin.mkpostman.tssetup" xml:space="preserve">
+				<source>plugin.tx_mkpostman.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,22 @@
+includeLibs.tx_rnbase_controller = EXT:rn_base/class.tx_rnbase_controller.php
+
+plugin.tx_mkpostman = USER
+plugin.tx_mkpostman {
+	userFunc = tx_rnbase_controller->main
+	defaultAction = DMK\Mkpostman\Action\SubscribeAction
+	extensionKey = mkpostman
+	qualifier = mkpostman
+	templatePath = {$plugin.tx_mkpostman.templatePath}
+	locallangFilename {
+		fronted = EXT:mkpostman/Resources/Private/Language/Frontend.xlf
+	}
+}
+
+tt_content.list.20.tx_mkpostman =< plugin.tx_mkpostman
+
+plugin.tx_mkpostman {
+
+	subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
+	subscribe {
+	}
+}
