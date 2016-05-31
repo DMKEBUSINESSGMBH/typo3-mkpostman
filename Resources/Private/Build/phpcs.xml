@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="Ruleset">
+	<description>rule set for PHP_CodeSniffer</description>
+	<rule ref="DMKPHPCS" />
+</ruleset>
