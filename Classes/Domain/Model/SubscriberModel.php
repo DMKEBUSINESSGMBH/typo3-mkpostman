@@ -1,5 +1,5 @@
 <?php
-namespace DMK\Mkpostman\View;
+namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
  * Copyright notice
@@ -24,39 +24,32 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('DMK\\Mkpostman\\View\\AbstractView');
+\tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 
 /**
- * MK Postman subscribe view
+ * Subscriber Model
+ *
+ * @method string getEmail()
+ * @method Tx_Rnbase_Domain_Model_Data setEmail() setEmail(string $email)
+ * @method bool hasEmail()
+ * @method Tx_Rnbase_Domain_Model_Data unsEmail()
  *
  * @package TYPO3
- * @subpackage Tx_Hpsplaner
+ * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeView
-	extends \DMK\Mkpostman\View\AbstractView
+class SubscriberModel
+	extends \Tx_Rnbase_Domain_Model_Base
 {
 	/**
-	 * Parses the current view template
+	 * Liefert den aktuellen Tabellenname
 	 *
-	 * @param string $template
-	 *
-	 * @return string
+	 * @return Tabellenname als String
 	 */
-	protected function parseTemplate($template)
+	public function getTableName()
 	{
-		return $template;
-	}
-
-	/**
-	 * The subpart for this view
-	 *
-	 * @return string
-	 */
-	public function getMainSubpart()
-	{
-		return '###SUBSCRIBE###';
+		return 'tx_mkpostman_subscribers';
 	}
 }

@@ -4,7 +4,7 @@ namespace DMK\Mkpostman\Utility;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2015 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2016 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ namespace DMK\Mkpostman\Utility;
  * MK Postman wizard icon
  *
  * @package TYPO3
- * @subpackage Tx_Hpsplaner
+ * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later

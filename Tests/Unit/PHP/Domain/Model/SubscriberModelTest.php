@@ -1,5 +1,5 @@
 <?php
-namespace DMK\Mkpostman\View;
+namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
  * Copyright notice
@@ -24,10 +24,11 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('DMK\\Mkpostman\\View\\AbstractView');
+require_once \t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+require_once \t3lib_extMgm::extPath('mkpostman', 'Tests/Unit/PHP/BaseTestCase.php');
 
 /**
- * MK Postman subscribe view
+ * Subscriber model test
  *
  * @package TYPO3
  * @subpackage Tx_Hpsplaner
@@ -35,28 +36,43 @@ namespace DMK\Mkpostman\View;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeView
-	extends \DMK\Mkpostman\View\AbstractView
+class SubscriberModelTest
+	extends \DMK\Mkpostman\Tests\BaseTestCase
 {
 	/**
-	 * Parses the current view template
+	 * Test the getTableName method
 	 *
-	 * @param string $template
+	 * @return void
 	 *
-	 * @return string
+	 * @group unit
+	 * @test
 	 */
-	protected function parseTemplate($template)
+	public function testGetTableName()
 	{
-		return $template;
+		self::assertSame(
+			'tx_mkpostman_subscribers',
+			$this->getModelMock()->getTableName()
+		);
 	}
 
 	/**
-	 * The subpart for this view
+	 * returns a mock of
 	 *
-	 * @return string
+	 * @param array $record
+	 * @param string $class
+	 * @return tx_rnbase_model_base|PHPUnit_Framework_MockObject_MockObject
 	 */
-	public function getMainSubpart()
+	protected function getModelMock(
+		$record = NULL,
+		array $methods = array()
+	)
 	{
-		return '###SUBSCRIBE###';
+		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
+
+		return $this->getModel(
+			$record,
+			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel',
+			$methods
+		);
 	}
 }

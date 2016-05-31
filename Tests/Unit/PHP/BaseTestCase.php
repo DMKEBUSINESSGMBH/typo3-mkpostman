@@ -1,5 +1,5 @@
 <?php
-namespace DMK\Mkpostman\View;
+namespace DMK\Mkpostman\Tests;
 
 /***************************************************************
  * Copyright notice
@@ -24,10 +24,11 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('DMK\\Mkpostman\\View\\AbstractView');
+require_once \t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+\tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
 /**
- * MK Postman subscribe view
+ * Basis Testcase
  *
  * @package TYPO3
  * @subpackage Tx_Hpsplaner
@@ -35,28 +36,27 @@ namespace DMK\Mkpostman\View;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeView
-	extends \DMK\Mkpostman\View\AbstractView
+abstract class BaseTestCase
+	extends \tx_rnbase_tests_BaseTestCase
 {
 	/**
-	 * Parses the current view template
+	 * Sets up the fixture, for example, open a network connection.
+	 * This method is called before a test is executed.
 	 *
-	 * @param string $template
-	 *
-	 * @return string
+	 * @return void
 	 */
-	protected function parseTemplate($template)
+	protected function setUp()
 	{
-		return $template;
 	}
 
 	/**
-	 * The subpart for this view
+	 * Tears down the fixture, for example, close a network connection.
+	 * This method is called after a test is executed.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	public function getMainSubpart()
+	protected function tearDown()
 	{
-		return '###SUBSCRIBE###';
 	}
+
 }
