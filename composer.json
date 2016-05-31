@@ -1,0 +1,34 @@
+{
+	"name" : "dmk/mkpostman",
+	"version" : "0.0.0",
+	"type" : "typo3-cms-extension",
+	"keywords" : [
+		"TYPO3 CMS",
+		"newsletter",
+		"postman"
+	],
+	"homepage" : "http://www.dmk-ebusiness.de/",
+	"license" : "GPL-2.0+",
+	"authors" : [{
+			"name" : "Michael Wagner",
+			"email" : "michael.wagner@dmk-ebusiness.de",
+			"role" : "Developer"
+		}
+	],
+	"support" : {
+		"email" : "dev@dmk-ebusiness.de",
+		"source" : "https://github.com/DMKEBUSINESSGMBH/typo3-mkpostman",
+		"issues" : "https://github.com/DMKEBUSINESSGMBH/typo3-mkpostman"
+	},
+	"replace" : {
+		"typo3-ter/mkpostman" : "*"
+	},
+	"require" : {
+		"typo3/cms-core" : ">=6.2.10",
+		"digedag/rn-base" : ">=1.0.10"
+	},
+	"autoload" : {
+		"classmap" : [
+		]
+	}
+}
