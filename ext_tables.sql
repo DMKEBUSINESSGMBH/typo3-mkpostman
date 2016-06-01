@@ -10,9 +10,12 @@ CREATE TABLE tx_mkpostman_subscribers (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 
+	gender tinyint(4) DEFAULT '0' NOT NULL,
+	first_name varchar(60) DEFAULT '' NOT NULL,
+	last_name varchar(60) DEFAULT '' NOT NULL,
 	email varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY contact (contact)
+	KEY email (email)
 );

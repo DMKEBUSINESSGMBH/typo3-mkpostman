@@ -29,6 +29,21 @@ namespace DMK\Mkpostman\Domain\Model;
 /**
  * Subscriber Model
  *
+ * @method int getGender()
+ * @method Tx_Rnbase_Domain_Model_Data setGender() setGender(int $gender)
+ * @method bool hasGender()
+ * @method Tx_Rnbase_Domain_Model_Data unsGender()
+ *
+ * @method string getFirstName()
+ * @method Tx_Rnbase_Domain_Model_Data setFirstName() setFirstName(string $firstname)
+ * @method bool hasFirstName()
+ * @method Tx_Rnbase_Domain_Model_Data unsFirstName()
+ *
+ * @method string getLastName()
+ * @method Tx_Rnbase_Domain_Model_Data setLastName() setLastName(string $lastname)
+ * @method bool hasLastName()
+ * @method Tx_Rnbase_Domain_Model_Data unsLastName()
+ *
  * @method string getEmail()
  * @method Tx_Rnbase_Domain_Model_Data setEmail() setEmail(string $email)
  * @method bool hasEmail()
