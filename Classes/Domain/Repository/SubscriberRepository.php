@@ -98,7 +98,7 @@ class SubscriberRepository
 		$options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
 			// default searcher config
 			array(
-				'usealias' => '1',
+				'usealias' => 1,
 				'basetable' => $model->getTableName(),
 				'basetablealias' => 'SUBSCRIBER',
 				'wrapperclass' => get_class($model),

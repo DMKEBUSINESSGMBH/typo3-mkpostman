@@ -104,12 +104,73 @@ class SubscriberRepositoryTest
 					}
 				),
 				$this->callback(
-					function($options)
+					function($options) use ($repo)
 					{
+						$tablename = $repo->getEmptyModel()->getTableName();
+						self::assertTrue(is_array($options));
+
 						self::assertArrayHasKey('searchdef', $options);
 						self::assertTrue(is_array($options['searchdef']));
-						// @TODO: extend the test for searchdef
-						return is_array($options);
+
+						$sd = $options['searchdef'];
+						self::assertArrayHasKey('usealias', $sd);
+						self::assertSame($sd['usealias'], 1);
+						self::assertArrayHasKey('basetable', $sd);
+						self::assertSame($sd['basetable'], $tablename);
+						self::assertArrayHasKey('basetablealias', $sd);
+						self::assertSame($sd['basetablealias'], 'SUBSCRIBER');
+						self::assertArrayHasKey('wrapperclass', $sd);
+						self::assertSame($sd['wrapperclass'], get_class($repo->getEmptyModel()));
+
+						self::assertArrayHasKey('alias', $sd);
+						self::assertTrue(is_array($sd['alias']));
+						self::assertArrayHasKey('SUBSCRIBER', $sd['alias']);
+						self::assertTrue(is_array($sd['alias']['SUBSCRIBER']));
+						self::assertArrayHasKey('table', $sd['alias']['SUBSCRIBER']);
+						self::assertSame($sd['alias']['SUBSCRIBER']['table'], $tablename);
+
+						return true;
+					}
+				)
+			)
+			->will(self::returnValue(new \ArrayObject()))
+		;
+
+		self::assertInstanceOf('ArrayObject', $repo->findAll());
+	}
+
+	/**
+	 * Test the getEmptyModel method.
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testPrepareGenericSearcherShouldUseArrayObject()
+	{
+		$repo = $this->getRepository();
+		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+
+		$searcher
+			->expects(self::once())
+			->method('search')
+			->with(
+				$this->callback(
+					function($fields)
+					{
+						return is_array($fields);
+					}
+				),
+				$this->callback(
+					function($options) use ($repo)
+					{
+						self::assertTrue(is_array($options));
+
+						self::assertArrayHasKey('array_object', $options);
+						self::assertTrue($options['array_object']);
+
+						return true;
 					}
 				)
 			)
