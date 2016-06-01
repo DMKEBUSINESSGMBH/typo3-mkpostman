@@ -81,7 +81,7 @@ class SubscriberRepositoryTest
 	}
 
 	/**
-	 * Test the getEmptyModel method.
+	 * Test the prepareGenericSearcher method.
 	 *
 	 * @return void
 	 *
@@ -140,7 +140,7 @@ class SubscriberRepositoryTest
 	}
 
 	/**
-	 * Test the getEmptyModel method.
+	 * Test the prepareGenericSearcher method.
 	 *
 	 * @return void
 	 *

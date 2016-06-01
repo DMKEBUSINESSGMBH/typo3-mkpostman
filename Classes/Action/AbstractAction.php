@@ -83,8 +83,8 @@ abstract class AbstractAction
 	protected function getStorage()
 	{
 		if ($this->storage === null) {
-			tx_rnbase::load('Tx_Rnbase_Domain_Model_Data');
-			$this->storage = Tx_Rnbase_Domain_Model_Data::getInstance();
+			\tx_rnbase::load('Tx_Rnbase_Domain_Model_Data');
+			$this->storage = \Tx_Rnbase_Domain_Model_Data::getInstance();
 		}
 
 		return $this->storage;
