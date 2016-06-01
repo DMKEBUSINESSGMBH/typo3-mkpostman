@@ -28,7 +28,7 @@ require_once \t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 require_once \t3lib_extMgm::extPath('mkpostman', 'Tests/Unit/PHP/BaseTestCase.php');
 
 /**
- * Subscriber model test
+ * Abstract action test
  *
  * @package TYPO3
  * @subpackage Tx_Hpsplaner
