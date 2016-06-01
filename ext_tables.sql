@@ -14,6 +14,7 @@ CREATE TABLE tx_mkpostman_subscribers (
 	first_name varchar(60) DEFAULT '' NOT NULL,
 	last_name varchar(60) DEFAULT '' NOT NULL,
 	email varchar(255) DEFAULT '' NOT NULL,
+	confirmstring varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
