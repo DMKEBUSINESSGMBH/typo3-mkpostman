@@ -15,6 +15,10 @@
 			"role" : "Developer"
 		}
 	],
+	"require" : {
+		"typo3/cms-core" : ">=6.2.10",
+		"digedag/rn-base" : ">=1.0.10"
+	},
 	"support" : {
 		"email" : "dev@dmk-ebusiness.de",
 		"source" : "https://github.com/DMKEBUSINESSGMBH/typo3-mkpostman",
@@ -23,12 +27,9 @@
 	"replace" : {
 		"typo3-ter/mkpostman" : "*"
 	},
-	"require" : {
-		"typo3/cms-core" : ">=6.2.10",
-		"digedag/rn-base" : ">=1.0.10"
-	},
 	"autoload" : {
-		"classmap" : [
-		]
+		"psr-4" : {
+			"DMK\\Mkpostman\\" : "Classes"
+		}
 	}
 }
