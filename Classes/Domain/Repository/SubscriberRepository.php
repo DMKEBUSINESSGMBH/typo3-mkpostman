@@ -92,10 +92,6 @@ class SubscriberRepository
 		array &$fields,
 		array &$options
 	) {
-		if (!isset($options['array_object'])) {
-			$options['array_object'] = true;
-		}
-
 		$this->handleEnableFieldsOptions($fields, $options);
 		$this->prepareGenericSearcher($options);
 	}
@@ -105,7 +101,7 @@ class SubscriberRepository
 	 *
 	 * @param array $options
 	 *
-	 * @return array
+	 * @return void
 	 */
 	protected function prepareGenericSearcher(
 		array &$options
