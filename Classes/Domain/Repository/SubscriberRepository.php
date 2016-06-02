@@ -92,7 +92,7 @@ class SubscriberRepository
 		array &$fields,
 		array &$options
 	) {
-		$this->handleEnableFieldsOptions($fields, $options);
+		parent::prepareFieldsAndOptions($fields, $options);
 		$this->prepareGenericSearcher($options);
 	}
 
