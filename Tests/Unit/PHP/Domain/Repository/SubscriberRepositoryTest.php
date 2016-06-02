@@ -81,6 +81,64 @@ class SubscriberRepositoryTest
 	}
 
 	/**
+	 * Test the getEmptyModel method.
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testfindByEmailCallsSearchCorectly()
+	{
+		$mail = 'mwagner@localhost.net';
+		$repo = $this->getRepository();
+		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+
+		$searcher
+			->expects(self::once())
+			->method('search')
+			->with(
+				$this->callback(
+					function($fields) use ($mail)
+					{
+						self::assertTrue(is_array($fields));
+
+						// only the mail should be filtered
+						self::assertCount(1, $fields);
+						self::assertArrayHasKey('SUBSCRIBER.email', $fields);
+						self::assertTrue(is_array($fields['SUBSCRIBER.email']));
+
+						// only the eq str should be performed
+						self::assertCount(1, $fields['SUBSCRIBER.email']);
+						self::assertArrayHasKey(OP_EQ, $fields['SUBSCRIBER.email']);
+						self::assertSame($mail, $fields['SUBSCRIBER.email'][OP_EQ]);
+
+						return true;
+					}
+				),
+				$this->callback(
+					function($options)
+					{
+						self::assertTrue(is_array($options));
+
+						// the limit should be set, the mail in uniq!
+						self::assertArrayHasKey('limit', $options);
+						self::assertSame(1, $options['limit']);
+
+						// enablefields be are set, we want hidden/inactive subscribers!
+						self::assertArrayHasKey('enablefieldsbe', $options);
+						self::assertTrue($options['enablefieldsbe']);
+
+						return true;
+					}
+				)
+			)
+		;
+
+		$repo->findByEmail($mail);
+	}
+
+	/**
 	 * Test the prepareGenericSearcher method.
 	 *
 	 * @return void

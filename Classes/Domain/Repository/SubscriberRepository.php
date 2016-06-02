@@ -24,7 +24,7 @@ namespace DMK\Mkpostman\Domain\Repository;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Domain_Repository_AbstractRepository');
+\tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
  * Subscriber repo
@@ -36,7 +36,7 @@ namespace DMK\Mkpostman\Domain\Repository;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscriberRepository
-	extends \Tx_Rnbase_Domain_Repository_AbstractRepository
+	extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
 	/**
 	 * Liefert den Namen der Suchklasse
@@ -56,6 +56,28 @@ class SubscriberRepository
 	protected function getWrapperClass()
 	{
 		return 'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel';
+	}
+
+	/**
+	 * Finds a subscriber by email
+	 *
+	 * @param string $mail
+	 *
+	 * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+	 */
+	public function findByEmail(
+		$mail
+	) {
+		return $this->searchSingle(
+			array (
+				'SUBSCRIBER.email' => array(
+					OP_EQ => $mail
+				)
+			),
+			array(
+				'enablefieldsbe' => true
+			)
+		);
 	}
 
 	/**
