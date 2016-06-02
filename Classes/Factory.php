@@ -64,4 +64,14 @@ final class Factory
 
 		return \tx_rnbase_cache_Manager::getCache('mkpostman');
 	}
+
+	/**
+	 * Returns the subscriber repository
+	 *
+	 * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
+	 */
+	public static function getSubscriberRepository()
+	{
+		return \tx_rnbase::makeInstance('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+	}
 }
