@@ -18,5 +18,11 @@ plugin.tx_mkpostman {
 
 	subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
 	subscribe {
+		toUserInt = 1
+
+		formconfig = < config.tx_mkforms
+		xml = EXT:mkpostman/Resources/Private/Form/Subscribe.xml
+
+		subscriber.storage = {$plugin.tx_mkpostman.subscriberStorage}
 	}
 }

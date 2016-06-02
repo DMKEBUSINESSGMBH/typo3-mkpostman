@@ -2,14 +2,34 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>The One and Only - The Planer</title>
 	</head>
 	<body>
 
-		<!-- ###SUBSCRIBE### -->
-			<h1>Welcome to the MK POSTMAN subscribe action!</h1>
-			<!--  @TODO: write down the form!  -->
-		<!-- ###SUBSCRIBE### -->
+		<!-- ###SUBSCRIBE_FORMWRAP### -->
+			<h1>Welcome to the MK POSTMAN subscribe form action!</h1>
+			###FORM###
+		<!-- ###SUBSCRIBE_FORMWRAP### -->
+
+
+		<!-- ###SUBSCRIBE_FORM### -->
+
+			<div class="errors">{errors}</div>
+
+			<fieldset>
+				{subscriber-gender}
+				{subscriber-first_name}
+				{subscriber-last_name}
+			</fieldset>
+			<fieldset>
+				{subscriber-email}
+			</fieldset>
+			<fieldset>
+				{button-subscribe}
+			</fieldset>
+
+		<!-- ###SUBSCRIBE_FORM### -->
 
 	</body>
 </html>

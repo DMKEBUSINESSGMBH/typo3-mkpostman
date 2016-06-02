@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mkforms version="2.0.0">
+	<meta defaultLLL="EXT:mkpostman/Resources/Private/Language/Frontend.xlf" >
+		<form formid="subscribe" name="Newsletter Subscribe form" />
+	</meta>
+	<control>
+		<!--
+			WARNING:
+				don't change the datahandler,
+				otherwise the data could not be stored!
+		-->
+		<datahandler:RAW>
+			<record>
+				<userobj
+					extension="tx_mkforms_util_FormBase"
+					method="fillForm"
+				/>
+			</record>
+			<callback>
+				<userobj
+					extension="tx_mkforms_util_FormBase"
+					method="processForm"
+				/>
+			</callback>
+		</datahandler:RAW>
+		<renderer:TEMPLATE>
+			<template
+				path="EXT:mkpostman/Resources/Private/Templates/Frontend/Subscribe.html"
+				subpart="###SUBSCRIBE_FORM###"
+				errortag="errors"
+			/>
+		</renderer:TEMPLATE>
+	</control>
+
+	<elements>
+
+		<renderlet:LISTBOX
+			name="subscriber-gender"
+			label="LLL:label_form_subscriber_gender"
+			addBlank="LLL:label_general_choose"
+			blankValue="null"
+			strictSelectedCheck="true"
+		>
+			<data>
+				<items>
+					<item value="0" caption="LLL:label_gender_0" />
+					<item value="1" caption="LLL:label_gender_1" />
+				</items>
+			</data>
+		</renderlet:LISTBOX>
+		<renderlet:TEXT
+			name="subscriber-first_name"
+			label="LLL:label_form_subscriber_first_name"
+		/>
+		<renderlet:TEXT
+			name="subscriber-last_name"
+			label="LLL:label_form_subscriber_last_name"
+		/>
+
+		<renderlet:TEXT
+			name="subscriber-email"
+			inputType="mail"
+			label="LLL:label_form_subscriber_email"
+			custom="required=&quot;required&quot;"
+		>
+			<validators>
+				<validator:STANDARD>
+					<required
+						message="LLL:label_form_subscriber_email_required"
+					/>
+					<email
+						message="LLL:label_form_subscriber_email_email"
+					/>
+				</validator:STANDARD>
+			</validators>
+		</renderlet:TEXT>
+
+		<renderlet:SUBMIT
+			name="button-subscribe"
+			label="LLL:label_form_button_subscribe"
+		/>
+
+	</elements>
+</mkforms>

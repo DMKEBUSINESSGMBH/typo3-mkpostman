@@ -24,7 +24,7 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('DMK\\Mkpostman\\View\\AbstractView');
+\tx_rnbase::load('tx_mkforms_view_Form');
 
 /**
  * MK Postman subscribe view
@@ -36,20 +36,8 @@ namespace DMK\Mkpostman\View;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeView
-	extends \DMK\Mkpostman\View\AbstractView
+	extends \tx_mkforms_view_Form
 {
-	/**
-	 * Parses the current view template
-	 *
-	 * @param string $template
-	 *
-	 * @return string
-	 */
-	protected function parseTemplate($template)
-	{
-		return $template;
-	}
-
 	/**
 	 * The subpart for this view
 	 *
@@ -57,6 +45,6 @@ class SubscribeView
 	 */
 	public function getMainSubpart()
 	{
-		return '###SUBSCRIBE###';
+		return '###SUBSCRIBE_FORMWRAP###';
 	}
 }
