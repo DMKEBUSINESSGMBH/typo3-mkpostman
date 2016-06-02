@@ -4,12 +4,12 @@ defined('TYPO3_MODE') || die ('Access denied.');
 return array(
 	'ctrl' => array(
 		'title' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers',
-		'label' => 'name',
+		'label' => 'email',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'delete' => 'deleted',
-		'default_sortby' => 'ORDER BY name',
+		'default_sortby' => 'ORDER BY email',
 		'enablecolumns' => array(
 			'disabled' => 'hidden',
 		),
@@ -75,7 +75,7 @@ return array(
 				'type' => 'input',
 				'size' => '20',
 				'max' => '255',
-				'eval' => 'trim,required'
+				'eval' => 'trim,required,unique'
 			)
 		),
 	),
