@@ -49,6 +49,17 @@ namespace DMK\Mkpostman\Domain\Model;
  * @method bool hasEmail()
  * @method Tx_Rnbase_Domain_Model_Data unsEmail()
  *
+ * @method string getConfirmstring()
+ * @method Tx_Rnbase_Domain_Model_Data setConfirmstring() setConfirmstring(string $confirmstring)
+ * @method bool hasConfirmstring()
+ * @method Tx_Rnbase_Domain_Model_Data unsConfirmstring()
+ *
+ * @method int getHidden()
+ * @method Tx_Rnbase_Domain_Model_Data setHidden() setHidden(int $hidden)
+ *
+ * @method int getDeleted()
+ * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
+ *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
  * @author Michael Wagner
