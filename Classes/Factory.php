@@ -66,6 +66,18 @@ final class Factory
 	}
 
 	/**
+	 * Returns the subscriber repository
+	 *
+	 * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
+	 */
+	public static function getSubscriberRepository()
+	{
+		return \tx_rnbase::makeInstance(
+			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository'
+		);
+	}
+
+	/**
 	 * Creates the mail processor
 	 *
 	 * @param \tx_rnbase_configurations $configurations
@@ -100,28 +112,28 @@ final class Factory
 	/**
 	 * Creates an double opt in util instance with an subscriber
 	 *
-	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 * @param string|DMK\Mkpostman\Domain\Model\SubscriberModel $subscriberOrActivationKey
 	 *
 	 * @return \DMK\Mkpostman\Utility\DoubleOptInUtility
 	 */
 	public static function getDoubleOptInUtility(
-		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+		$subscriberOrActivationKey
 	) {
 		return \tx_rnbase::makeInstance(
 			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-			$subscriber
+			$subscriberOrActivationKey
 		);
 	}
 
 	/**
-	 * Returns the subscriber repository
+	 * Creates the crypt utility
 	 *
-	 * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
+	 * @return \DMK\Mkpostman\Utility\CryptUtility
 	 */
-	public static function getSubscriberRepository()
+	public static function getCryptUtility()
 	{
 		return \tx_rnbase::makeInstance(
-			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository'
+			'DMK\\Mkpostman\\Utility\\CryptUtility'
 		);
 	}
 }
