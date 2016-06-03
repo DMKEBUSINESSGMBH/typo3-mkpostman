@@ -79,4 +79,32 @@ abstract class BaseTestCase
 			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
 		);
 	}
+
+	/**
+	 * Creates the repo mock
+	 *
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getSubscriberRepository()
+	{
+		\tx_rnbase::load('tx_rnbase_util_SearchGeneric');
+		$searcher = $this->getMock(
+			'tx_rnbase_util_SearchGeneric',
+			array('search')
+		);
+
+		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+		$repo = $this->getMock(
+			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
+			array('getSearcher', 'persist')
+		);
+
+		$repo
+			->expects(self::any())
+			->method('getSearcher')
+			->will(self::returnValue($searcher))
+		;
+
+		return $repo;
+	}
 }

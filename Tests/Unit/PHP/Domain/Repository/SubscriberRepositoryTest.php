@@ -51,7 +51,7 @@ class SubscriberRepositoryTest
 		self::assertEquals(
 			'tx_rnbase_util_SearchGeneric',
 			$this->callInaccessibleMethod(
-				$this->getRepository(),
+				$this->getSubscriberRepository(),
 				'getSearchClass'
 			)
 		);
@@ -67,7 +67,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testGetEmptyModelShouldBeBaseModelWithPageTable() {
 		$model = $this->callInaccessibleMethod(
-			$this->getRepository(),
+			$this->getSubscriberRepository(),
 			'getEmptyModel'
 		);
 		self::assertInstanceOf(
@@ -81,17 +81,17 @@ class SubscriberRepositoryTest
 	}
 
 	/**
-	 * Test the getEmptyModel method.
+	 * Test the findByEmail method.
 	 *
 	 * @return void
 	 *
 	 * @group unit
 	 * @test
 	 */
-	public function testfindByEmailCallsSearchCorectly()
+	public function testFindByEmailCallsSearchCorrectly()
 	{
 		$mail = 'mwagner@localhost.net';
-		$repo = $this->getRepository();
+		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
 		$searcher
@@ -139,6 +139,63 @@ class SubscriberRepositoryTest
 	}
 
 	/**
+	 * Test the findByUid method.
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testFindByUidCallsSearchCorrectly()
+	{
+		$repo = $this->getSubscriberRepository();
+		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+
+		$searcher
+			->expects(self::once())
+			->method('search')
+			->with(
+				$this->callback(
+					function($fields)
+					{
+						self::assertTrue(is_array($fields));
+
+						// only the mail should be filtered
+						self::assertCount(1, $fields);
+						self::assertArrayHasKey('SUBSCRIBER.uid', $fields);
+						self::assertTrue(is_array($fields['SUBSCRIBER.uid']));
+
+						// only the eq str should be performed
+						self::assertCount(1, $fields['SUBSCRIBER.uid']);
+						self::assertArrayHasKey(OP_EQ_INT, $fields['SUBSCRIBER.uid']);
+						self::assertSame(7, $fields['SUBSCRIBER.uid'][OP_EQ_INT]);
+
+						return true;
+					}
+				),
+				$this->callback(
+					function($options)
+					{
+						self::assertTrue(is_array($options));
+
+						// the limit should be set, the mail in uniq!
+						self::assertArrayHasKey('limit', $options);
+						self::assertSame(1, $options['limit']);
+
+						// enablefields be are set, we want hidden/inactive subscribers!
+						self::assertArrayHasKey('enablefieldsbe', $options);
+						self::assertTrue($options['enablefieldsbe']);
+
+						return true;
+					}
+				)
+			)
+		;
+
+		$repo->findByUid(7);
+	}
+
+	/**
 	 * Test the prepareGenericSearcher method.
 	 *
 	 * @return void
@@ -148,7 +205,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testPrepareGenericSearcherShouldBeTheRightSearchdefConfig()
 	{
-		$repo = $this->getRepository();
+		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
 		$searcher
@@ -207,7 +264,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testPrepareGenericSearcherShouldUseArrayObject()
 	{
-		$repo = $this->getRepository();
+		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
 		$searcher
@@ -236,33 +293,5 @@ class SubscriberRepositoryTest
 		;
 
 		self::assertInstanceOf('ArrayObject', $repo->findAll());
-	}
-
-	/**
-	 * Creates the repo mock
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected function getRepository()
-	{
-		\tx_rnbase::load('tx_rnbase_util_SearchGeneric');
-		$searcher = $this->getMock(
-			'tx_rnbase_util_SearchGeneric',
-			array('search')
-		);
-
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
-		$repo = $this->getMock(
-			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
-			array('getSearcher')
-		);
-
-		$repo
-			->expects(self::any())
-			->method('getSearcher')
-			->will(self::returnValue($searcher))
-		;
-
-		return $repo;
 	}
 }

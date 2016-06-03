@@ -61,6 +61,28 @@ class SubscriberRepository
 	/**
 	 * Finds a subscriber by email
 	 *
+	 * @param integer $uid
+	 *
+	 * @return Tx_Rnbase_Domain_Model_DomainInterface|null
+	 */
+	public function findByUid(
+		$uid
+	) {
+		return $this->searchSingle(
+			array (
+				'SUBSCRIBER.uid' => array(
+					OP_EQ_INT => $uid
+				)
+			),
+			array(
+				'enablefieldsbe' => true
+			)
+		);
+	}
+
+	/**
+	 * Finds a subscriber by email
+	 *
 	 * @param string $mail
 	 *
 	 * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
