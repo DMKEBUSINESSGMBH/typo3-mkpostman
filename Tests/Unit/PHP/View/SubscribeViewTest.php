@@ -24,10 +24,11 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_mkforms_view_Form');
+require_once \t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+require_once \t3lib_extMgm::extPath('mkpostman', 'Tests/Unit/PHP/BaseTestCase.php');
 
 /**
- * MK Postman subscribe view
+ * Subscribtion view test
  *
  * @package TYPO3
  * @subpackage Tx_Hpsplaner
@@ -35,23 +36,20 @@ namespace DMK\Mkpostman\View;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeView
-	extends \tx_mkforms_view_Form
+class SubscribeViewTest
+	extends \DMK\Mkpostman\Tests\BaseTestCase
 {
 	/**
-	 * The subpart for this view
+	 * Test the getMainSubpart method
 	 *
-	 * @param \ArrayObject $viewData
+	 * @return void
 	 *
-	 * @return string
+	 * @group unit
+	 * @test
 	 */
-	public function getMainSubpart(\ArrayObject $viewData)
+	public function testGetMainSubpart()
 	{
-		$subPartKey = $viewData->offsetGet('main_subpart_key');
-		if (empty($subPartKey)) {
-			$subPartKey = 'FORMWRAP';
-		}
-
-		return '###SUBSCRIBE_' . \strtoupper($subPartKey) . '###';
+		$this->markTestIncomplete();
 	}
+
 }

@@ -39,6 +39,131 @@ class SubscribeAction
 	extends \tx_mkforms_action_FormBase
 {
 	/**
+	 * Referer key after subscribtion success
+	 *
+	 * @var string
+	 */
+	const SUCCESS_REFERER_SUBSCRIBE = 'subscribe';
+	/**
+	 * Referer key after activation success
+	 *
+	 * @var string
+	 */
+	const SUCCESS_REFERER_ACTIVATE = 'activate';
+
+	/**
+	 * Start the dance...
+	 *
+	 * @param \tx_rnbase_parameters $parameters
+	 * @param \tx_rnbase_configurations $configurations
+	 * @param \ArrayObject $viewData
+	 *
+	 * @return null|string
+	 */
+	// @codingStandardsIgnoreStart (interface/abstract mistake)
+	public function handleRequest(&$parameters, &$configurations, &$viewData)
+	{
+		// @codingStandardsIgnoreEnd
+
+		// check for an subscriber activation
+		$key = $parameters->get('key');
+		if (!empty($key) && $this->handleActivation($key)) {
+			return null;
+		}
+
+		// check for success after a subscription or activation
+		$success = $parameters->get('success');
+		if (!empty($success) && $this->handleSuccess($success)) {
+			return null;
+		}
+
+		// render the subscribtion form
+		return $this->handleForm();
+	}
+
+	/**
+	 * Activates a subscriber by key
+	 *
+	 * @param string $activationKey
+	 *
+	 * @return bool
+	 */
+	protected function handleActivation(
+		$activationKey
+	) {
+		try {
+			$doubleOptInUtil = \DMK\Mkpostman\Factory::getDoubleOptInUtility(
+				$activationKey
+			);
+		} catch (\BadMethodCallException $e) {
+			if ($e->getCode() != 1464951846) {
+				throw $e;
+			}
+
+			return false;
+		}
+
+		if ($doubleOptInUtil->activateByKey($activationKey)) {
+			// after a successful activation we perform a redirect to success page
+			$this->performSuccessRedirect(
+				self::SUCCESS_REFERER_ACTIVATE,
+				$doubleOptInUtil->getSubscriber()
+			);
+		}
+	}
+
+	/**
+	 * Activates a subscriber by key
+	 *
+	 * @param string $success
+	 *
+	 * @return bool
+	 */
+	protected function handleSuccess(
+		$success
+	) {
+		$success = \DMK\Mkpostman\Factory::getCryptUtility()->urlDencode($success);
+		list($referer, $uid) = explode(':', $success);
+
+		switch ($referer) {
+			case self::SUCCESS_REFERER_SUBSCRIBE:
+				break;
+
+			case self::SUCCESS_REFERER_ACTIVATE:
+				break;
+
+			default:
+				return false;
+		}
+
+		$this->getViewData()->offsetSet(
+			'main_subpart_key',
+			'success_' . $referer
+		);
+
+		$this->getViewData()->offsetSet(
+			'subscriber',
+			$this->getSubscriberRepository()->findByUid($uid)
+		);
+
+		return true;
+	}
+
+	/**
+	 * Renders the subscribtion form
+	 *
+	 * @return null|string
+	 */
+	protected function handleForm()
+	{
+		return parent::handleRequest(
+			$this->getParameters(),
+			$this->getConfigurations(),
+			$this->getViewData()
+		);
+	}
+
+	/**
 	 * The record of the current feuser, if any is logged in.
 	 *
 	 * @return array
@@ -49,7 +174,7 @@ class SubscribeAction
 	}
 
 	/**
-	 * Actually fill the data to be published in form
+	 * Prefills the subscribtin form with fe userdada
 	 *
 	 * @param array $params Parameters from the form
 	 *
@@ -58,7 +183,8 @@ class SubscribeAction
 	protected function fillData(
 		array $params
 	) {
-		// prefill with feuserdata, in Form we need all values as string to perform some strict checks (gender)!
+		// prefill with feuserdata,
+		// in form we need all values as string to perform some strict checks (gender)!
 		$params['subscriber'] = \array_map('strval', $this->getFeUserData());
 
 		return $params;
@@ -93,6 +219,12 @@ class SubscribeAction
 		}
 
 		$repo->persist($subscriber);
+
+		// after a successful submit we perform a redirect to success page
+		$this->performSuccessRedirect(
+			self::SUCCESS_REFERER_SUBSCRIBE,
+			$subscriber
+		);
 
 		return $data;
 	}
@@ -154,6 +286,31 @@ class SubscribeAction
 	protected function getSubscriberRepository()
 	{
 		return \DMK\Mkpostman\Factory::getSubscriberRepository();
+	}
+
+	/**
+	 * Performs a sucess redirect
+	 *
+	 * @param string $referer
+	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 *
+	 * @return void
+	 */
+	protected function performSuccessRedirect(
+		$referer,
+		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	) {
+		$link = $this->getConfigurations()->createLink();
+		$link->initByTS(
+			$this->getConfigurations(),
+			$this->getConfId() . 'redirect.' . $referer . '.',
+			array(
+				'success' => \DMK\Mkpostman\Factory::getCryptUtility()->urlEncode(
+					$referer . ':' . $subscriber->getUid()
+				)
+			)
+		);
+		$link->redirect();
 	}
 
 	/**

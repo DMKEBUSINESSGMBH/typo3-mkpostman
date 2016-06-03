@@ -45,7 +45,7 @@ In the template currently the following markers available:
  * ###SUBSCRIBER_ACTIVATIONLINKURL###  
    the activation url
  * ###SUBSCRIBER_ACTIVATIONLINK###  
-   the linkwrap with tags as wrap
+   the link with tags as wrap
 
 ### Form Templating
 

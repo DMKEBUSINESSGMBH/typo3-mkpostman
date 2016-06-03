@@ -40,6 +40,252 @@ class SubscribeActionTest
 	extends \DMK\Mkpostman\Tests\BaseTestCase
 {
 	/**
+	 * Test the handleRequest method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandeRequestForm()
+	{
+		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('handleForm', 'handleActivation', 'handleSuccess')
+		);
+
+		$action
+			->expects(self::never())
+			->method('handleActivation')
+		;
+		$action
+			->expects(self::never())
+			->method('handleSuccess')
+		;
+		$action
+			->expects(self::once())
+			->method('handleForm')
+		;
+
+		$null = null;
+		self::assertSame(
+			null,
+			$action->handleRequest(
+				$this->getMock('tx_rnbase_parameters'),
+				$null,
+				$null
+			)
+		);
+	}
+
+	/**
+	 * Test the handleRequest method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandeRequestActivationWithValidKey()
+	{
+		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('handleForm', 'handleActivation', 'handleSuccess')
+		);
+
+
+		$action
+			->expects(self::once())
+			->method('handleActivation')
+			->with(self::equalTo('valid'))
+			->will(self::returnValue(true))
+		;
+		$action
+			->expects(self::never())
+			->method('handleSuccess')
+		;
+		$action
+			->expects(self::never())
+			->method('handleForm')
+		;
+		/* @var $parameters \tx_rnbase_parameters */
+		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+		$parameters->offsetSet('key', 'valid');
+		$null = null;
+		self::assertSame(
+			null,
+			$action->handleRequest(
+				$parameters,
+				$null,
+				$null
+			)
+		);
+	}
+
+	/**
+	 * Test the handleRequest method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandeRequestActivationWithInvalidKey()
+	{
+		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('handleForm', 'handleActivation', 'handleSuccess')
+		);
+
+
+		$action
+			->expects(self::once())
+			->method('handleActivation')
+			->with(self::equalTo('invalid'))
+			->will(self::returnValue(false))
+		;
+		$action
+			->expects(self::never())
+			->method('handleSuccess')
+		;
+		$action
+			->expects(self::once())
+			->method('handleForm')
+		;
+		/* @var $parameters \tx_rnbase_parameters */
+		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+		$parameters->offsetSet('key', 'invalid');
+		$null = null;
+		self::assertSame(
+			null,
+			$action->handleRequest(
+				$parameters,
+				$null,
+				$null
+			)
+		);
+	}
+
+	/**
+	 * Test the handleRequest method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandeRequestSuccessWithValidKey()
+	{
+		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('handleForm', 'handleActivation', 'handleSuccess')
+		);
+
+		$action
+			->expects(self::never())
+			->method('handleActivation')
+		;
+		$action
+			->expects(self::once())
+			->method('handleSuccess')
+			->with(self::equalTo('referer:7'))
+			->will(self::returnValue(true))
+		;
+		$action
+			->expects(self::never())
+			->method('handleForm')
+		;
+		/* @var $parameters \tx_rnbase_parameters */
+		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+		$parameters->offsetSet('success', 'referer:7');
+		$null = null;
+		self::assertSame(
+			null,
+			$action->handleRequest(
+				$parameters,
+				$null,
+				$null
+			)
+		);
+	}
+
+	/**
+	 * Test the handleRequest method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandeRequestSuccessWithInvalidKey()
+	{
+		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('handleForm', 'handleActivation', 'handleSuccess')
+		);
+
+		$action
+			->expects(self::never())
+			->method('handleActivation')
+		;
+		$action
+			->expects(self::once())
+			->method('handleSuccess')
+			->with(self::equalTo('invalid'))
+			->will(self::returnValue(false))
+		;
+		$action
+			->expects(self::once())
+			->method('handleForm')
+		;
+		/* @var $parameters \tx_rnbase_parameters */
+		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+		$parameters->offsetSet('success', 'invalid');
+		$null = null;
+		self::assertSame(
+			null,
+			$action->handleRequest(
+				$parameters,
+				$null,
+				$null
+			)
+		);
+	}
+
+	/**
+	 * Test the handleActivation method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandleActivation()
+	{
+		// @TODO check if $doubleOptInUtil->activateByKey was called correctly!
+		// @TODO check if the performSuccessRedirect was called correctly
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * Test the handleSuccess method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testHandleSuccess()
+	{
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * Test the fillData method
 	 *
 	 * @return void
@@ -243,6 +489,19 @@ class SubscribeActionTest
 		self::assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
 		self::assertSame($model->getProperty(), $subscriber->getProperty());
+	}
+
+	/**
+	 * Test the getConfId method
+	 *
+	 * @return void
+	 *
+	 * @group unit
+	 * @test
+	 */
+	public function testPerformSuccessRedirect()
+	{
+		$this->markTestIncomplete();
 	}
 
 	/**
