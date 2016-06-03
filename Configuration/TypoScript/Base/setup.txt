@@ -16,6 +16,19 @@ tt_content.list.20.tx_mkpostman =< plugin.tx_mkpostman
 
 plugin.tx_mkpostman {
 
+	### ########### ###
+	### mail config ###
+	### ########### ###
+
+	mails.subscriber.links.activation {
+		pid = 0
+		absurl = 1
+	}
+
+	### ############# ###
+	### action config ###
+	### ############# ###
+
 	subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
 	subscribe {
 		toUserInt = 1

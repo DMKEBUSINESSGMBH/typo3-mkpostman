@@ -130,10 +130,20 @@ class SubscribeAction
 		return $subscriber;
 	}
 
+	/**
+	 * Sends the double opt in mail
+	 *
+	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 *
+	 * @return void
+	 */
 	protected function performDoubleOptIn(
 		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
 	) {
-		$subscriber->setConfirmstring(md5(\uniqid($subscriber->getUid())));
+		$processor = \DMK\Mkpostman\Factory::getProcessorMail(
+			$this->getConfigurations()
+		);
+		$processor->sendSubscriberActivation($subscriber);
 	}
 
 	/**

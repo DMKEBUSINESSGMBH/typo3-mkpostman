@@ -37,13 +37,14 @@ namespace DMK\Mkpostman\View;
  */
 abstract class AbstractView
 	extends \tx_rnbase_view_Base
-{	/**
+{
+	/**
 	 * Entry point for child classes
 	 *
 	 * @param string $template
-	 * @param ArrayObject $viewData
-	 * @param tx_rnbase_configurations $configurations
-	 * @param tx_rnbase_util_FormatUtil $formatter
+	 * @param \ArrayObject $viewData
+	 * @param \tx_rnbase_configurations $configurations
+	 * @param \tx_rnbase_util_FormatUtil $formatter
 	 *
 	 * @return string
 	 */

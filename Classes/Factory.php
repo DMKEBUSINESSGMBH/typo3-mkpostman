@@ -66,12 +66,62 @@ final class Factory
 	}
 
 	/**
+	 * Creates the mail processor
+	 *
+	 * @param \tx_rnbase_configurations $configurations
+	 *
+	 * @return \DMK\Mkpostman\Mail\ProcessorMail
+	 */
+	public static function getProcessorMail(
+		\tx_rnbase_configurations $configurations
+	) {
+		return \tx_rnbase::makeInstance(
+			'DMK\\Mkpostman\\Mail\\ProcessorMail',
+			$configurations
+		);
+	}
+
+	/**
+	 * Creates mail receiver
+	 *
+	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 *
+	 * @return \DMK\Mkpostman\Mail\Receiver\SubscriberReceiver
+	 */
+	public static function getSubscriberMailReceiver(
+		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	) {
+		return \tx_rnbase::makeInstance(
+			'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
+			$subscriber
+		);
+	}
+
+	/**
+	 * Creates an double opt in util instance with an subscriber
+	 *
+	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 *
+	 * @return \DMK\Mkpostman\Utility\DoubleOptInUtility
+	 */
+	public static function getDoubleOptInUtility(
+		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	) {
+		return \tx_rnbase::makeInstance(
+			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
+			$subscriber
+		);
+	}
+
+	/**
 	 * Returns the subscriber repository
 	 *
 	 * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
 	 */
 	public static function getSubscriberRepository()
 	{
-		return \tx_rnbase::makeInstance('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+		return \tx_rnbase::makeInstance(
+			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository'
+		);
 	}
 }

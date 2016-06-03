@@ -59,4 +59,24 @@ abstract class BaseTestCase
 	{
 	}
 
+	/**
+	 * Returns a subscriber model mock
+	 *
+	 * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
+	 */
+	protected function getSubscriberModel()
+	{
+		return $this->getModel(
+			array(
+				'uid' => 5,
+				'pid' => 7,
+				'hidden' => 0,
+				'gender' => 1,
+				'first_name' => 'Michael',
+				'last_name' => 'Wagner',
+				'email' => 'mwagner@localhost.net',
+			),
+			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+		);
+	}
 }
