@@ -24,7 +24,7 @@ namespace DMK\Mkpostman\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_util_Wizicon');
+use \DMK\Mkpostman\Domain\Model\SubscriberModel;
 
 /**
  * MK Postman Double-Opt-In utility
@@ -47,26 +47,71 @@ class DoubleOptInUtility
 	/**
 	 * The Constructor
 	 *
-	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+	 * @param string|SubscriberModel $subscriberOrActivationKey
+	 *
+	 * @throws \BadMethodCallException
 	 */
 	public function __construct(
-		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+		$subscriberOrActivationKey
 	) {
-		$this->subscriber = $subscriber;
+		// check for activatoin key
+		if (is_string($subscriberOrActivationKey)) {
+			$subscriberOrActivationKey = $this->findSubscriberByKey(
+				$this->decodeActivationKey($subscriberOrActivationKey)
+			);
+		}
+
+		if (!$subscriberOrActivationKey instanceof SubscriberModel) {
+			throw new \BadMethodCallException(
+				'No valid subscriber model given for double opt in',
+				1464951846
+			);
+		}
+
+		$this->subscriber = $subscriberOrActivationKey;
+	}
+
+	/**
+	 * Finds a subscriber by key
+	 *
+	 * @param \Tx_Rnbase_Domain_Model_Data $keyData
+	 *
+	 * @return null|SubscriberModel
+	 */
+	protected function findSubscriberByKey(
+		\Tx_Rnbase_Domain_Model_Data $keyData
+	) {
+		if (!$keyData->getUid()) {
+			return null;
+		}
+
+		return $this->getRepository()->findByUid($keyData->getUid());
+
 	}
 
 	/**
 	 * The current subscriber
 	 *
-	 * @return  \DMK\Mkpostman\Domain\Model\SubscriberModel
+	 * @return SubscriberModel
 	 */
-	protected function getSubscriber()
+	public function getSubscriber()
 	{
 		return $this->subscriber;
 	}
 
 	/**
+	 * Returns the subscriber repository
+	 *
+	 * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
+	 */
+	protected function getRepository()
+	{
+		return \DMK\Mkpostman\Factory::getSubscriberRepository();
+	}
+
+	/**
 	 * Updates subscriber model with a new confirmstring
+	 * and persist the changes
 	 *
 	 * @return void
 	 */
@@ -74,6 +119,8 @@ class DoubleOptInUtility
 	{
 		$confirmString = $this->createConfirmString();
 		$this->getSubscriber()->setConfirmstring($confirmString);
+
+		$this->getRepository()->persist($this->getSubscriber());
 	}
 
 	/**
@@ -84,6 +131,54 @@ class DoubleOptInUtility
 	protected function createConfirmString()
 	{
 		return md5(\uniqid($this->getSubscriber()->getUid()));
+	}
+
+	/**
+	 * Check if the activation key is valid for the current user
+	 *
+	 * @param string $activationKey
+	 *
+	 * @return bool
+	 */
+	protected function validateActivationKey(
+		$activationKey
+	) {
+		$subscriber = $this->getSubscriber();
+
+		$keyData = $this->decodeActivationKey($activationKey);
+
+		return (
+			$subscriber->getUid() == $keyData->getUid() &&
+			$subscriber->getConfirmstring() === $keyData->getConfirmstring() &&
+			md5($subscriber->getEmail()) === $keyData->getMailHash()
+		);
+	}
+
+	/**
+	 * Decodes the activatoin key and extracts the informations
+	 *
+	 * @param string $activationKey
+	 *
+	 * @return Tx_Rnbase_Domain_Model_Data
+	 */
+	protected function decodeActivationKey(
+		$activationKey
+	) {
+		// the key loks like base64 and urlencoded
+		if (\substr_count($activationKey, ':') !== 2) {
+			$crypt = \DMK\Mkpostman\Factory::getCryptUtility();
+			$activationKey = $crypt->urlDencode($activationKey);
+		}
+
+		list ($uid, $confirmstring, $md5) = explode(':', $activationKey);
+
+		return \Tx_Rnbase_Domain_Model_Data::getInstance(
+			array(
+				'uid' => $uid,
+				'confirmstring' => $confirmstring,
+				'mail_hash' => $md5
+			)
+		);
 	}
 
 	/**
@@ -125,36 +220,33 @@ class DoubleOptInUtility
 
 		// make the key base64 and url encoded
 		if ($urlencode) {
-			$key = \urlencode(\base64_encode($key));
+			$crypt = \DMK\Mkpostman\Factory::getCryptUtility();
+			$key = $crypt->urlEncode($key);
 		}
 
 		return $key;
 	}
 
 	/**
-	 * Check if the activation key is valid for the current user
+	 * Validates the activation key and activates the subscriber
 	 *
 	 * @param string $activationKey
 	 *
 	 * @return bool
 	 */
-	public function validateActivationKey(
+	public function activateByKey(
 		$activationKey
 	) {
-		$subscriber = $this->getSubscriber();
-
-		// the key loks like base64 and urlencoded
-		if (\substr_count($activationKey, ':') !== 2) {
-			$activationKey = \base64_decode(\urldecode($activationKey));
+		if (!$this->validateActivationKey($activationKey)) {
+			return false;
 		}
 
+		$subscriber = $this->getSubscriber();
+		$subscriber->setConfirmstring('');
+		$subscriber->setHidden(0);
 
-		list ($uid, $confirmstring, $md5) = explode(':', $activationKey);
+		$this->getRepository()->persist($subscriber);
 
-		return (
-			$subscriber->getUid() == $uid &&
-			$subscriber->getConfirmstring() === $confirmstring &&
-			md5($subscriber->getEmail()) === $md5
-		);
+		return true;
 	}
 }
