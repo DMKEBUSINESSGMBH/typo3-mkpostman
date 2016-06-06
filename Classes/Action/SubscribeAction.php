@@ -137,7 +137,7 @@ class SubscribeAction
 		}
 
 		$this->getViewData()->offsetSet(
-			'main_subpart_key',
+			'main_view_key',
 			'success_' . $referer
 		);
 

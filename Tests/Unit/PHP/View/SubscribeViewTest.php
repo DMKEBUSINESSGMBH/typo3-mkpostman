@@ -49,7 +49,34 @@ class SubscribeViewTest
 	 */
 	public function testGetMainSubpart()
 	{
-		$this->markTestIncomplete();
-	}
+		$configuration = $this->createConfigurations(array(), 'mkpostman');
 
+		$action = $this->getMock(
+			'DMK\\Mkpostman\\Action\\SubscribeAction',
+			array('getConfigurations')
+		);
+		$action
+			->expects(self::exactly(2))
+			->method('getConfigurations')
+			->will(self::returnValue($configuration))
+		;
+
+		$view = $this->getMock(
+			'DMK\\Mkpostman\\View\\SubscribeView',
+			array('getController')
+		);
+		$view
+			->expects(self::exactly(2))
+			->method('getController')
+			->will(self::returnValue($action))
+		;
+
+
+		// formwrap by default
+		self::assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart());
+
+		// test subpart by viewdata
+		$configuration->getViewData()->offsetSet('main_view_key', 'foo');
+		self::assertSame('###SUBSCRIBE_FOO###', $view->getMainSubpart());
+	}
 }

@@ -62,3 +62,30 @@ All formular elements and the template are defined there.
 
 Note, that all fields with the prefix *subscriber-* will be stored in the
 table *tx_mkpostman_subscribers*. All other fields will be ignoren on process.
+
+### Subscription confirm
+
+After the subscription form was surefully submitted,
+there will be a redirect to a confirm page.  
+By default the same page as the current subscription form will be used
+and the subpart *###SUBSCRIBE_SUCCESS_SUBSCRIBE###* of the subscribe-template will be outputted.  
+A diffrent page for the redirect after the form submit can be defined in TypoScript
+
+```
+plugin.tx_mkpostman.subscribe.redirect.subscribe.pid = 7
+```
+
+### Activation confirm
+
+After the activation link from the double-opt-in mail was processed by MK Postman,
+there will be a redirect to a confirm page.  
+By default it is the same page as the current activation page
+and the subpart *###SUBSCRIBE_SUCCESS_ACTIVATE###* of the subscribe-template will be outputted.  
+A diffrent page for the redirect after the form submit can be defined in TypoScript
+
+```
+plugin.tx_mkpostman.subscribe.redirect.activate.pid = 5
+```
+
+In case of activation failure the subscribe form will be rendered currently.
+

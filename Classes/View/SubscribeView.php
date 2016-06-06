@@ -39,19 +39,29 @@ class SubscribeView
 	extends \tx_mkforms_view_Form
 {
 	/**
-	 * The subpart for this view
-	 *
-	 * @param \ArrayObject $viewData
+	 * The current viewkey. default is formwrap
 	 *
 	 * @return string
 	 */
-	public function getMainSubpart(\ArrayObject $viewData)
+	protected function getViewKey()
 	{
-		$subPartKey = $viewData->offsetGet('main_subpart_key');
-		if (empty($subPartKey)) {
-			$subPartKey = 'FORMWRAP';
+		$viewData = $this->getController()->getViewData();
+		$key = $viewData->offsetGet('main_view_key');
+
+		if (empty($key)) {
+			$key = 'formwrap';
 		}
 
-		return '###SUBSCRIBE_' . \strtoupper($subPartKey) . '###';
+		return $key;
+	}
+
+	/**
+	 * The subpart for this view
+	 *
+	 * @return string
+	 */
+	public function getMainSubpart()
+	{
+		return '###SUBSCRIBE_' . \strtoupper($this->getViewKey()) . '###';
 	}
 }
