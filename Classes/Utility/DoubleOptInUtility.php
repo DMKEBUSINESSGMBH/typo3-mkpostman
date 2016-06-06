@@ -243,7 +243,7 @@ class DoubleOptInUtility
 
 		$subscriber = $this->getSubscriber();
 		$subscriber->setConfirmstring('');
-		$subscriber->setHidden(0);
+		$subscriber->setDisabled(0);
 
 		$this->getRepository()->persist($subscriber);
 

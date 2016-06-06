@@ -213,7 +213,7 @@ class SubscribeAction
 		// before a double opt in mail was send, we has to persist the model, we need the uid!
 		$repo->persist($subscriber);
 
-		// if there is a new subscriber or the exciting is hidden, send double opt in
+		// if there is a new subscriber or the exciting is disabled, send double opt in
 		if ($subscriber->isHidden()) {
 			$this->performDoubleOptIn($subscriber);
 		}
@@ -249,8 +249,8 @@ class SubscribeAction
 		// otherwise create a new one
 		if (!$subscriber) {
 			$subscriber = $repo->createNewModel();
-			// a new subscriber initialy is hidden and has to be confirmed
-			$subscriber->setHidden(1);
+			// a new subscriber initialy is disabled and has to be confirmed
+			$subscriber->setDisabled(1);
 			// set the storage pid for the new subscriber
 			$subscriber->setPid(
 				$this->getConfigurations()->getInt(

@@ -423,9 +423,9 @@ class SubscribeActionTest
 
 		self::assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
-		// the created model should have a pid and should be hidden, nothing else
+		// the created model should have a pid and should be disabled, nothing else
 		self::assertCount(2, $model->getProperty());
-		self::assertSame(1, $model->getHidden());
+		self::assertSame(1, $model->getDisabled());
 		self::assertSame(14, $model->getpid());
 	}
 
@@ -444,7 +444,7 @@ class SubscribeActionTest
 			array(
 				'uid' => 5,
 				'pid' => 7,
-				'hidden' => 0,
+				'disabled' => 0,
 				'gender' => 1,
 				'first_name' => 'Michael',
 				'last_name' => 'Wagner',

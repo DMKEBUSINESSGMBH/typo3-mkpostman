@@ -125,7 +125,7 @@ class SubscriberRepositoryTest
 						self::assertArrayHasKey('limit', $options);
 						self::assertSame(1, $options['limit']);
 
-						// enablefields be are set, we want hidden/inactive subscribers!
+						// enablefields be are set, we want disabled/inactive subscribers!
 						self::assertArrayHasKey('enablefieldsbe', $options);
 						self::assertTrue($options['enablefieldsbe']);
 
@@ -182,7 +182,7 @@ class SubscriberRepositoryTest
 						self::assertArrayHasKey('limit', $options);
 						self::assertSame(1, $options['limit']);
 
-						// enablefields be are set, we want hidden/inactive subscribers!
+						// enablefields be are set, we want disabled/inactive subscribers!
 						self::assertArrayHasKey('enablefieldsbe', $options);
 						self::assertTrue($options['enablefieldsbe']);
 

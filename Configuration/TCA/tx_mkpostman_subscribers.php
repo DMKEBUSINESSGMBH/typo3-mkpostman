@@ -11,17 +11,17 @@ return array(
 		'delete' => 'deleted',
 		'default_sortby' => 'ORDER BY email',
 		'enablecolumns' => array(
-			'disabled' => 'hidden',
+			'disabled' => 'disabled',
 		),
 		'searchFields' => 'name,',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman') . 'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
 		'dividers2tabs' => TRUE,
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'name,hidden,contact,vatregno'
+		'showRecordFieldList' => 'name,disabled,contact,vatregno'
 	),
 	'columns' => array(
-		'hidden' => array(
+		'disabled' => array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.disable',
 			'config' => array(
@@ -80,6 +80,6 @@ return array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'hidden, email, gender, first_name, last_name, confirmstring')
+		'0' => array('showitem' => 'disabled, email, gender, first_name, last_name, confirmstring')
 	)
 );

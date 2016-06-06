@@ -8,7 +8,7 @@ CREATE TABLE tx_mkpostman_subscribers (
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
-	hidden tinyint(4) DEFAULT '0' NOT NULL,
+	disabled tinyint(4) DEFAULT '0' NOT NULL,
 
 	gender tinyint(4) DEFAULT '0' NOT NULL,
 	first_name varchar(60) DEFAULT '' NOT NULL,

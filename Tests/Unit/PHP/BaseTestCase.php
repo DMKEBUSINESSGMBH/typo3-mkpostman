@@ -70,7 +70,7 @@ abstract class BaseTestCase
 			array(
 				'uid' => 5,
 				'pid' => 7,
-				'hidden' => 0,
+				'disabled' => 0,
 				'gender' => 1,
 				'first_name' => 'Michael',
 				'last_name' => 'Wagner',

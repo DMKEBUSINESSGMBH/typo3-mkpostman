@@ -336,13 +336,13 @@ class DoubleOptInUtilityTest
 			->with(self::equalTo($subscriber))
 		;
 
-		$subscriber->setHidden(1);
+		$subscriber->setDisabled(1);
 		$subscriber->setConfirmstring($confirmString);
 
 		self::assertTrue($util->activateByKey($activationKey));
 
 		self::assertSame('', $subscriber->getConfirmstring());
-		self::assertSame(0, $subscriber->getHidden());
+		self::assertSame(0, $subscriber->getDisabled());
 	}
 
 	/**
@@ -367,13 +367,13 @@ class DoubleOptInUtilityTest
 			->method('persist')
 		;
 
-		$subscriber->setHidden(1);
+		$subscriber->setDisabled(1);
 		$subscriber->setConfirmstring($confirmString);
 
 		self::assertFalse($util->activateByKey('5:in:valid'));
 
 		self::assertSame($confirmString, $subscriber->getConfirmstring());
-		self::assertSame(1, $subscriber->getHidden());
+		self::assertSame(1, $subscriber->getDisabled());
 	}
 
 	/**
