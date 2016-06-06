@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mkforms version="2.0.0">
-	<meta defaultLLL="EXT:mkpostman/Resources/Private/Language/Frontend.xlf" >
+	<meta>
 		<form formid="subscribe" name="Newsletter Subscribe form" />
 	</meta>
+
 	<control>
 		<!--
 			WARNING:
@@ -23,6 +24,7 @@
 				/>
 			</callback>
 		</datahandler:RAW>
+
 		<renderer:TEMPLATE>
 			<template
 				subpart="###SUBSCRIBE_FORM###"
@@ -39,43 +41,47 @@
 	</control>
 
 	<elements>
-
+		<!--
+			NOTE:
+				don't change the elements in this xml!
+				it is in productive use already!
+		-->
 		<renderlet:LISTBOX
 			name="subscriber-gender"
-			label="LLL:label_form_subscriber_gender"
-			addBlank="LLL:label_general_choose"
+			label="###LABEL_FORM_SUBSCRIBER_GENDER###"
+			addBlank="###LABEL_GENERAL_CHOOSE###"
 			blankValue="null"
 			strictSelectedCheck="true"
 		>
 			<data>
 				<items>
-					<item value="0" caption="LLL:label_gender_0" />
-					<item value="1" caption="LLL:label_gender_1" />
+					<item value="0" caption="###LABEL_GENDER_0###" />
+					<item value="1" caption="###LABEL_GENDER_1###" />
 				</items>
 			</data>
 		</renderlet:LISTBOX>
 		<renderlet:TEXT
 			name="subscriber-first_name"
-			label="LLL:label_form_subscriber_first_name"
+			label="###LABEL_FORM_SUBSCRIBER_FIRST_NAME###"
 		/>
 		<renderlet:TEXT
 			name="subscriber-last_name"
-			label="LLL:label_form_subscriber_last_name"
+			label="###LABEL_FORM_SUBSCRIBER_LAST_NAME###"
 		/>
 
 		<renderlet:TEXT
 			name="subscriber-email"
 			inputType="mail"
-			label="LLL:label_form_subscriber_email"
+			label="###LABEL_FORM_SUBSCRIBER_EMAIL###"
 			custom="required=&quot;required&quot;"
 		>
 			<validators>
 				<validator:STANDARD>
 					<required
-						message="LLL:label_form_subscriber_email_required"
+						message="###LABEL_FORM_SUBSCRIBER_EMAIL_REQUIRED###"
 					/>
 					<email
-						message="LLL:label_form_subscriber_email_email"
+						message="###LABEL_FORM_SUBSCRIBER_EMAIL_EMAIL###"
 					/>
 				</validator:STANDARD>
 			</validators>
@@ -83,8 +89,9 @@
 
 		<renderlet:SUBMIT
 			name="button-subscribe"
-			label="LLL:label_form_button_subscribe"
+			label="###LABEL_FORM_BUTTON_SUBSCRIBE###"
 		/>
 
 	</elements>
+
 </mkforms>
