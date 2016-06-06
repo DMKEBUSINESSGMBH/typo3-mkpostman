@@ -71,7 +71,6 @@ class SubscribeViewTest
 			->will(self::returnValue($action))
 		;
 
-
 		// formwrap by default
 		self::assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart());
 

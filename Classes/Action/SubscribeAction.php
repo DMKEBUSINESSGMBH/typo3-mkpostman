@@ -314,6 +314,23 @@ class SubscribeAction
 	}
 
 	/**
+	 * The TemplatePath for the mkforms xml subscribe form
+	 *
+	 * @return string
+	 */
+	public function getFormTemplate()
+	{
+		\tx_rnbase::load('tx_rnbase_util_Files');
+
+		return \tx_rnbase_util_Files::getFileAbsFileName(
+			$this->getConfigurations()->get(
+				$this->getTemplateName() . 'Template',
+				true
+			)
+		);
+	}
+
+	/**
 	 * Confid
 	 *
 	 * @return string

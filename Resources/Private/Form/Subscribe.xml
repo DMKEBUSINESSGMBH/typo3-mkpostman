@@ -25,10 +25,16 @@
 		</datahandler:RAW>
 		<renderer:TEMPLATE>
 			<template
-				path="EXT:mkpostman/Resources/Private/Templates/Frontend/Subscribe.html"
 				subpart="###SUBSCRIBE_FORM###"
 				errortag="errors"
-			/>
+			>
+				<path>
+					<userobj
+						extension="this"
+						method="getFormTemplate"
+					/>
+				</path>
+			</template>
 		</renderer:TEMPLATE>
 	</control>
 
