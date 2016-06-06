@@ -54,8 +54,8 @@ namespace DMK\Mkpostman\Domain\Model;
  * @method bool hasConfirmstring()
  * @method Tx_Rnbase_Domain_Model_Data unsConfirmstring()
  *
- * @method int getHidden()
- * @method Tx_Rnbase_Domain_Model_Data setHidden() setHidden(int $hidden)
+ * @method int getDisabled()
+ * @method Tx_Rnbase_Domain_Model_Data setDisabled() setDisabled(int $disabled)
  *
  * @method int getDeleted()
  * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
