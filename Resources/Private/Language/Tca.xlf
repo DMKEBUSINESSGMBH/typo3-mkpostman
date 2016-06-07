@@ -24,7 +24,7 @@
 			<trans-unit id="tx_mkpostman_subscribers.last_name" xml:space="preserve">
 				<source>Last Name</source>
 			</trans-unit>
-			<trans-unit id="tx_mkpostman_subscribers.lemaile" xml:space="preserve">
+			<trans-unit id="tx_mkpostman_subscribers.email" xml:space="preserve">
 				<source>E-Mail</source>
 			</trans-unit>
 		</body>

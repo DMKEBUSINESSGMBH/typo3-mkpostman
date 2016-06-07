@@ -1,0 +1,16 @@
+mod {
+	mkpostman {
+		template = EXT:mkpostman/Resources/Private/Templates/Backend/Module.html
+
+		mkpostman_subscriber {
+			template = EXT:mkpostman/Resources/Private/Templates/Backend/Module/Subscriber.html
+		}
+
+		_cfg {
+			funcmenu.useTabs = 1
+			funcmenu.allow := addToList(
+				DMK\\Mkpostman\\Backend\\Module\\SubscriberModule
+			)
+		}
+	}
+}

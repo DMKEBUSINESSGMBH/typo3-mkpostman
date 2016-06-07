@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') || die ('Access denied.');
+defined('TYPO3_MODE') or die('Access denied.');
 
 return array(
 	'ctrl' => array(
@@ -14,8 +14,9 @@ return array(
 			'disabled' => 'disabled',
 		),
 		'searchFields' => 'name,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman') . 'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
-		'dividers2tabs' => TRUE,
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman') .
+			'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
+		'dividers2tabs' => true,
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'name,disabled,contact,vatregno'
@@ -37,14 +38,20 @@ return array(
 				'readOnly' => true
 			)
 		),
-		'gender' => Array (
+		'gender' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender',
-			'config' => Array (
+			'config' => array(
 				'type' => 'radio',
-				'items' => Array (
-					Array('LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.0', '0'),
-					Array('LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.1', '1'),
+				'items' => array(
+					array(
+						'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.0',
+						'0',
+					),
+					array(
+						'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.1',
+						'1',
+					),
 				),
 			)
 		),

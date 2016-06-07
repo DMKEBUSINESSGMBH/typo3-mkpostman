@@ -1,0 +1,50 @@
+<html>
+
+<body>
+
+Vorlage für das BE-Modul Overview
+
+<!-- ###MKPOSTMAN_SUBSCRIBER### -->
+
+<!-- ###COMMON_START### start -->
+<script type="text/javascript">
+(function(dyntabmenu) {
+	// Submenu-Tabs ausblenden, wenn es nur max. einen Tab gibt
+	if (dyntabmenu.childNodes[1].childNodes[0].childNodes.length <= 3) {
+		dyntabmenu.style.display = "none";
+	}
+})(document.getElementsByClassName("typo3-dyntabmenu")[1]);
+</script>
+<!-- ###COMMON_START### start -->
+
+<!-- ###MKPOSTMAN_SUBSCRIBER_MAIN### -->
+
+<!-- ###SEARCHPART### -->
+<div class="tables graybox mksearchform">
+	<h2 class="bgColor2 t3-row-header">###LABEL_SEARCH_FORM###</h2>
+	###SEARCHFORM###
+</div>
+<div class="tables graybox mkbuttons">
+	<h2 class="bgColor2 t3-row-header">###LABEL_BUTTONS###</h2>
+	###ADDITIONAL###
+</div>
+<div class="tables graybox mkpager">
+	<h2 class="bgColor2 t3-row-header">###LABEL_PAGER###</h2>
+	###PAGER###
+</div>
+
+<div class="cleardiv"></div>
+<h2 class="bgColor2 t3-row-header">###LABEL_LIST### <span class="mklistsize">(###LABEL_LIST_SIZE### ###SIZE###)</span></h2>
+<div class="mklist">###LIST###</div>
+
+<!-- ###SEARCHPART### END -->
+
+<!-- ###MKPOSTMAN_SUBSCRIBER_MAIN### -->
+
+
+
+
+<!-- ###MKPOSTMAN_SUBSCRIBER### -->
+
+</body>
+</html>
