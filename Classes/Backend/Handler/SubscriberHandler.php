@@ -37,6 +37,46 @@ class SubscriberHandler
 	implements \tx_rnbase_mod_IModHandler
 {
 	/**
+	 * The current mod
+	 *
+	 * @var \DMK\Mkpostman\Backend\ModuleBackend
+	 */
+	private $mod = null;
+	/**
+	 * The Options Array for the Handler
+	 *
+	 * @var array
+	 */
+	private $options = array();
+
+	/**
+	 * Returns the module
+	 *
+	 * @return tx_rnbase_mod_IModule
+	 */
+	public function getModule()
+	{
+		return $this->mod;
+	}
+
+	/**
+	 * Returns the options
+	 *
+	 * @param string $key
+	 *
+	 * @return tx_rnbase_mod_IModule
+	 */
+	protected function getOptions(
+		$key = null
+	) {
+		if ($key === null) {
+			return $this->options;
+		}
+
+		return $this->options[$key];
+	}
+
+	/**
 	 * Returns a unique ID for this handler.
 	 * This is used to created the subpart in template.
 	 *
@@ -65,9 +105,9 @@ class SubscriberHandler
 	 * @param \tx_rnbase_mod_IModule $mod
 	 * @param array $options
 	 *
-	 * @return array
+	 * @return void
 	 */
-	protected function prepareOptions(
+	protected function init(
 		\tx_rnbase_mod_IModule $mod,
 		array &$options = array()
 	) {
@@ -76,7 +116,8 @@ class SubscriberHandler
 
 		$options['pid'] = $mod->getPid();
 
-		return $options;
+		$this->mod = $mod;
+		$this->options = $options;
 	}
 
 	/**
@@ -105,7 +146,7 @@ class SubscriberHandler
 		$options
 	) {
 		// @codingStandardsIgnoreEnd
-		$this->prepareOptions($mod, $options);
+		$this->init($mod, $options);
 
 		$markerArray = array();
 
@@ -121,8 +162,6 @@ class SubscriberHandler
 		} else {
 			$templateMod = $this->showSearch(
 				$templateMod,
-				$mod,
-				$options,
 				$markerArray
 			);
 		}
@@ -137,37 +176,27 @@ class SubscriberHandler
 	 * Base listing
 	 *
 	 * @param string $template
-	 * @param \tx_rnbase_mod_IModule $mod
-	 * @param array $options
 	 * @param array $markerArray
 	 *
 	 * @return string
 	 */
 	protected function showSearch(
 		$template,
-		\tx_rnbase_mod_IModule $mod,
-		array $options,
 		array &$markerArray = array()
 	) {
 		/* @var $searcher \DMK\Mkpostman\Backend\Lister\SubscriberLister */
-		$searcher = \tx_rnbase::makeInstance(
-			$this->getSearcherClass(),
-			$mod,
-			$options
-		);
+		$searcher = $this->getLister();
 
-		$form = $searcher->getSearchForm();
-		$markerArray['###SEARCHFORM###'] = $form;
-
+		$markerArray['###SEARCHFORM###'] = $searcher->getSearchForm();
 		$data = $searcher->getResultList();
 		$markerArray['###LIST###'] = $data['table'];
 		$markerArray['###SIZE###'] = $data['totalsize'];
 		$markerArray['###PAGER###'] = $data['pager'];
 
-		$markerArray['###ADDITIONAL###'] = $mod->getFormTool()->createNewLink(
-			$options['baseTableName'],
-			$options['pid'],
-			'###LABEL_BUTTON_NEW_OBJECT###'
+		$markerArray['###ADDITIONAL###'] = $this->getModule()->getFormTool()->createNewLink(
+			$this->getOptions('baseTableName'),
+			$this->getOptions('pid'),
+			'###LABEL_BUTTON_NEW_SUBSCRIBER###'
 		);
 
 		return $template;
@@ -178,9 +207,22 @@ class SubscriberHandler
 	 *
 	 * @return string
 	 */
-	protected function getSearcherClass()
+	protected function getListerClass()
 	{
 		return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister';
+	}
+	/**
+	 * The class for the searcher
+	 *
+	 * @return \DMK\Mkpostman\Backend\Lister\SubscriberLister
+	 */
+	protected function getLister()
+	{
+		return \tx_rnbase::makeInstance(
+			$this->getListerClass(),
+			$this->getModule(),
+			$this->getOptions()
+		);
 	}
 
 	/**
