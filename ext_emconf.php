@@ -30,6 +30,8 @@ $EM_CONF[$_EXTKEY] = array(
 			'typo3' => '6.2.10-',
 		),
 		'conflicts' => array(),
-		'suggests' => array()
+		'suggests' => array(
+			'mklib' => '2.0.4-',
+		)
 	)
 );

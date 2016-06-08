@@ -1,5 +1,5 @@
 <?php
-namespace DMK\Mkpostman\Backend\Module;
+namespace DMK\Mkpostman\Backend\Lister;
 
 /***************************************************************
  * Copyright notice
@@ -24,55 +24,48 @@ namespace DMK\Mkpostman\Backend\Module;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
+\tx_rnbase::load('DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister');
+\tx_rnbase::load('tx_mklib_mod1_export_ISearcher');
 
 /**
- * MK Postman subscriber module
+ * Subscriber export lister.
+ *
+ * This lister requires mklib!
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberModule
-	extends \tx_rnbase_mod_ExtendedModFunc
+class SubscriberExportLister
+	extends SubscriberLister implements \tx_mklib_mod1_export_ISearcher
 {
 	/**
-	 * Method getFuncId
+	 * Liefert den List-Provider,
+	 * welcher die Ausgabe der einzelnen Datensätze generiert
+	 * und an den Listbuilder übergeben wird.
 	 *
-	 * @return	string
+	 * @return \tx_rnbase_util_IListProvider
 	 */
-	protected function getFuncId()
+	public function getInitialisedListProvider()
 	{
-		return 'mkpostman_subscriber';
-	}
+		// we has to initialize the form with all the filters
+		$this->getSearchForm();
 
-	/**
-	 * Returns all sub handlers
-	 *
-	 * @return array
-	 */
-	protected function getSubMenuItems()
-	{
-		$class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberHandler';
-		if (\tx_rnbase_util_Extensions::isLoaded('mklib')) {
-			$class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberExportHandler';
-		}
+		$fields = $options = array();
+		$options['distinct'] = 1;
+		$this->prepareFieldsAndOptions($fields, $options);
 
-		return array(
-			\tx_rnbase::makeInstance($class),
+		/* @var $provider \tx_rnbase_util_ListProvider */
+		$provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');
+		$provider->initBySearch(
+			array(
+				$this->getRepository(),
+				'search'
+			),
+			$fields,
+			$options
 		);
-	}
 
-	/**
-	 * Liefert false, wenn es keine SubSelectors gibt.
-	 * sonst ein Array mit den ausgewählten Werten.
-	 *
-	 * @param string $selectorStr
-	 *
-	 * @return array or false if not needed. Return empty array if no item found
-	 */
-	protected function makeSubSelectors(&$selectorStr)
-	{
-		return false;
+		return $provider;
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:o="urn:schemas-microsoft-com:office:office"
+	xmlns:x="urn:schemas-microsoft-com:office:excel"
+	xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+	xmlns:html="http://www.w3.org/TR/REC-html40">
+	<Worksheet ss:Name="HOGApage Export">
+		<!-- ###SUBSCRIBERS###### -->
+ 		<Table ss:ExpandedColumnCount="4" x:FullColumns="1" x:FullRows="1">
+			<Row>
+				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_NAME###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_EMAIL###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_DISABLED###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_CRDATE###]]></Data></Cell>
+			</Row>
+ 			<!-- ###SUBSCRIBER### -->
+			<Row>
+				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_DCNAME###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_EMAIL###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_DISABLED###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_CRDATE###]]></Data></Cell>
+			</Row>
+			<!-- ###SUBSCRIBER### -->
+		</Table>
+		<!-- ###SUBSCRIBERS### -->
+	</Worksheet>
+</Workbook>
+<!-- ###DEBUG### -->
+<!--
+	Date:            ###DEBUG_DATE###
+	Item Count:      ###DEBUG_ITEMCOUNT###
+	Execution Time:  ###DEBUG_PARSETIME###
+	Memory Consumed: ###DEBUG_MEMUSED###
+	Memory Start:    ###DEBUG_MEMSTART###
+	Memory End:      ###DEBUG_MEMEND###
+ -->
+<!-- ###DEBUG### -->

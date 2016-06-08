@@ -92,7 +92,6 @@ class SubscriberLister
 			)
 		);
 
-
 		$this->setFilterValue(
 			'disabled',
 			$this->showDisabledSelector(

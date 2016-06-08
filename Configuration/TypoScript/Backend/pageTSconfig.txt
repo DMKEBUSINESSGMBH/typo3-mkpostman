@@ -5,6 +5,49 @@ mod {
 		mkpostman_subscriber {
 			template = EXT:mkpostman/Resources/Private/Templates/Backend/Module/Subscriber.html
 		}
+		mkpostman_subscriber_main {
+			export.types {
+				excel_main {
+					label = Export Subscribers
+					description = Export all curently filtered subscribers
+					spriteIcon = mimetypes-excel
+					template {
+						template = EXT:mkpostman/Resources/Private/Templates/Backend/Export/SubscribersBase.xls.xml
+						itempath = subscriber
+					}
+					headers {
+						filename = MKPostmanSubscribers.xls
+						contenttype = application/vnd.ms-excel
+						additional {
+						}
+					}
+				}
+			}
+			subscriber {
+				### todo, coa is performance intensive on many entitirs to export. rebuild dynamic in marker class!
+				dcname = COA
+				dcname {
+					if.isTrue.data = field:last_name
+					10 = TEXT
+					10.field = gender
+					10.wrap = {LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.|}
+					10.insertData = 1
+					10.noTrimWrap = || |
+
+					20 = TEXT
+					20.field = first_name
+					20.noTrimWrap = || |
+					20.fieldRequired = first_name
+
+					30 = TEXT
+					30.field = last_name
+				}
+
+				disabled = TEXT
+				disabled.value = X
+				disabled.fieldRequired = disabled
+			}
+		}
 
 		_cfg {
 			funcmenu.useTabs = 1
