@@ -4,9 +4,12 @@
 	xmlns:x="urn:schemas-microsoft-com:office:excel"
 	xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
 	xmlns:html="http://www.w3.org/TR/REC-html40">
-	<Worksheet ss:Name="HOGApage Export">
+	<Worksheet ss:Name="MK Postman Subscribers">
 		<!-- ###SUBSCRIBERS###### -->
- 		<Table ss:ExpandedColumnCount="4" x:FullColumns="1" x:FullRows="1">
+		<Table ss:ExpandedColumnCount="4" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
+			<Column ss:AutoFitWidth="0" ss:Width="339.75" ss:Span="1"/>
+			<Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="87.75"/>
+			<Column ss:AutoFitWidth="0" ss:Width="129.75"/>
 			<Row>
 				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_NAME###]]></Data></Cell>
 				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_EMAIL###]]></Data></Cell>
