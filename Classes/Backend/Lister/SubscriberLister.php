@@ -38,15 +38,24 @@ use \DMK\Mkpostman\Backend\Decorator\SubscriberDecorator;
 class SubscriberLister
 	extends \tx_rnbase_mod_base_Lister
 {
+	/**
+	 * The Subscriber repository
+	 *
+	 * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
+	 */
+	protected function getRepository()
+	{
+		return \DMK\Mkpostman\Factory::getSubscriberRepository();
+	}
 
 	/**
-	 * Liefert den Service.
+	 * Only a wraper for getRepository to expect the abstract base class.
 	 *
 	 * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
 	 */
 	protected function getService()
 	{
-		return \DMK\Mkpostman\Factory::getSubscriberRepository();
+		return $this->getRepository();
 	}
 
 	/**
@@ -83,12 +92,48 @@ class SubscriberLister
 			)
 		);
 
+
+		$this->setFilterValue(
+			'disabled',
+			$this->showDisabledSelector(
+				$data['disabled'],
+				$options
+			)
+		);
+
 		$data['updatebutton'] = array(
 			'label' => '',
 			'button' => $this->getSearchButton()
 		);
 
 		return $this->buildFilterTable($data);
+	}
+
+	/**
+	 *
+	 * @param unknown $marker
+	 * @param array $options
+	 */
+	protected function showDisabledSelector(&$marker, $options=array()) {
+		$items = array(
+				0 => '###LABEL_FILTER_STATE_0###',
+				1 => '###LABEL_FILTER_STATE_1###',
+		);
+		\tx_rnbase::load('tx_rnbase_mod_Util');
+		$selectedItem = \tx_rnbase_mod_Util::getModuleValue(
+			'showdisabled',
+			$this->getModule(),
+			array('changed' => \tx_rnbase_parameters::getPostOrGetParameter('SET'))
+		);
+
+		$options['label'] = '###LABEL_FILTER_STATE###';
+		return \tx_rnbase_mod_Util::showSelectorByArray(
+			$items,
+			$selectedItem,
+			'showdisabled',
+			$marker,
+			$options
+		);
 	}
 
 	/**
@@ -105,6 +150,12 @@ class SubscriberLister
 
 		if (isset($this->options['pid'])) {
 			$fields['SUBSCRIBER.pid'][OP_EQ_INT] = $this->options['pid'];
+		}
+
+		if ($this->getFilterValue('disabled')) {
+			$options['enablefieldsbe'] = 1;
+		} else {
+			$options['enablefieldsfe'] = 1;
 		}
 	}
 
