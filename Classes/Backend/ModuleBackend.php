@@ -37,6 +37,17 @@ class ModuleBackend
 	extends \tx_rnbase_mod_BaseModule
 {
 	/**
+	 * Initializes the backend module by setting internal variables, initializing the menu.
+	 *
+	 * @return void
+	 */
+	public function init()
+	{
+		$GLOBALS['LANG']->includeLLFile('EXT:mkpostman/Resources/Private/Language/Backend.xlf');
+		parent::init();
+	}
+
+	/**
 	 * Method to get the extension key
 	 *
 	 * @return string Extension key
@@ -103,7 +114,7 @@ class ModuleBackend
 		return $out;
 	}
 	/**
-	 * Liefert Page Ids zu seiten mit mksearch inhalten.
+	 * Liefert Page Ids zu seiten mit mkpostman inhalten.
 	 * @return array
 	 */
 	private static function getStorageFolders()
