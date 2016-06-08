@@ -39,7 +39,7 @@ class SubscriberHandler
 	/**
 	 * The current mod
 	 *
-	 * @var \DMK\Mkpostman\Backend\ModuleBackend
+	 * @var \tx_rnbase_mod_BaseModule
 	 */
 	private $mod = null;
 	/**

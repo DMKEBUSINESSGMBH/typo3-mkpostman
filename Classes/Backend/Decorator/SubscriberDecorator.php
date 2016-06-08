@@ -36,17 +36,17 @@ class SubscriberDecorator
 	/**
 	 * The module
 	 *
-	 * @var \DMK\Mkpostman\Backend\ModuleBackend
+	 * @var \tx_rnbase_mod_BaseModule
 	 */
 	private $mod = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \DMK\Mkpostman\Backend\ModuleBackend $mod
+	 * @param \tx_rnbase_mod_BaseModule $mod
 	 */
 	public function __construct(
-		\DMK\Mkpostman\Backend\ModuleBackend $mod
+		\tx_rnbase_mod_BaseModule $mod
 	) {
 		$this->mod = $mod;
 	}
