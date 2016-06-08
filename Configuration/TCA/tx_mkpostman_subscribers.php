@@ -39,7 +39,7 @@ return array(
 			)
 		),
 		'gender' => array(
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender',
 			'config' => array(
 				'type' => 'radio',
@@ -56,7 +56,7 @@ return array(
 			)
 		),
 		'first_name' => array(
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.first_name',
 			'config' => array(
 				'type' => 'input',
@@ -66,7 +66,7 @@ return array(
 			)
 		),
 		'last_name' => array(
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.last_name',
 			'config' => array(
 				'type' => 'input',
@@ -76,7 +76,7 @@ return array(
 			)
 		),
 		'email' => array(
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.email',
 			'config' => array(
 				'type' => 'input',
