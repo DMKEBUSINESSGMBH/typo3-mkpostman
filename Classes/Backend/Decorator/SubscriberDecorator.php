@@ -106,7 +106,12 @@ class SubscriberDecorator
 				break;
 		}
 
-		return $return;
+		return sprintf(
+			'<span style="color:%3$s">%2$s</span>',
+			CRLF,
+			$return,
+			$entry->getDisabled() ? '#600' : '#060'
+		);
 	}
 
 	/**
@@ -144,7 +149,7 @@ class SubscriberDecorator
 			$uid,
 			'',
 			array(
-				'confirm' => $GLOBALS['LANG']->getLL('confirmation_deletion')
+				'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###'
 
 			)
 		);
@@ -167,7 +172,7 @@ class SubscriberDecorator
 		$creationDateTime = $item->getCreationDateTime();
 
 		return sprintf(
-			'<span title="UID: %3$d %1$sLabel: %2$s %1$sCreation: %4$s %1$sLast Change: %5$s">%2$s</span>',
+			'<span title="UID: %3$d %1$sCreation: %4$s %1$sLast Change: %5$s">%2$s</span>',
 			CRLF,
 			$item->getEmail(),
 			$item->getProperty('uid'),
