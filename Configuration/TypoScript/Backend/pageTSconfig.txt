@@ -13,6 +13,7 @@ mod {
 					spriteIcon = mimetypes-excel
 					template {
 						template = EXT:mkpostman/Resources/Private/Templates/Backend/Export/SubscribersBase.xls.xml
+						callModules = 1
 						itempath = subscriber
 					}
 					headers {
