@@ -34,8 +34,8 @@
 			<trans-unit id="label_tableheader_name" xml:space="preserve">
 				<source>Name</source>
 			</trans-unit>
-			<trans-unit id="label_tableheader_disabled" xml:space="preserve">
-				<source>Status</source>
+			<trans-unit id="label_tableheader_status" xml:space="preserve">
+				<source>State</source>
 			</trans-unit>
 			<trans-unit id="label_tableheader_actions" xml:space="preserve">
 				<source>Actions</source>

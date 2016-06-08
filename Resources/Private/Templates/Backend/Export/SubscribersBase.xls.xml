@@ -10,14 +10,14 @@
 			<Row>
 				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_NAME###]]></Data></Cell>
 				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_EMAIL###]]></Data></Cell>
-				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_DISABLED###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_STATUS###]]></Data></Cell>
 				<Cell><Data ss:Type="String"><![CDATA[###LABEL_TABLEHEADER_CRDATE###]]></Data></Cell>
 			</Row>
  			<!-- ###SUBSCRIBER### -->
 			<Row>
 				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_DCNAME###]]></Data></Cell>
 				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_EMAIL###]]></Data></Cell>
-				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_DISABLED###]]></Data></Cell>
+				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_DCSTATUS###]]></Data></Cell>
 				<Cell><Data ss:Type="String"><![CDATA[###SUBSCRIBER_CRDATE###]]></Data></Cell>
 			</Row>
 			<!-- ###SUBSCRIBER### -->
