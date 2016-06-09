@@ -1,7 +1,10 @@
 MK POSTMAN
 ==========
 
-[![Latest Stable Version](https://poser.pugx.org/dmk/mkpostman/v/stable)](https://packagist.org/packages/dmk/mkpostman) [![Latest Unstable Version](https://poser.pugx.org/dmk/mkpostman/v/unstable)](https://packagist.org/packages/dmk/mkpostman) [![Total Downloads](https://poser.pugx.org/dmk/mkpostman/downloads)](https://packagist.org/packages/dmk/mkpostman) [![License](https://poser.pugx.org/dmk/mkpostman/license)](https://packagist.org/packages/dmk/mkpostman)
+[![Latest Stable Version](https://poser.pugx.org/dmk/mkpostman/v/stable?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![Latest Unstable Version](https://poser.pugx.org/dmk/mkpostman/v/unstable?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![Total Downloads](https://poser.pugx.org/dmk/mkpostman/downloads?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![License](https://poser.pugx.org/dmk/mkpostman/license?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
 
 ##E-mail marketing system for the TYPO3 CMS
 
