@@ -20,9 +20,36 @@ plugin.tx_mkpostman {
 	### mail config ###
 	### ########### ###
 
-	mails.subscriber.links.activation {
-		pid = 0
-		absurl = 1
+	mails.subscriber =< lib.mkmailer.basetemplate
+	mails.subscriber {
+		default {
+			dcname = COA
+			dcname {
+				if.isTrue.data = field:last_name
+				10 = TEXT
+				10.field = gender
+				10.wrap = {LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.|}
+				10.insertData = 1
+				10.noTrimWrap = || |
+
+				20 = TEXT
+				20.field = first_name
+				20.noTrimWrap = || |
+				20.fieldRequired = first_name
+
+				30 = TEXT
+				30.field = last_name
+			}
+		}
+
+		subscriberSubject < .default
+		subscriberText < .default
+		subscriberHtml < .default
+
+		links.activation {
+			pid = 0
+			absurl = 1
+		}
 	}
 
 	### ############# ###
