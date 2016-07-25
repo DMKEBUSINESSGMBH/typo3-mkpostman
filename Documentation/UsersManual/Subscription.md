@@ -36,6 +36,8 @@ Important: the *Keystring* of the Template has to be *mkpostman_subsciber_activa
 
 In the template currently the following markers available:
 
+ * ###SUBSCRIBER_DCNAME###  
+   a combination of the gender, first- and last name (Mr. John Doe)
  * ###SUBSCRIBER_FIRST_NAME###  
    the first name from the subscribe form
  * ###SUBSCRIBER_LAST_NAME###  
