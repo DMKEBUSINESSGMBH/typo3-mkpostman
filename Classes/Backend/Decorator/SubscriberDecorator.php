@@ -24,6 +24,8 @@ namespace DMK\Mkpostman\Backend\Decorator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+\tx_rnbase::load('Tx_Rnbase_Backend_Decorator_BaseDecorator');
+
 /**
  * Subscriber lister
  *
@@ -32,84 +34,28 @@ namespace DMK\Mkpostman\Backend\Decorator;
  * @author Michael Wagner
  */
 class SubscriberDecorator
+	extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
 {
 	/**
-	 * The module
+	 * Wraps the Value.
+	 * A childclass can extend this and wrap each value in a spac.
+	 * For example a strikethrough for disabled entries.
 	 *
-	 * @var \tx_rnbase_mod_BaseModule
-	 */
-	private $mod = null;
-
-	/**
-	 * Constructor
-	 *
-	 * @param \tx_rnbase_mod_BaseModule $mod
-	 */
-	public function __construct(
-		\tx_rnbase_mod_BaseModule $mod
-	) {
-		$this->mod = $mod;
-	}
-
-	/**
-	 * Returns the module
-	 *
-	 * @return tx_rnbase_mod_IModule
-	 */
-	protected function getModule()
-	{
-		return $this->mod;
-	}
-
-	/**
-	 * Returns an instance of tx_rnbase_mod_IModule
-	 *
-	 * @return \tx_rnbase_util_FormTool
-	 */
-	protected function getFormTool()
-	{
-		return $this->mod->getFormTool();
-	}
-
-	/**
-	 * Formats a value
-	 *
-	 * @param string $columnValue
-	 * @param string $columnName
-	 * @param array $record
+	 * @param string $formatedValue
 	 * @param \Tx_Rnbase_Domain_Model_DataInterface $entry
+	 * @param string $columnName
 	 *
 	 * @return string
 	 */
-	public function format(
-		$columnValue,
-		$columnName,
-		array $record,
-		\Tx_Rnbase_Domain_Model_DataInterface $entry
+	protected function wrapValue(
+		$formatedValue,
+		\Tx_Rnbase_Domain_Model_DataInterface $entry,
+		$columnName
 	) {
-		$return = $columnValue;
-
-		switch ($columnName) {
-			case 'email':
-				$return = $this->getEmailColumn($entry);
-				break;
-
-			case 'name':
-				$return = $this->getNameColumn($entry);
-				break;
-
-			case 'actions':
-				$return = $this->getActions($entry);
-				break;
-
-			default:
-				break;
-		}
-
 		return sprintf(
 			'<span style="color:%3$s">%2$s</span>',
 			CRLF,
-			$return,
+			$formatedValue,
 			$entry->getDisabled() ? '#600' : '#060'
 		);
 	}
@@ -121,7 +67,7 @@ class SubscriberDecorator
 	 *
 	 * @return string
 	 */
-	protected function getActions(
+	protected function formatActionsColumn(
 		\Tx_Rnbase_Domain_Model_DataInterface $item
 	) {
 		\tx_rnbase::load('tx_rnbase_util_TCA');
@@ -164,7 +110,7 @@ class SubscriberDecorator
 	 *
 	 * @return string
 	 */
-	protected function getEmailColumn(
+	protected function formatEmailColumn(
 		\Tx_Rnbase_Domain_Model_DataInterface $item
 	) {
 
@@ -187,7 +133,7 @@ class SubscriberDecorator
 	 *
 	 * @return string
 	 */
-	protected function getNameColumn(
+	protected function formatNameColumn(
 		\Tx_Rnbase_Domain_Model_DataInterface $item
 	) {
 		$title = array_filter(

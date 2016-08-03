@@ -48,12 +48,7 @@ class SubscriberExportLister
 	 */
 	public function getInitialisedListProvider()
 	{
-		// we has to initialize the form with all the filters
-		$this->getSearchForm();
-
-		$fields = $options = array();
-		$options['distinct'] = 1;
-		$this->prepareFieldsAndOptions($fields, $options);
+		list($fields, $options) = $this->getFieldsAndOptions();
 
 		/* @var $provider \tx_rnbase_util_ListProvider */
 		$provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');

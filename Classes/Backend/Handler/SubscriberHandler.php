@@ -184,14 +184,10 @@ class SubscriberHandler
 		$template,
 		array &$markerArray = array()
 	) {
-		/* @var $searcher \DMK\Mkpostman\Backend\Lister\SubscriberLister */
-		$searcher = $this->getLister();
-
-		$markerArray['###SEARCHFORM###'] = $searcher->getSearchForm();
-		$data = $searcher->getResultList();
-		$markerArray['###LIST###'] = $data['table'];
-		$markerArray['###SIZE###'] = $data['totalsize'];
-		$markerArray['###PAGER###'] = $data['pager'];
+		$markerArray = array_merge(
+			$markerArray,
+			$this->getLister()->renderListMarkers()
+		);
 
 		$markerArray['###ADDITIONAL###'] = $this->getModule()->getFormTool()->createNewLink(
 			$this->getOptions('baseTableName'),
