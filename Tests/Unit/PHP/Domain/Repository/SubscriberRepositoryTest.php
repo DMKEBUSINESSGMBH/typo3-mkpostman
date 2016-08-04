@@ -262,7 +262,7 @@ class SubscriberRepositoryTest
 	 * @group unit
 	 * @test
 	 */
-	public function testPrepareGenericSearcherShouldUseArrayObject()
+	public function testPrepareGenericSearcherShouldUseCollection()
 	{
 		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
@@ -278,12 +278,15 @@ class SubscriberRepositoryTest
 					}
 				),
 				$this->callback(
-					function($options) use ($repo)
+					function($options)
 					{
 						self::assertTrue(is_array($options));
 
-						self::assertArrayHasKey('array_object', $options);
-						self::assertTrue($options['array_object']);
+						self::assertArrayHasKey('collection', $options);
+						self::assertEquals(
+							'Tx_Rnbase_Domain_Collection_Base',
+							$options['collection']
+						);
 
 						return true;
 					}
