@@ -24,7 +24,7 @@ namespace DMK\Mkpostman\Backend\Handler;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_mod_IModHandler');
+\tx_rnbase::load('Tx_Rnbase_Backend_Handler_SearchHandler');
 
 /**
  * Subscriber handler
@@ -34,47 +34,8 @@ namespace DMK\Mkpostman\Backend\Handler;
  * @author Michael Wagner
  */
 class SubscriberHandler
-	implements \tx_rnbase_mod_IModHandler
+	extends \Tx_Rnbase_Backend_Handler_SearchHandler
 {
-	/**
-	 * The current mod
-	 *
-	 * @var \tx_rnbase_mod_BaseModule
-	 */
-	private $mod = null;
-	/**
-	 * The Options Array for the Handler
-	 *
-	 * @var array
-	 */
-	private $options = array();
-
-	/**
-	 * Returns the module
-	 *
-	 * @return tx_rnbase_mod_IModule
-	 */
-	public function getModule()
-	{
-		return $this->mod;
-	}
-
-	/**
-	 * Returns the options
-	 *
-	 * @param string $key
-	 *
-	 * @return tx_rnbase_mod_IModule
-	 */
-	protected function getOptions(
-		$key = null
-	) {
-		if ($key === null) {
-			return $this->options;
-		}
-
-		return $this->options[$key];
-	}
 
 	/**
 	 * Returns a unique ID for this handler.
@@ -82,10 +43,8 @@ class SubscriberHandler
 	 *
 	 * @return string
 	 */
-	// @codingStandardsIgnoreStart (interface/abstract mistake)
-	public function getSubID()
+	public function getSubModuleId()
 	{
-		// @codingStandardsIgnoreEnd
 		return 'mkpostman_subscriber_main';
 	}
 
@@ -100,105 +59,6 @@ class SubscriberHandler
 	}
 
 	/**
-	 * Returns the handler options
-	 *
-	 * @param \tx_rnbase_mod_IModule $mod
-	 * @param array $options
-	 *
-	 * @return void
-	 */
-	protected function init(
-		\tx_rnbase_mod_IModule $mod,
-		array &$options = array()
-	) {
-		$repo = \DMK\Mkpostman\Factory::getSubscriberRepository();
-		$options['baseTableName'] = $repo->getEmptyModel()->getTableName();
-
-		$options['pid'] = $mod->getPid();
-
-		$this->mod = $mod;
-		$this->options = $options;
-	}
-
-	/**
-	 * Returns the current object for detail page.
-	 *
-	 * @return Tx_Rnbase_Domain_Model_RecordInterface
-	 */
-	protected function getObject()
-	{
-		return null;
-	}
-
-	/**
-	 * Display the user interface for this handler
-	 *
-	 * @param string $template The subpart for handler in func template
-	 * @param tx_rnbase_mod_IModule $mod
-	 * @param array $options
-	 *
-	 * @return string
-	 */
-	// @codingStandardsIgnoreStart (interface/abstract mistake)
-	public function showScreen(
-		$template,
-		\tx_rnbase_mod_IModule $mod,
-		$options
-	) {
-		// @codingStandardsIgnoreEnd
-		$this->init($mod, $options);
-
-		$markerArray = array();
-
-		$current = $this->getObject();
-
-		$templateMod = \tx_rnbase_util_Templates::getSubpart(
-			$template,
-			$current ? '###DETAILPART###' : '###SEARCHPART###'
-		);
-
-		if ($current) {
-			throw new \Exception('detail not implemented yet');
-		} else {
-			$templateMod = $this->showSearch(
-				$templateMod,
-				$markerArray
-			);
-		}
-
-		return \tx_rnbase_util_Templates::substituteMarkerArrayCached(
-			$templateMod,
-			$markerArray
-		);
-	}
-
-	/**
-	 * Base listing
-	 *
-	 * @param string $template
-	 * @param array $markerArray
-	 *
-	 * @return string
-	 */
-	protected function showSearch(
-		$template,
-		array &$markerArray = array()
-	) {
-		$markerArray = array_merge(
-			$markerArray,
-			$this->getLister()->renderListMarkers()
-		);
-
-		$markerArray['###ADDITIONAL###'] = $this->getModule()->getFormTool()->createNewLink(
-			$this->getOptions('baseTableName'),
-			$this->getOptions('pid'),
-			'###LABEL_BUTTON_NEW_SUBSCRIBER###'
-		);
-
-		return $template;
-	}
-
-	/**
 	 * The class for the searcher
 	 *
 	 * @return string
@@ -207,31 +67,20 @@ class SubscriberHandler
 	{
 		return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister';
 	}
-	/**
-	 * The class for the searcher
-	 *
-	 * @return \DMK\Mkpostman\Backend\Lister\SubscriberLister
-	 */
-	protected function getLister()
-	{
-		return \tx_rnbase::makeInstance(
-			$this->getListerClass(),
-			$this->getModule(),
-			$this->getOptions()
-		);
-	}
 
 	/**
-	 * This method is called each time the method func is clicked,
-	 * to handle request data.
+	 * Prepares the handler
 	 *
-	 * @param \tx_rnbase_mod_IModule $mod
-	 *
-	 * @return string, with error message
+	 * @return void
 	 */
-	public function handleRequest(
-		\tx_rnbase_mod_IModule $mod
-	) {
-		return null;
+	protected function prepare()
+	{
+		$options = $this->getOptions();
+
+		$repo = \DMK\Mkpostman\Factory::getSubscriberRepository();
+		$options->setBaseTableName(
+			$repo->getEmptyModel()->getTableName()
+		);
+		$options->setNewEntryLabel('###LABEL_BUTTON_NEW_SUBSCRIBER###');
 	}
 }
