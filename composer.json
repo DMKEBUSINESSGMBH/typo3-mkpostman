@@ -19,17 +19,43 @@
 		"typo3/cms-core" : ">=6.2.10",
 		"digedag/rn-base" : ">=1.0.17"
 	},
+	"require-dev" : {
+		"namelesscoder/typo3-repository-client" : "^1.2",
+		"mikey179/vfsStream" : "^1.4",
+		"phpunit/phpunit" : "^4.7 || ^5.0"
+	},
 	"support" : {
 		"email" : "dev@dmk-ebusiness.de",
 		"source" : "https://github.com/DMKEBUSINESSGMBH/typo3-mkpostman",
 		"issues" : "https://github.com/DMKEBUSINESSGMBH/typo3-mkpostman"
 	},
 	"replace" : {
-		"typo3-ter/mkpostman" : "*"
+		"mkpostman" : "self.version",
+		"typo3-ter/mkpostman" : "self.version"
 	},
 	"autoload" : {
 		"psr-4" : {
 			"DMK\\Mkpostman\\" : "Classes"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"DMK\\Mkpostman\\Tests\\" : "Tests/Classes",
+			"TYPO3\\CMS\\Core\\Tests\\" : ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
+			"TYPO3\\CMS\\Fluid\\Tests\\" : ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
+		}
+	},
+	"config" : {
+		"vendor-dir" : ".Build/vendor",
+		"bin-dir" : ".Build/bin",
+		"preferred-install" : {
+			"typo3/cms" : "source"
+		}
+	},
+	"extra" : {
+		"typo3/cms" : {
+			"cms-package-dir" : "{$vendor-dir}/typo3/cms",
+			"web-dir" : ".Build/Web"
 		}
 	}
 }
