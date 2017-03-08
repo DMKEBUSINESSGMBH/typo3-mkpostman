@@ -102,6 +102,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testFindByEmailCallsSearchCorrectly()
 	{
+		$that = $this; // php 3.5 compatibility!
 		$mail = 'mwagner@localhost.net';
 		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
@@ -111,35 +112,35 @@ class SubscriberRepositoryTest
 			->method('search')
 			->with(
 				$this->callback(
-					function($fields) use ($mail)
+					function($fields) use ($that, $mail)
 					{
-						self::assertTrue(is_array($fields));
+						$that->assertTrue(is_array($fields));
 
 						// only the mail should be filtered
-						self::assertCount(1, $fields);
-						self::assertArrayHasKey('SUBSCRIBER.email', $fields);
-						self::assertTrue(is_array($fields['SUBSCRIBER.email']));
+						$that->assertCount(1, $fields);
+						$that->assertArrayHasKey('SUBSCRIBER.email', $fields);
+						$that->assertTrue(is_array($fields['SUBSCRIBER.email']));
 
 						// only the eq str should be performed
-						self::assertCount(1, $fields['SUBSCRIBER.email']);
-						self::assertArrayHasKey(OP_EQ, $fields['SUBSCRIBER.email']);
-						self::assertSame($mail, $fields['SUBSCRIBER.email'][OP_EQ]);
+						$that->assertCount(1, $fields['SUBSCRIBER.email']);
+						$that->assertArrayHasKey(OP_EQ, $fields['SUBSCRIBER.email']);
+						$that->assertSame($mail, $fields['SUBSCRIBER.email'][OP_EQ]);
 
 						return true;
 					}
 				),
 				$this->callback(
-					function($options)
+					function($options) use ($that)
 					{
-						self::assertTrue(is_array($options));
+						$that->assertTrue(is_array($options));
 
 						// the limit should be set, the mail in uniq!
-						self::assertArrayHasKey('limit', $options);
-						self::assertSame(1, $options['limit']);
+						$that->assertArrayHasKey('limit', $options);
+						$that->assertSame(1, $options['limit']);
 
 						// enablefields be are set, we want disabled/inactive subscribers!
-						self::assertArrayHasKey('enablefieldsbe', $options);
-						self::assertTrue($options['enablefieldsbe']);
+						$that->assertArrayHasKey('enablefieldsbe', $options);
+						$that->assertTrue($options['enablefieldsbe']);
 
 						return true;
 					}
@@ -160,6 +161,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testFindByUidCallsSearchCorrectly()
 	{
+		$that = $this; // php 3.5 compatibility!
 		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
@@ -168,35 +170,35 @@ class SubscriberRepositoryTest
 			->method('search')
 			->with(
 				$this->callback(
-					function($fields)
+					function($fields) use($that)
 					{
-						self::assertTrue(is_array($fields));
+						$that->assertTrue(is_array($fields));
 
 						// only the mail should be filtered
-						self::assertCount(1, $fields);
-						self::assertArrayHasKey('SUBSCRIBER.uid', $fields);
-						self::assertTrue(is_array($fields['SUBSCRIBER.uid']));
+						$that->assertCount(1, $fields);
+						$that->assertArrayHasKey('SUBSCRIBER.uid', $fields);
+						$that->assertTrue(is_array($fields['SUBSCRIBER.uid']));
 
 						// only the eq str should be performed
-						self::assertCount(1, $fields['SUBSCRIBER.uid']);
-						self::assertArrayHasKey(OP_EQ_INT, $fields['SUBSCRIBER.uid']);
-						self::assertSame(7, $fields['SUBSCRIBER.uid'][OP_EQ_INT]);
+						$that->assertCount(1, $fields['SUBSCRIBER.uid']);
+						$that->assertArrayHasKey(OP_EQ_INT, $fields['SUBSCRIBER.uid']);
+						$that->assertSame(7, $fields['SUBSCRIBER.uid'][OP_EQ_INT]);
 
 						return true;
 					}
 				),
 				$this->callback(
-					function($options)
+					function($options) use ($that)
 					{
-						self::assertTrue(is_array($options));
+						$that->assertTrue(is_array($options));
 
 						// the limit should be set, the mail in uniq!
-						self::assertArrayHasKey('limit', $options);
-						self::assertSame(1, $options['limit']);
+						$that->assertArrayHasKey('limit', $options);
+						$that->assertSame(1, $options['limit']);
 
 						// enablefields be are set, we want disabled/inactive subscribers!
-						self::assertArrayHasKey('enablefieldsbe', $options);
-						self::assertTrue($options['enablefieldsbe']);
+						$that->assertArrayHasKey('enablefieldsbe', $options);
+						$that->assertTrue($options['enablefieldsbe']);
 
 						return true;
 					}
@@ -217,6 +219,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testPrepareGenericSearcherShouldBeTheRightSearchdefConfig()
 	{
+		$that = $this; // php 3.5 compatibility!
 		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
@@ -231,30 +234,30 @@ class SubscriberRepositoryTest
 					}
 				),
 				$this->callback(
-					function($options) use ($repo)
+					function($options) use ($that, $repo)
 					{
 						$tablename = $repo->getEmptyModel()->getTableName();
-						self::assertTrue(is_array($options));
+						$that->assertTrue(is_array($options));
 
-						self::assertArrayHasKey('searchdef', $options);
-						self::assertTrue(is_array($options['searchdef']));
+						$that->assertArrayHasKey('searchdef', $options);
+						$that->assertTrue(is_array($options['searchdef']));
 
 						$sd = $options['searchdef'];
-						self::assertArrayHasKey('usealias', $sd);
-						self::assertSame($sd['usealias'], 1);
-						self::assertArrayHasKey('basetable', $sd);
-						self::assertSame($sd['basetable'], $tablename);
-						self::assertArrayHasKey('basetablealias', $sd);
-						self::assertSame($sd['basetablealias'], 'SUBSCRIBER');
-						self::assertArrayHasKey('wrapperclass', $sd);
-						self::assertSame($sd['wrapperclass'], get_class($repo->getEmptyModel()));
+						$that->assertArrayHasKey('usealias', $sd);
+						$that->assertSame($sd['usealias'], 1);
+						$that->assertArrayHasKey('basetable', $sd);
+						$that->assertSame($sd['basetable'], $tablename);
+						$that->assertArrayHasKey('basetablealias', $sd);
+						$that->assertSame($sd['basetablealias'], 'SUBSCRIBER');
+						$that->assertArrayHasKey('wrapperclass', $sd);
+						$that->assertSame($sd['wrapperclass'], get_class($repo->getEmptyModel()));
 
-						self::assertArrayHasKey('alias', $sd);
-						self::assertTrue(is_array($sd['alias']));
-						self::assertArrayHasKey('SUBSCRIBER', $sd['alias']);
-						self::assertTrue(is_array($sd['alias']['SUBSCRIBER']));
-						self::assertArrayHasKey('table', $sd['alias']['SUBSCRIBER']);
-						self::assertSame($sd['alias']['SUBSCRIBER']['table'], $tablename);
+						$that->assertArrayHasKey('alias', $sd);
+						$that->assertTrue(is_array($sd['alias']));
+						$that->assertArrayHasKey('SUBSCRIBER', $sd['alias']);
+						$that->assertTrue(is_array($sd['alias']['SUBSCRIBER']));
+						$that->assertArrayHasKey('table', $sd['alias']['SUBSCRIBER']);
+						$that->assertSame($sd['alias']['SUBSCRIBER']['table'], $tablename);
 
 						return true;
 					}
@@ -276,6 +279,7 @@ class SubscriberRepositoryTest
 	 */
 	public function testPrepareGenericSearcherShouldUseCollection()
 	{
+		$that = $this; // php 3.5 compatibility!
 		$repo = $this->getSubscriberRepository();
 		$searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
@@ -290,12 +294,12 @@ class SubscriberRepositoryTest
 					}
 				),
 				$this->callback(
-					function($options)
+					function($options) use ($that)
 					{
-						self::assertTrue(is_array($options));
+						$that->assertTrue(is_array($options));
 
-						self::assertArrayHasKey('collection', $options);
-						self::assertEquals(
+						$that->assertArrayHasKey('collection', $options);
+						$that->assertEquals(
 							'Tx_Rnbase_Domain_Collection_Base',
 							$options['collection']
 						);
