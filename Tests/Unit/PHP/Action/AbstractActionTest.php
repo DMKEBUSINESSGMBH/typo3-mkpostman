@@ -75,7 +75,16 @@ class AbstractActionTest
 			->will(self::returnArgument(0))
 		;
 
-		$ret = $this->callInaccessibleMethod($action, 'handleRequest', null, null, null);
+		$dummy = new \ArrayObject();
+
+		$reflectionObject = new \ReflectionObject($action);
+		$reflectionMethod = $reflectionObject->getMethod('handleRequest');
+		$reflectionMethod->setAccessible(true);
+
+		$ret = $reflectionMethod->invokeArgs(
+			$action,
+			array(&$dummy, &$dummy, &$dummy)
+		);
 
 		// the handleRequest expects returns the first argument
 		// this argument should be null. doRequest has no argument!
