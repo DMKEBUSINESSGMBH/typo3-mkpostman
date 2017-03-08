@@ -24,8 +24,20 @@ namespace DMK\Mkpostman\Domain\Repository;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once \t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-require_once \t3lib_extMgm::extPath('mkpostman', 'Tests/Unit/PHP/BaseTestCase.php');
+// for non composer autoload support
+if (!\class_exists('tx_rnbase')) {
+	require_once \tx_rnbase_util_Extensions::extPath(
+		'rn_base',
+		'class.tx_rnbase.php'
+	);
+}
+// for non composer autoload support
+if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
+	require_once \tx_rnbase_util_Extensions::extPath(
+		'mkpostman',
+		'Tests/Unit/PHP/BaseTestCase.php'
+	);
+}
 
 /**
  * Subscriber model test
