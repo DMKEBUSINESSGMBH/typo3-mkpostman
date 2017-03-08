@@ -221,8 +221,12 @@ class SubscribeAction
 		$repo->persist($subscriber);
 
 		// after a successful submit we perform a redirect to success page
+		// if the subscriber is already subscribed, send activated, otherwise subscribed
 		$this->performSuccessRedirect(
-			self::SUCCESS_REFERRER_SUBSCRIBE,
+			($subscriber->isHidden() ?
+				self::SUCCESS_REFERRER_SUBSCRIBE :
+				self::SUCCESS_REFERRER_ACTIVATE
+			),
 			$subscriber
 		);
 
