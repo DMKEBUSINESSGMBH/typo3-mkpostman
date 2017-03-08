@@ -39,17 +39,17 @@ class SubscribeAction
 	extends \tx_mkforms_action_FormBase
 {
 	/**
-	 * Referer key after subscribtion success
+	 * Referrer key after subscribtion success
 	 *
 	 * @var string
 	 */
-	const SUCCESS_REFERER_SUBSCRIBE = 'subscribe';
+	const SUCCESS_REFERRER_SUBSCRIBE = 'subscribe';
 	/**
-	 * Referer key after activation success
+	 * Referrer key after activation success
 	 *
 	 * @var string
 	 */
-	const SUCCESS_REFERER_ACTIVATE = 'activate';
+	const SUCCESS_REFERRER_ACTIVATE = 'activate';
 
 	/**
 	 * Start the dance...
@@ -106,7 +106,7 @@ class SubscribeAction
 		if ($doubleOptInUtil->activateByKey($activationKey)) {
 			// after a successful activation we perform a redirect to success page
 			$this->performSuccessRedirect(
-				self::SUCCESS_REFERER_ACTIVATE,
+				self::SUCCESS_REFERRER_ACTIVATE,
 				$doubleOptInUtil->getSubscriber()
 			);
 		}
@@ -123,13 +123,13 @@ class SubscribeAction
 		$success
 	) {
 		$success = \DMK\Mkpostman\Factory::getCryptUtility()->urlDencode($success);
-		list($referer, $uid) = explode(':', $success);
+		list($referrer, $uid) = explode(':', $success);
 
-		switch ($referer) {
-			case self::SUCCESS_REFERER_SUBSCRIBE:
+		switch ($referrer) {
+			case self::SUCCESS_REFERRER_SUBSCRIBE:
 				break;
 
-			case self::SUCCESS_REFERER_ACTIVATE:
+			case self::SUCCESS_REFERRER_ACTIVATE:
 				break;
 
 			default:
@@ -138,7 +138,7 @@ class SubscribeAction
 
 		$this->getViewData()->offsetSet(
 			'main_view_key',
-			'success_' . $referer
+			'success_' . $referrer
 		);
 
 		$this->getViewData()->offsetSet(
@@ -222,7 +222,7 @@ class SubscribeAction
 
 		// after a successful submit we perform a redirect to success page
 		$this->performSuccessRedirect(
-			self::SUCCESS_REFERER_SUBSCRIBE,
+			self::SUCCESS_REFERRER_SUBSCRIBE,
 			$subscriber
 		);
 
@@ -291,22 +291,22 @@ class SubscribeAction
 	/**
 	 * Performs a sucess redirect
 	 *
-	 * @param string $referer
+	 * @param string $referrer
 	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
 	 *
 	 * @return void
 	 */
 	protected function performSuccessRedirect(
-		$referer,
+		$referrer,
 		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
 	) {
 		$link = $this->getConfigurations()->createLink();
 		$link->initByTS(
 			$this->getConfigurations(),
-			$this->getConfId() . 'redirect.' . $referer . '.',
+			$this->getConfId() . 'redirect.' . $referrer . '.',
 			array(
 				'success' => \DMK\Mkpostman\Factory::getCryptUtility()->urlEncode(
-					$referer . ':' . $subscriber->getUid()
+					$referrer . ':' . $subscriber->getUid()
 				)
 			)
 		);

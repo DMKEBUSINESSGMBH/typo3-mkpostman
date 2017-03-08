@@ -192,7 +192,7 @@ class SubscribeActionTest
 		$action
 			->expects(self::once())
 			->method('handleSuccess')
-			->with(self::equalTo('referer:7'))
+			->with(self::equalTo('referrer:7'))
 			->will(self::returnValue(true))
 		;
 		$action
@@ -201,7 +201,7 @@ class SubscribeActionTest
 		;
 		/* @var $parameters \tx_rnbase_parameters */
 		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-		$parameters->offsetSet('success', 'referer:7');
+		$parameters->offsetSet('success', 'referrer:7');
 		$null = null;
 		self::assertSame(
 			null,
