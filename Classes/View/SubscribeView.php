@@ -60,7 +60,7 @@ class SubscribeView
 	 *
 	 * @return string
 	 */
-	public function getMainSubpart()
+	public function getMainSubpart(&$viewData)
 	{
 		return '###SUBSCRIBE_' . \strtoupper($this->getViewKey()) . '###';
 	}
