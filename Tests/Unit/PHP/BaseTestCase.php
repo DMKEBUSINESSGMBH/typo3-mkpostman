@@ -71,17 +71,20 @@ abstract class BaseTestCase
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
 	 */
-	protected function getSubscriberModel()
+	protected function getSubscriberModel(array $record = array())
 	{
 		return $this->getModel(
-			array(
-				'uid' => 5,
-				'pid' => 7,
-				'disabled' => 0,
-				'gender' => 1,
-				'first_name' => 'Michael',
-				'last_name' => 'Wagner',
-				'email' => 'mwagner@localhost.net',
+			array_merge(
+				array(
+					'uid' => 5,
+					'pid' => 7,
+					'disabled' => 0,
+					'gender' => 1,
+					'first_name' => 'Michael',
+					'last_name' => 'Wagner',
+					'email' => 'mwagner@localhost.net',
+				),
+				$record
 			),
 			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
 		);

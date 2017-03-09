@@ -140,7 +140,7 @@ class SubscriberReceiverTest
 		$receiver = $this->getMock(
 			'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
 			array(),
-			array($this->getSubscriberModel())
+			array($this->getSubscriberModel(array('confirmstring'=>'PreventPersist')))
 		);
 
 		return $receiver;
