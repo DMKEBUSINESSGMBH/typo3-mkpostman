@@ -67,7 +67,7 @@ class CryptUtilityTest
 		);
 		$encoded = $util->urlEncode($this->getTestValue());
 
-		self::assertSame(
+		$this->assertSame(
 			\urlencode(\base64_encode($this->getTestValue())),
 			$encoded
 		);
@@ -94,7 +94,7 @@ class CryptUtilityTest
 			'DMK\\Mkpostman\\Utility\\CryptUtility'
 		);
 
-		self::assertSame(
+		$this->assertSame(
 			$this->getTestValue(),
 			$util->urlDencode($encoded)
 		);

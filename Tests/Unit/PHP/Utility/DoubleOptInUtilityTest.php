@@ -78,6 +78,7 @@ class DoubleOptInUtilityTest
 	 */
 	public function testConstructorWithKey()
 	{
+		$that = $this; // php 3.5 compatibility!
 		$util = $this->getMock(
 			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
 			array('findSubscriberByKey'),
@@ -91,12 +92,12 @@ class DoubleOptInUtilityTest
 			->method('findSubscriberByKey')
 			->with(
 				self::callback(
-					function ($keyData) {
+					function ($keyData) use ($that) {
 
-						self::assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
-						self::assertSame('5', $keyData->getUid());
-						self::assertSame('abcdef1234567890', $keyData->getConfirmstring());
-						self::assertSame('123456789abcdef', $keyData->getMailHash());
+						$that->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+						$that->assertSame('5', $keyData->getUid());
+						$that->assertSame('abcdef1234567890', $keyData->getConfirmstring());
+						$that->assertSame('123456789abcdef', $keyData->getMailHash());
 
 						return true;
 					}
@@ -151,7 +152,7 @@ class DoubleOptInUtilityTest
 		);
 
 		// we only check for length and containing chars
-		self::assertRegExp('/^[a-f0-9]{32}$/', $confirmString);
+		$this->assertRegExp('/^[a-f0-9]{32}$/', $confirmString);
 
 		return $confirmString;
 	}
@@ -187,7 +188,7 @@ class DoubleOptInUtilityTest
 		$this->callInaccessibleMethod($util, 'updateConfirmString');
 
 		// we only check for length and containing chars
-		self::assertSame($confirmString, $subscriber->getConfirmstring());
+		$this->assertSame($confirmString, $subscriber->getConfirmstring());
 	}
 
 	/**
@@ -210,13 +211,13 @@ class DoubleOptInUtilityTest
 		$key = $this->callInaccessibleMethod($util, 'buildActivationKey', false);
 
 		// the key should contain the uid, confirmstring and the md5 of the mail
-		self::assertSame(2, substr_count($key, ':'));
+		$this->assertSame(2, substr_count($key, ':'));
 		$parts = explode(':', $key);
-		self::assertCount(3, $parts);
+		$this->assertCount(3, $parts);
 
-		self::assertEquals($subscriber->getUid(), $parts[0]);
-		self::assertEquals($subscriber->getConfirmstring(), $parts[1]);
-		self::assertEquals(md5($subscriber->getEmail()), $parts[2]);
+		$this->assertEquals($subscriber->getUid(), $parts[0]);
+		$this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
+		$this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
 
 		return array($confirmString, $key);
 	}
@@ -243,13 +244,13 @@ class DoubleOptInUtilityTest
 		$key = \base64_decode(\urldecode($key));
 
 		// the key should contain the uid, confirmstring and the md5 of the mail
-		self::assertSame(2, substr_count($key, ':'));
+		$this->assertSame(2, substr_count($key, ':'));
 		$parts = explode(':', $key);
-		self::assertCount(3, $parts);
+		$this->assertCount(3, $parts);
 
-		self::assertEquals($subscriber->getUid(), $parts[0]);
-		self::assertEquals($subscriber->getConfirmstring(), $parts[1]);
-		self::assertEquals(md5($subscriber->getEmail()), $parts[2]);
+		$this->assertEquals($subscriber->getUid(), $parts[0]);
+		$this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
+		$this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
 	}
 
 	/**
@@ -269,10 +270,10 @@ class DoubleOptInUtilityTest
 			'firstIsUid:secondIsConfirmstring:thirdIsMailHash'
 		);
 
-		self::assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
-		self::assertSame('firstIsUid', $keyData->getUid());
-		self::assertSame('secondIsConfirmstring', $keyData->getConfirmstring());
-		self::assertSame('thirdIsMailHash', $keyData->getMailHash());
+		$this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+		$this->assertSame('firstIsUid', $keyData->getUid());
+		$this->assertSame('secondIsConfirmstring', $keyData->getConfirmstring());
+		$this->assertSame('thirdIsMailHash', $keyData->getMailHash());
 	}
 	/**
 	 * Test the validateActivationKey method
@@ -293,7 +294,7 @@ class DoubleOptInUtilityTest
 
 		$subscriber->setConfirmstring($confirmString);
 
-		self::assertTrue(
+		$this->assertTrue(
 			$this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
 		);
 	}
@@ -319,7 +320,7 @@ class DoubleOptInUtilityTest
 
 		$activationKey = \urlencode(\base64_encode($activationKey));
 
-		self::assertTrue(
+		$this->assertTrue(
 			$this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
 		);
 	}
@@ -351,10 +352,10 @@ class DoubleOptInUtilityTest
 		$subscriber->setDisabled(1);
 		$subscriber->setConfirmstring($confirmString);
 
-		self::assertTrue($util->activateByKey($activationKey));
+		$this->assertTrue($util->activateByKey($activationKey));
 
-		self::assertSame('', $subscriber->getConfirmstring());
-		self::assertSame(0, $subscriber->getDisabled());
+		$this->assertSame('', $subscriber->getConfirmstring());
+		$this->assertSame(0, $subscriber->getDisabled());
 	}
 
 	/**
@@ -382,10 +383,10 @@ class DoubleOptInUtilityTest
 		$subscriber->setDisabled(1);
 		$subscriber->setConfirmstring($confirmString);
 
-		self::assertFalse($util->activateByKey('5:in:valid'));
+		$this->assertFalse($util->activateByKey('5:in:valid'));
 
-		self::assertSame($confirmString, $subscriber->getConfirmstring());
-		self::assertSame(1, $subscriber->getDisabled());
+		$this->assertSame($confirmString, $subscriber->getConfirmstring());
+		$this->assertSame(1, $subscriber->getDisabled());
 	}
 
 	/**

@@ -64,7 +64,7 @@ class AbstractActionTest
 		\tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
 		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
 		$storage = $this->callInaccessibleMethod($action, 'getStorage');
-		self::assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $storage);
+		$this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $storage);
 	}
 
 	/**
@@ -100,7 +100,7 @@ class AbstractActionTest
 
 		// the handleRequest expects returns the first argument
 		// this argument should be null. doRequest has no argument!
-		self::assertSame(null, $ret);
+		$this->assertSame(null, $ret);
 	}
 
 	/**
@@ -121,6 +121,6 @@ class AbstractActionTest
 
 		$this->callInaccessibleMethod($action, 'setToView', 'test', '57');
 
-		self::assertSame('57', $configuration->getViewData()->offsetGet('test'));
+		$this->assertSame('57', $configuration->getViewData()->offsetGet('test'));
 	}
 }

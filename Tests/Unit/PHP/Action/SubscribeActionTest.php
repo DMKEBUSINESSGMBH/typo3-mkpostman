@@ -81,7 +81,7 @@ class SubscribeActionTest
 		;
 
 		$null = null;
-		self::assertSame(
+		$this->assertSame(
 			null,
 			$action->handleRequest(
 				$this->getMock('tx_rnbase_parameters'),
@@ -126,7 +126,7 @@ class SubscribeActionTest
 		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
 		$parameters->offsetSet('key', 'valid');
 		$null = null;
-		self::assertSame(
+		$this->assertSame(
 			null,
 			$action->handleRequest(
 				$parameters,
@@ -171,7 +171,7 @@ class SubscribeActionTest
 		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
 		$parameters->offsetSet('key', 'invalid');
 		$null = null;
-		self::assertSame(
+		$this->assertSame(
 			null,
 			$action->handleRequest(
 				$parameters,
@@ -215,7 +215,7 @@ class SubscribeActionTest
 		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
 		$parameters->offsetSet('success', 'referrer:7');
 		$null = null;
-		self::assertSame(
+		$this->assertSame(
 			null,
 			$action->handleRequest(
 				$parameters,
@@ -259,7 +259,7 @@ class SubscribeActionTest
 		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
 		$parameters->offsetSet('success', 'invalid');
 		$null = null;
-		self::assertSame(
+		$this->assertSame(
 			null,
 			$action->handleRequest(
 				$parameters,
@@ -320,10 +320,10 @@ class SubscribeActionTest
 
 		$data = $this->callInaccessibleMethod($action, 'fillData', array());
 
-		self::assertTrue(is_array($data));
-		self::assertArrayHasKey('subscriber', $data);
-		self::assertTrue(is_array($data['subscriber']));
-		self::assertTrue(empty($data['subscriber']));
+		$this->assertTrue(is_array($data));
+		$this->assertArrayHasKey('subscriber', $data);
+		$this->assertTrue(is_array($data['subscriber']));
+		$this->assertTrue(empty($data['subscriber']));
 	}
 
 	/**
@@ -355,11 +355,11 @@ class SubscribeActionTest
 
 		$data = $this->callInaccessibleMethod($action, 'fillData', array());
 
-		self::assertTrue(is_array($data));
-		self::assertArrayHasKey('subscriber', $data);
-		self::assertTrue(is_array($data['subscriber']));
-		self::assertSame(
-			\array_map('strval', $userdata),
+		$this->assertTrue(is_array($data));
+		$this->assertArrayHasKey('subscriber', $data);
+		$this->assertTrue(is_array($data['subscriber']));
+		$this->assertSame(
+			array_map('strval', $userdata),
 			$data['subscriber']
 		);
 	}
@@ -433,12 +433,12 @@ class SubscribeActionTest
 			)
 		);
 
-		self::assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
+		$this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
 		// the created model should have a pid and should be disabled, nothing else
-		self::assertCount(2, $model->getProperty());
-		self::assertSame(1, $model->getDisabled());
-		self::assertSame(14, $model->getpid());
+		$this->assertCount(2, $model->getProperty());
+		$this->assertSame(1, $model->getDisabled());
+		$this->assertSame(14, $model->getpid());
 	}
 
 	/**
@@ -498,9 +498,9 @@ class SubscribeActionTest
 			)
 		);
 
-		self::assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
+		$this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
-		self::assertSame($model->getProperty(), $subscriber->getProperty());
+		$this->assertSame($model->getProperty(), $subscriber->getProperty());
 	}
 
 	/**
@@ -528,7 +528,7 @@ class SubscribeActionTest
 	{
 		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
 		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
-		self::assertSame('subscribe.', $action->getConfId());
+		$this->assertSame('subscribe.', $action->getConfId());
 	}
 
 	/**
@@ -544,7 +544,7 @@ class SubscribeActionTest
 		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
 		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
 		$name = $this->callInaccessibleMethod($action, 'getTemplateName');
-		self::assertSame('subscribe', $name);
+		$this->assertSame('subscribe', $name);
 	}
 
 	/**
@@ -560,6 +560,6 @@ class SubscribeActionTest
 		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
 		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
 		$name  = $this->callInaccessibleMethod($action, 'getViewClassName');
-		self::assertSame('DMK\\Mkpostman\\View\\SubscribeView', $name);
+		$this->assertSame('DMK\\Mkpostman\\View\\SubscribeView', $name);
 	}
 }
