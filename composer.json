@@ -18,7 +18,7 @@
 	],
 	"require": {
 		"typo3/cms-core": ">=6.2.10",
-		"digedag/rn-base": ">=1.0.17"
+		"digedag/rn-base": ">=1.2.5"
 	},
 	"require-dev": {
 		"namelesscoder/typo3-repository-client": "^1.2",
