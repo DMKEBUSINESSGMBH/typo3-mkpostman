@@ -61,7 +61,7 @@ class SubscriberModelTest
 	 */
 	public function testGetTableName()
 	{
-		self::assertSame(
+		$this->assertSame(
 			'tx_mkpostman_subscribers',
 			$this->getModelMock()->getTableName()
 		);

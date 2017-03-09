@@ -61,6 +61,7 @@ class SubscriberReceiverTest
 	 */
 	public function testPrepareLinks()
 	{
+		$that = $this; // php 5.3 compatibility
 		$cObject = $this->getMock(
 			\tx_rnbase_util_Typo3Classes::getContentObjectRendererClass(),
 			array('typolink')
@@ -73,11 +74,11 @@ class SubscriberReceiverTest
 				// only the url, no laben
 				$this->equalTo(null),
 				$this->callback(
-					function($config)
+					function($config) use ($that)
 					{
-						self::assertTrue(is_array($config));
-						self::assertArrayHasKey('additionalParams', $config);
-						self::assertContains('mkpostman%5Bkey%5D=', $config['additionalParams']);
+						$that->assertTrue(is_array($config));
+						$that->assertArrayHasKey('additionalParams', $config);
+						$that->assertContains('mkpostman%5Bkey%5D=', $config['additionalParams']);
 
 						return true;
 					}
@@ -124,9 +125,9 @@ class SubscriberReceiverTest
 			)
 		);
 
-		self::assertTrue(is_array($markerArray));
-		self::assertArrayHasKey('###SUBSCRIBER_ACTIVATIONLINKURL###', $markerArray);
-		self::assertContains('mkpostman%5Bkey%5D=', $markerArray['###SUBSCRIBER_ACTIVATIONLINKURL###']);
+		$this->assertTrue(is_array($markerArray));
+		$this->assertArrayHasKey('###SUBSCRIBER_ACTIVATIONLINKURL###', $markerArray);
+		$this->assertContains('mkpostman%5Bkey%5D=', $markerArray['###SUBSCRIBER_ACTIVATIONLINKURL###']);
 	}
 
 	/**

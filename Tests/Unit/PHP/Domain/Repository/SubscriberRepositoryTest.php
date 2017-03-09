@@ -60,7 +60,7 @@ class SubscriberRepositoryTest
 	 * @test
 	 */
 	public function testGetSearchClassShouldBeGeneric() {
-		self::assertEquals(
+		$this->assertEquals(
 			'tx_rnbase_util_SearchGeneric',
 			$this->callInaccessibleMethod(
 				$this->getSubscriberRepository(),
@@ -82,11 +82,11 @@ class SubscriberRepositoryTest
 			$this->getSubscriberRepository(),
 			'getEmptyModel'
 		);
-		self::assertInstanceOf(
+		$this->assertInstanceOf(
 			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel',
 			$model
 		);
-		self::assertSame(
+		$this->assertSame(
 			'tx_mkpostman_subscribers',
 			$model->getTablename()
 		);
@@ -266,7 +266,7 @@ class SubscriberRepositoryTest
 			->will(self::returnValue(new \ArrayObject()))
 		;
 
-		self::assertInstanceOf('ArrayObject', $repo->findAll());
+		$this->assertInstanceOf('ArrayObject', $repo->findAll());
 	}
 
 	/**
@@ -311,6 +311,6 @@ class SubscriberRepositoryTest
 			->will(self::returnValue(new \ArrayObject()))
 		;
 
-		self::assertInstanceOf('ArrayObject', $repo->findAll());
+		$this->assertInstanceOf('ArrayObject', $repo->findAll());
 	}
 }
