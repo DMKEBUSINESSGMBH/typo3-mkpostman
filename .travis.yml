@@ -25,7 +25,9 @@ matrix:
       env: TYPO3_VERSION="^7.6.0"
     - php: 5.4
       env: TYPO3_VERSION="^7.6.0"
-    - php: 7
+    - php: 7.0
+      env: TYPO3_VERSION="^6.2.14"
+    - php: 7.1
       env: TYPO3_VERSION="^6.2.14"
 
 sudo: false
