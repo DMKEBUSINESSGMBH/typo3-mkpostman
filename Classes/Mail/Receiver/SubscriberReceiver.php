@@ -184,16 +184,20 @@ class SubscriberReceiver
 	 * @param string $mailSubject
 	 * @param \tx_rnbase_util_FormatUtil $formatter
 	 * @param string $confId
+	 * @param int $idx Index des Empfängers von 0 bis (getAddressCount() - 1)
 	 *
 	 * @return void
 	 */
+	// @codingStandardsIgnoreStart (interface/abstract mistake)
 	protected function addAdditionalData(
 		&$mailText,
 		&$mailHtml,
 		&$mailSubject,
-		\tx_rnbase_util_FormatUtil $formatter,
-		$confId
+		/* \tx_rnbase_util_FormatUtil */ $formatter,
+		$confId,
+		$idx
 	) {
+		// @codingStandardsIgnoreEND (interface/abstract mistake)
 
 		$subscriber = $this->getSubscriber();
 		$marker = $this->getMarkerInstance();
