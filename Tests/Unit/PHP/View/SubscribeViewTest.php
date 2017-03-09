@@ -83,11 +83,13 @@ class SubscribeViewTest
 			->will(self::returnValue($action))
 		;
 
+		$viewData = new \ArrayObject();
+
 		// formwrap by default
-		$this->assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart());
+		$this->assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart($viewData));
 
 		// test subpart by viewdata
 		$configuration->getViewData()->offsetSet('main_view_key', 'foo');
-		$this->assertSame('###SUBSCRIBE_FOO###', $view->getMainSubpart());
+		$this->assertSame('###SUBSCRIBE_FOO###', $view->getMainSubpart($viewData));
 	}
 }
