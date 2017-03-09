@@ -1,10 +1,10 @@
 MK POSTMAN
 ==========
 
-[![Latest Stable Version](https://poser.pugx.org/dmk/mkpostman/v/stable?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
-[![Latest Unstable Version](https://poser.pugx.org/dmk/mkpostman/v/unstable?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
-[![Total Downloads](https://poser.pugx.org/dmk/mkpostman/downloads?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
-[![License](https://poser.pugx.org/dmk/mkpostman/license?format=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![Latest Stable Version](https://img.shields.io/packagist/v/dmk/mkpostman.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![Total Downloads](https://img.shields.io/packagist/dt/dmk/mkpostman.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mkpostman)
+[![Build Status](https://img.shields.io/travis/DMKEBUSINESSGMBH/typo3-mkpostman.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/DMKEBUSINESSGMBH/typo3-mkpostman)
+[![License](https://img.shields.io/packagist/l/dmk/mkpostman.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mkpostman)
 
 ##E-mail marketing system for the TYPO3 CMS
 
