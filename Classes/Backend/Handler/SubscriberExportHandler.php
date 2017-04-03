@@ -79,7 +79,9 @@ class SubscriberExportHandler
 	 */
 	protected function showSearch(
 		$template,
-		array &$markerArray = array()
+		array &$markerArray = null,
+		array &$subpartArray = null,
+		array &$wrappedSubpartArray = null
 	) {
 		/* @var $exportHandler \tx_mklib_mod1_export_Handler */
 		$exportHandler = \tx_rnbase::makeInstance(
