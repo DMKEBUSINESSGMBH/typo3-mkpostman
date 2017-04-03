@@ -6,11 +6,11 @@ defined('TYPO3_MODE') || die('Access denied.');
  * *** **************** *** */
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['tx_mkpostman'] = 'pi_flexform';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['tx_mkpostman'] = 'layout,select_key,pages';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+tx_rnbase_util_Extensions::addPiFlexFormValue(
 	'tx_mkpostman',
 	'FILE:EXT:mkpostman/Configuration/Flexform/Main.xml'
 );
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+tx_rnbase_util_Extensions::addPlugin(
 	array(
 		'LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.label',
 		'tx_mkpostman',
@@ -29,14 +29,14 @@ if (TYPO3_MODE == 'BE') {
 		'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mkpostman/Configuration/TypoScript/Backend/pageTSconfig.txt">'
 	);
 
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['DMK\Mkpostman\Utility\WizIconUtility']
+	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['DMK\Mkpostman\Utility\WizIconUtility']
 		= tx_rnbase_util_Extensions::extPath(
 			'mkpostman',
 			'Classes/Utility/WizIconUtility.php'
 		);
 
 	// register web_MkpostmanBackend
-	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+	tx_rnbase_util_Extensions::registerModule(
 		'mkpostman',
 		'web',
 		'backend',
