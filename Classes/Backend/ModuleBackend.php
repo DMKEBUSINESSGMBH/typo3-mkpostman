@@ -77,7 +77,7 @@ class ModuleBackend
 		$pages = self::getStorageFolders();
 
 		// check for records on the current page
-		if ($this->getPid() && (empty($pages) || isset($pages[$this->getPid()]))) {
+		if ((empty($pages) || isset($pages[$this->getPid()]))) {
 			return null;
 		}
 
@@ -93,11 +93,20 @@ class ModuleBackend
 				''
 			);
 			$page  = '<a href="' . $modUrl . '">';
-			$page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIconForRecord(
-				'pages',
-				\Tx_Rnbase_Backend_Utility::getRecord('pages', $pid)
-			);
-			$page .= ' ' . $pageinfo['title'];
+			if ($pid === 0) {
+				$page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon(
+					'apps-pagetree-root',
+					array('size' => 'small')
+				);
+				$page .= ' ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
+			} else {
+				$page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIconForRecord(
+					'pages',
+					\Tx_Rnbase_Database_Connection::getInstance()->getRecord('pages', $pid),
+					'small'
+				);
+				$page .= ' ' . $pageinfo['title'];
+			}
 			$page .= ' ' . htmlspecialchars($pageinfo['_thePath']);
 			$page .= '</a>';
 
@@ -155,11 +164,6 @@ class ModuleBackend
 
 		// convert the pids to keys
 		$pages = array_flip($pages['pageid']);
-
-		// remove pid 0
-		if (isset($pages[0])) {
-			unset($pages[0]);
-		}
 
 		$pids = $pages;
 
