@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'mkmailer' => '2.0.8-',
 			'mkforms' => '2.0.11-',
 			'rn_base' => '1.2.5-',
-			'typo3' => '6.2.10-',
+			'typo3' => '6.2.10-8.7.99',
 		),
 		'conflicts' => array(),
 		'suggests' => array(
