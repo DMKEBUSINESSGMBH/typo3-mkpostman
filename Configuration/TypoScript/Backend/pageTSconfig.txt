@@ -1,4 +1,18 @@
 mod {
+	wizards.newContentElement.wizardItems.plugins {
+		elements {
+			mkpostman {
+				iconIdentifier = ext-mkpostman-wizard-icon
+				title = LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.label
+				description = LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.description
+				tt_content_defValues {
+					CType = list
+					list_type = tx_mkpostman
+				}
+			}
+		}
+	}
+
 	mkpostman {
 		template = EXT:mkpostman/Resources/Private/Templates/Backend/Module.html
 

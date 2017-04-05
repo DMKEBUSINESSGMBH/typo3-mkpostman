@@ -24,16 +24,28 @@ tx_rnbase_util_Extensions::addStaticFile(
 );
 
 if (TYPO3_MODE == 'BE') {
-	// add be module ts
+	// add be module ts and wizard config
 	tx_rnbase_util_Extensions::addPageTSConfig(
 		'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mkpostman/Configuration/TypoScript/Backend/pageTSconfig.txt">'
 	);
 
-	$GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['DMK\Mkpostman\Utility\WizIconUtility']
-		= tx_rnbase_util_Extensions::extPath(
-			'mkpostman',
-			'Classes/Utility/WizIconUtility.php'
+	if (tx_rnbase_util_TYPO3::isTYPO80OrHigher()) {
+		// register icon
+		Tx_Rnbase_Backend_Utility_Icons::getIconRegistry()->registerIcon(
+			'ext-mkpostman-wizard-icon',
+			'TYPO3\\CMS\Core\\Imaging\\IconProvider\\BitmapIconProvider',
+			array('source' => 'EXT:mkpostman/ext_icon.gif')
 		);
+	} else {
+		// register wizzard the old way
+		\DMK\Mkpostman\Utility\WizIconUtility::addWizicon(
+			'DMK\Mkpostman\Utility\WizIconUtility',
+			tx_rnbase_util_Extensions::extPath(
+				'mkpostman',
+				'Classes/Utility/WizIconUtility.php'
+			)
+		);
+	}
 
 	// register web_MkpostmanBackend
 	tx_rnbase_util_Extensions::registerModule(
