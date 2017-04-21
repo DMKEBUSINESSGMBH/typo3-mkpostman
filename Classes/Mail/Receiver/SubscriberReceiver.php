@@ -48,10 +48,13 @@ class SubscriberReceiver
 	/**
 	 * The Constructor
 	 *
+	 * The subsciber model is optionaly.
+	 * You can set the subscriber by calling setValueString($uid) after initialisation.
+	 *
 	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
 	 */
 	public function __construct(
-		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber = null
 	) {
 		$this->subscriber = $subscriber;
 	}
