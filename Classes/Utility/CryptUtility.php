@@ -36,31 +36,31 @@ namespace DMK\Mkpostman\Utility;
  *          GNU Lesser General Public License, version 3 or later
  */
 class CryptUtility
-	implements \Tx_Rnbase_Interface_Singleton
+    implements \Tx_Rnbase_Interface_Singleton
 {
-	/**
-	 * Encodes an Parameter for Url
-	 *
-	 * @param string $value
-	 *
-	 * @return string
-	 */
-	public function urlEncode(
-		$value
-	) {
-		return \urlencode(\base64_encode($value));
-	}
+    /**
+     * Encodes an Parameter for Url
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function urlEncode(
+        $value
+    ) {
+        return \urlencode(\base64_encode($value));
+    }
 
-	/**
-	 * Decodes a var for the url
-	 *
-	 * @param string $value
-	 *
-	 * @return string
-	 */
-	public function urlDencode(
-		$value
-	) {
-		return \base64_decode(\urldecode($value));
-	}
+    /**
+     * Decodes a var for the url
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function urlDencode(
+        $value
+    ) {
+        return \base64_decode(\urldecode($value));
+    }
 }

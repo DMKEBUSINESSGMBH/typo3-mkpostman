@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\View;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,47 +49,45 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeViewTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the getMainSubpart method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testGetMainSubpart()
-	{
-		$configuration = $this->createConfigurations(array(), 'mkpostman');
+    /**
+     * Test the getMainSubpart method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testGetMainSubpart()
+    {
+        $configuration = $this->createConfigurations(array(), 'mkpostman');
 
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('getConfigurations')
-		);
-		$action
-			->expects(self::exactly(2))
-			->method('getConfigurations')
-			->will(self::returnValue($configuration))
-		;
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('getConfigurations')
+        );
+        $action
+            ->expects(self::exactly(2))
+            ->method('getConfigurations')
+            ->will(self::returnValue($configuration));
 
-		$view = $this->getMock(
-			'DMK\\Mkpostman\\View\\SubscribeView',
-			array('getController')
-		);
-		$view
-			->expects(self::exactly(2))
-			->method('getController')
-			->will(self::returnValue($action))
-		;
+        $view = $this->getMock(
+            'DMK\\Mkpostman\\View\\SubscribeView',
+            array('getController')
+        );
+        $view
+            ->expects(self::exactly(2))
+            ->method('getController')
+            ->will(self::returnValue($action));
 
-		$viewData = new \ArrayObject();
+        $viewData = new \ArrayObject();
 
-		// formwrap by default
-		$this->assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart($viewData));
+        // formwrap by default
+        $this->assertSame('###SUBSCRIBE_FORMWRAP###', $view->getMainSubpart($viewData));
 
-		// test subpart by viewdata
-		$configuration->getViewData()->offsetSet('main_view_key', 'foo');
-		$this->assertSame('###SUBSCRIBE_FOO###', $view->getMainSubpart($viewData));
-	}
+        // test subpart by viewdata
+        $configuration->getViewData()->offsetSet('main_view_key', 'foo');
+        $this->assertSame('###SUBSCRIBE_FOO###', $view->getMainSubpart($viewData));
+    }
 }

@@ -36,36 +36,36 @@ namespace DMK\Mkpostman\Utility;
  *          GNU Lesser General Public License, version 3 or later
  */
 class WizIconUtility
-	extends \tx_rnbase_util_Wizicon
+    extends \tx_rnbase_util_Wizicon
 {
-	/**
-	 * Returns the plugin data
-	 *
-	 * @return array
-	 */
-	protected function getPluginData()
-	{
-		return array(
-			'tx_mkpostman' => array(
-				'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman') . 'ext_icon.gif',
-				'title' => 'plugin.mkpostman.label',
-				'description' => 'plugin.mkpostman.description'
-			)
-		);
-	}
+    /**
+     * Returns the plugin data
+     *
+     * @return array
+     */
+    protected function getPluginData()
+    {
+        return array(
+            'tx_mkpostman' => array(
+                'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman') . 'ext_icon.gif',
+                'title' => 'plugin.mkpostman.label',
+                'description' => 'plugin.mkpostman.description'
+            )
+        );
+    }
 
-	/**
-	 * Returns the LL file
-	 *
-	 * @return string
-	 */
-	// @codingStandardsIgnoreStart (interface/abstract mistake)
-	protected function getLLFile()
-	{
-	// @codingStandardsIgnoreEnd
-		return \tx_rnbase_util_Extensions::extPath(
-			'mkpostman',
-			'Resources/Private/Language/Flexform.xlf'
-		);
-	}
+    /**
+     * Returns the LL file
+     *
+     * @return string
+     */
+    // @codingStandardsIgnoreStart (interface/abstract mistake)
+    protected function getLLFile()
+    {
+    // @codingStandardsIgnoreEnd
+        return \tx_rnbase_util_Extensions::extPath(
+            'mkpostman',
+            'Resources/Private/Language/Flexform.xlf'
+        );
+    }
 }

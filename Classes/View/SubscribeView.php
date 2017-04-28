@@ -36,32 +36,36 @@ namespace DMK\Mkpostman\View;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeView
-	extends \tx_mkforms_view_Form
+    extends \tx_mkforms_view_Form
 {
-	/**
-	 * The current viewkey. default is formwrap
-	 *
-	 * @return string
-	 */
-	protected function getViewKey()
-	{
-		$viewData = $this->getController()->getViewData();
-		$key = $viewData->offsetGet('main_view_key');
+    /**
+     * The current viewkey. default is formwrap
+     *
+     * @return string
+     */
+    protected function getViewKey()
+    {
+        $viewData = $this->getController()->getViewData();
+        $key = $viewData->offsetGet('main_view_key');
 
-		if (empty($key)) {
-			$key = 'formwrap';
-		}
+        if (empty($key)) {
+            $key = 'formwrap';
+        }
 
-		return $key;
-	}
+        return $key;
+    }
 
-	/**
-	 * The subpart for this view
-	 *
-	 * @return string
-	 */
-	public function getMainSubpart(&$viewData)
-	{
-		return '###SUBSCRIBE_' . \strtoupper($this->getViewKey()) . '###';
-	}
+    /**
+     * The subpart for this view
+     *
+     * @param ArrayObject $viewData
+     *
+     * @return string
+     */
+    // @codingStandardsIgnoreStart (interface/abstract mistake)
+    public function getMainSubpart(&$viewData)
+    {
+        // @codingStandardsIgnoreEnd
+        return '###SUBSCRIBE_' . \strtoupper($this->getViewKey()) . '###';
+    }
 }

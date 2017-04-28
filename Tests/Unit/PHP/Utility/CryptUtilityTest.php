@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\Utility;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,64 +49,64 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class CryptUtilityTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the urlEncode method
-	 *
-	 * @return string
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testUrlEncode()
-	{
-		/* @var $util \DMK\Mkpostman\Utility\CryptUtility */
-		$util = \tx_rnbase::makeInstance(
-			'DMK\\Mkpostman\\Utility\\CryptUtility'
-		);
-		$encoded = $util->urlEncode($this->getTestValue());
+    /**
+     * Test the urlEncode method
+     *
+     * @return string
+     *
+     * @group unit
+     * @test
+     */
+    public function testUrlEncode()
+    {
+        /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
+        $util = \tx_rnbase::makeInstance(
+            'DMK\\Mkpostman\\Utility\\CryptUtility'
+        );
+        $encoded = $util->urlEncode($this->getTestValue());
 
-		$this->assertSame(
-			\urlencode(\base64_encode($this->getTestValue())),
-			$encoded
-		);
+        $this->assertSame(
+            \urlencode(\base64_encode($this->getTestValue())),
+            $encoded
+        );
 
-		return $encoded;
-	}
+        return $encoded;
+    }
 
-	/**
-	 * Test the urlDencode method
-	 *
-	 * @param string $encoded
-	 * @return void
-	 *
-	 * @depends testCreateConfirmString
-	 * @group unit
-	 * @test
-	 */
-	public function testUrlDencode(
-		$encoded
-	) {
+    /**
+     * Test the urlDencode method
+     *
+     * @param string $encoded
+     * @return void
+     *
+     * @depends testCreateConfirmString
+     * @group unit
+     * @test
+     */
+    public function testUrlDencode(
+        $encoded
+    ) {
 
-		/* @var $util \DMK\Mkpostman\Utility\CryptUtility */
-		$util = \tx_rnbase::makeInstance(
-			'DMK\\Mkpostman\\Utility\\CryptUtility'
-		);
+        /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
+        $util = \tx_rnbase::makeInstance(
+            'DMK\\Mkpostman\\Utility\\CryptUtility'
+        );
 
-		$this->assertSame(
-			$this->getTestValue(),
-			$util->urlDencode($encoded)
-		);
-	}
+        $this->assertSame(
+            $this->getTestValue(),
+            $util->urlDencode($encoded)
+        );
+    }
 
-	/**
-	 * The Value To test :)
-	 *
-	 * @return string
-	 */
-	protected function getTestValue()
-	{
-		return 'H31l0 Wor1d$!';
-	}
+    /**
+     * The Value To test :)
+     *
+     * @return string
+     */
+    protected function getTestValue()
+    {
+        return 'H31l0 Wor1d$!';
+    }
 }

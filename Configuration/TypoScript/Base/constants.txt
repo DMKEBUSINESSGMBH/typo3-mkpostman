@@ -1,6 +1,6 @@
 plugin.tx_mkpostman {
 
-	templatePath = EXT:mkpostman/Resources/Private/Templates/Frontend
+    templatePath = EXT:mkpostman/Resources/Private/Templates/Frontend
 
-	subscriberStorage = 0
+    subscriberStorage = 0
 }

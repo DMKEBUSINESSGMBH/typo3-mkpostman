@@ -36,120 +36,120 @@ namespace DMK\Mkpostman\Domain\Repository;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscriberRepository
-	extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+    extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
-	/**
-	 * Liefert den Namen der Suchklasse
-	 *
-	 * @return 	string
-	 */
-	protected function getSearchClass()
-	{
-		return 'tx_rnbase_util_SearchGeneric';
-	}
+    /**
+     * Liefert den Namen der Suchklasse
+     *
+     * @return  string
+     */
+    protected function getSearchClass()
+    {
+        return 'tx_rnbase_util_SearchGeneric';
+    }
 
-	/**
-	 * Liefert die Model Klasse.
-	 *
-	 * @return 	string
-	 */
-	protected function getWrapperClass()
-	{
-		return 'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel';
-	}
+    /**
+     * Liefert die Model Klasse.
+     *
+     * @return  string
+     */
+    protected function getWrapperClass()
+    {
+        return 'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel';
+    }
 
-	/**
-	 * Finds a subscriber by email
-	 *
-	 * @param integer $uid
-	 *
-	 * @return Tx_Rnbase_Domain_Model_DomainInterface|null
-	 */
-	public function findByUid(
-		$uid
-	) {
-		return $this->searchSingle(
-			array (
-				'SUBSCRIBER.uid' => array(
-					OP_EQ_INT => $uid
-				)
-			),
-			array(
-				'enablefieldsbe' => true
-			)
-		);
-	}
+    /**
+     * Finds a subscriber by email
+     *
+     * @param int $uid
+     *
+     * @return Tx_Rnbase_Domain_Model_DomainInterface|null
+     */
+    public function findByUid(
+        $uid
+    ) {
+        return $this->searchSingle(
+            array (
+                'SUBSCRIBER.uid' => array(
+                    OP_EQ_INT => $uid
+                )
+            ),
+            array(
+                'enablefieldsbe' => true
+            )
+        );
+    }
 
-	/**
-	 * Finds a subscriber by email
-	 *
-	 * @param string $mail
-	 *
-	 * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
-	 */
-	public function findByEmail(
-		$mail
-	) {
-		return $this->searchSingle(
-			array (
-				'SUBSCRIBER.email' => array(
-					OP_EQ => $mail
-				)
-			),
-			array(
-				'enablefieldsbe' => true
-			)
-		);
-	}
+    /**
+     * Finds a subscriber by email
+     *
+     * @param string $mail
+     *
+     * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+     */
+    public function findByEmail(
+        $mail
+    ) {
+        return $this->searchSingle(
+            array (
+                'SUBSCRIBER.email' => array(
+                    OP_EQ => $mail
+                )
+            ),
+            array(
+                'enablefieldsbe' => true
+            )
+        );
+    }
 
-	/**
-	 * On default, return hidden and deleted fields in backend
-	 *
-	 * @param array $fields
-	 * @param array $options
-	 *
-	 * @return void
-	 */
-	protected function prepareFieldsAndOptions(
-		array &$fields,
-		array &$options
-	) {
-		parent::prepareFieldsAndOptions($fields, $options);
-		$this->prepareGenericSearcher($options);
-	}
+    /**
+     * On default, return hidden and deleted fields in backend
+     *
+     * @param array $fields
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function prepareFieldsAndOptions(
+        array &$fields,
+        array &$options
+    ) {
+        parent::prepareFieldsAndOptions($fields, $options);
+        $this->prepareGenericSearcher($options);
+    }
 
-	/**
-	 * Prepares the simple generic searcher
-	 *
-	 * @param array $options
-	 *
-	 * @return void
-	 */
-	protected function prepareGenericSearcher(
-		array &$options
-	) {
-		$model = $this->getEmptyModel();
+    /**
+     * Prepares the simple generic searcher
+     *
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function prepareGenericSearcher(
+        array &$options
+    ) {
+        $model = $this->getEmptyModel();
 
-		if (empty($options['searchdef']) || !is_array($options['searchdef'])) {
-			$options['searchdef'] = array();
-		}
+        if (empty($options['searchdef']) || !is_array($options['searchdef'])) {
+            $options['searchdef'] = array();
+        }
 
-		\tx_rnbase::load('tx_rnbase_util_Arrays');
-		$options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
-			// default searcher config
-			array(
-				'usealias' => 1,
-				'basetable' => $model->getTableName(),
-				'basetablealias' => 'SUBSCRIBER',
-				'wrapperclass' => get_class($model),
-				'alias' => array(
-					'SUBSCRIBER' => array(
-						'table' => $model->getTableName()
-					)
-				)
-			),
-			// searcher config overrides
-			$options['searchdef']
-		);
-	}
+        \tx_rnbase::load('tx_rnbase_util_Arrays');
+        $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
+            // default searcher config
+            array(
+                'usealias' => 1,
+                'basetable' => $model->getTableName(),
+                'basetablealias' => 'SUBSCRIBER',
+                'wrapperclass' => get_class($model),
+                'alias' => array(
+                    'SUBSCRIBER' => array(
+                        'table' => $model->getTableName()
+                    )
+                )
+            ),
+            // searcher config overrides
+            $options['searchdef']
+        );
+    }
 }

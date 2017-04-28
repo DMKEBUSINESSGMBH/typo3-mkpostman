@@ -34,45 +34,45 @@ namespace DMK\Mkpostman\Backend\Module;
  * @author Michael Wagner
  */
 class SubscriberModule
-	extends \tx_rnbase_mod_ExtendedModFunc
+    extends \tx_rnbase_mod_ExtendedModFunc
 {
-	/**
-	 * Method getFuncId
-	 *
-	 * @return	string
-	 */
-	protected function getFuncId()
-	{
-		return 'mkpostman_subscriber';
-	}
+    /**
+     * Method getFuncId
+     *
+     * @return  string
+     */
+    protected function getFuncId()
+    {
+        return 'mkpostman_subscriber';
+    }
 
-	/**
-	 * Returns all sub handlers
-	 *
-	 * @return array
-	 */
-	protected function getSubMenuItems()
-	{
-		$class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberHandler';
-		if (\tx_rnbase_util_Extensions::isLoaded('mklib')) {
-			$class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberExportHandler';
-		}
+    /**
+     * Returns all sub handlers
+     *
+     * @return array
+     */
+    protected function getSubMenuItems()
+    {
+        $class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberHandler';
+        if (\tx_rnbase_util_Extensions::isLoaded('mklib')) {
+            $class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberExportHandler';
+        }
 
-		return array(
-			\tx_rnbase::makeInstance($class),
-		);
-	}
+        return array(
+            \tx_rnbase::makeInstance($class),
+        );
+    }
 
-	/**
-	 * Liefert false, wenn es keine SubSelectors gibt.
-	 * sonst ein Array mit den ausgewählten Werten.
-	 *
-	 * @param string $selectorStr
-	 *
-	 * @return array or false if not needed. Return empty array if no item found
-	 */
-	protected function makeSubSelectors(&$selectorStr)
-	{
-		return false;
-	}
+    /**
+     * Liefert false, wenn es keine SubSelectors gibt.
+     * sonst ein Array mit den ausgewählten Werten.
+     *
+     * @param string $selectorStr
+     *
+     * @return array or false if not needed. Return empty array if no item found
+     */
+    protected function makeSubSelectors(&$selectorStr)
+    {
+        return false;
+    }
 }

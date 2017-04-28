@@ -37,30 +37,30 @@ namespace DMK\Mkpostman\Backend\Lister;
  * @author Michael Wagner
  */
 class SubscriberExportLister
-	extends SubscriberLister implements \tx_mklib_mod1_export_ISearcher
+    extends SubscriberLister implements \tx_mklib_mod1_export_ISearcher
 {
-	/**
-	 * Liefert den List-Provider,
-	 * welcher die Ausgabe der einzelnen Datensätze generiert
-	 * und an den Listbuilder übergeben wird.
-	 *
-	 * @return \tx_rnbase_util_IListProvider
-	 */
-	public function getInitialisedListProvider()
-	{
-		list($fields, $options) = $this->getFieldsAndOptions();
+    /**
+     * Liefert den List-Provider,
+     * welcher die Ausgabe der einzelnen Datensätze generiert
+     * und an den Listbuilder übergeben wird.
+     *
+     * @return \tx_rnbase_util_IListProvider
+     */
+    public function getInitialisedListProvider()
+    {
+        list($fields, $options) = $this->getFieldsAndOptions();
 
-		/* @var $provider \tx_rnbase_util_ListProvider */
-		$provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');
-		$provider->initBySearch(
-			array(
-				$this->getRepository(),
-				'search'
-			),
-			$fields,
-			$options
-		);
+        /* @var $provider \tx_rnbase_util_ListProvider */
+        $provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');
+        $provider->initBySearch(
+            array(
+                $this->getRepository(),
+                'search'
+            ),
+            $fields,
+            $options
+        );
 
-		return $provider;
-	}
+        return $provider;
+    }
 }

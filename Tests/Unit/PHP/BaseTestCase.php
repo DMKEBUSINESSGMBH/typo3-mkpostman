@@ -26,10 +26,10 @@ namespace DMK\Mkpostman\Tests;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 \tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
@@ -44,77 +44,76 @@ if (!\class_exists('tx_rnbase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class BaseTestCase
-	extends \tx_rnbase_tests_BaseTestCase
+    extends \tx_rnbase_tests_BaseTestCase
 {
-	/**
-	 * Sets up the fixture, for example, open a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return void
-	 */
-	protected function setUp()
-	{
-	}
+    /**
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+    }
 
-	/**
-	 * Tears down the fixture, for example, close a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @return void
-	 */
-	protected function tearDown()
-	{
-	}
+    /**
+     * Tears down the fixture, for example, close a network connection.
+     * This method is called after a test is executed.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+    }
 
-	/**
-	 * Returns a subscriber model mock
-	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
-	 */
-	protected function getSubscriberModel(array $record = array())
-	{
-		return $this->getModel(
-			array_merge(
-				array(
-					'uid' => 5,
-					'pid' => 7,
-					'disabled' => 0,
-					'gender' => 1,
-					'first_name' => 'Michael',
-					'last_name' => 'Wagner',
-					'email' => 'mwagner@localhost.net',
-				),
-				$record
-			),
-			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
-		);
-	}
+    /**
+     * Returns a subscriber model mock
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
+     */
+    protected function getSubscriberModel(array $record = array())
+    {
+        return $this->getModel(
+            array_merge(
+                array(
+                    'uid' => 5,
+                    'pid' => 7,
+                    'disabled' => 0,
+                    'gender' => 1,
+                    'first_name' => 'Michael',
+                    'last_name' => 'Wagner',
+                    'email' => 'mwagner@localhost.net',
+                ),
+                $record
+            ),
+            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+        );
+    }
 
-	/**
-	 * Creates the repo mock
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected function getSubscriberRepository()
-	{
-		\tx_rnbase::load('tx_rnbase_util_SearchGeneric');
-		$searcher = $this->getMock(
-			'tx_rnbase_util_SearchGeneric',
-			array('search')
-		);
+    /**
+     * Creates the repo mock
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getSubscriberRepository()
+    {
+        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
+        $searcher = $this->getMock(
+            'tx_rnbase_util_SearchGeneric',
+            array('search')
+        );
 
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
-		$repo = $this->getMock(
-			'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
-			array('getSearcher', 'persist')
-		);
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+        $repo = $this->getMock(
+            'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
+            array('getSearcher', 'persist')
+        );
 
-		$repo
-			->expects(self::any())
-			->method('getSearcher')
-			->will(self::returnValue($searcher))
-		;
+        $repo
+            ->expects(self::any())
+            ->method('getSearcher')
+            ->will(self::returnValue($searcher));
 
-		return $repo;
-	}
+        return $repo;
+    }
 }

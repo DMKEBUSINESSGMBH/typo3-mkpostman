@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\Mail\Receiver;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,101 +49,99 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscriberReceiverTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the prepareLinks method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testPrepareLinks()
-	{
-		$that = $this; // php 5.3 compatibility
-		$cObject = $this->getMock(
-			\tx_rnbase_util_Typo3Classes::getContentObjectRendererClass(),
-			array('typolink')
-		);
+    /**
+     * Test the prepareLinks method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testPrepareLinks()
+    {
+        $that = $this; // php 5.3 compatibility
+        $cObject = $this->getMock(
+            \tx_rnbase_util_Typo3Classes::getContentObjectRendererClass(),
+            array('typolink')
+        );
 
-		$cObject
-			->expects(self::once())
-			->method('typolink')
-			->with(
-				// only the url, no laben
-				$this->equalTo(null),
-				$this->callback(
-					function($config) use ($that)
-					{
-						$that->assertTrue(is_array($config));
-						$that->assertArrayHasKey('additionalParams', $config);
-						$that->assertContains('mkpostman%5Bkey%5D=', $config['additionalParams']);
+        $cObject
+            ->expects(self::once())
+            ->method('typolink')
+            ->with(
+                // only the url, no laben
+                $this->equalTo(null),
+                $this->callback(
+                    function ($config) use ($that) {
+                        $that->assertTrue(is_array($config));
+                        $that->assertArrayHasKey('additionalParams', $config);
+                        $that->assertContains('mkpostman%5Bkey%5D=', $config['additionalParams']);
 
-						return true;
-					}
-				)
-			)
-			->will(self::returnValue('?mkpostman%5Bkey%5D=foo'))
-		;
+                        return true;
+                    }
+                )
+            )
+            ->will(self::returnValue('?mkpostman%5Bkey%5D=foo'));
 
-		$configurations = $this->createConfigurations(
-			array(
-				'mails.' => array(
-					'subscriber.' => array(
-						'links.' => array(
-							'activation.' => array(
-								'absurl' => 'https://www.dmk-ebusiness.de/',
-							)
-						)
-					)
-				)
-			),
-			'mkpostman',
-			'mkpostman',
-			$cObject
-		);
+        $configurations = $this->createConfigurations(
+            array(
+                'mails.' => array(
+                    'subscriber.' => array(
+                        'links.' => array(
+                            'activation.' => array(
+                                'absurl' => 'https://www.dmk-ebusiness.de/',
+                            )
+                        )
+                    )
+                )
+            ),
+            'mkpostman',
+            'mkpostman',
+            $cObject
+        );
 
-		$template = '###SUBSCRIBER_ACTIVATIONLINKURL###';
-		$markerArray = array();
-		$subpartArray = array();
-		$wrappedSubpartArray = array();
-		$confId = 'mails.subscriber.';
+        $template = '###SUBSCRIBER_ACTIVATIONLINKURL###';
+        $markerArray = array();
+        $subpartArray = array();
+        $wrappedSubpartArray = array();
+        $confId = 'mails.subscriber.';
 
-		$this->callInaccessibleMethod(
-			array(
-				$this->getReceiver(),
-				'prepareLinks'
-			),
-			array(
-				$template,
-				&$markerArray,
-				&$subpartArray,
-				&$wrappedSubpartArray,
-				$configurations->getFormatter(),
-				$confId
-			)
-		);
+        $this->callInaccessibleMethod(
+            array(
+                $this->getReceiver(),
+                'prepareLinks'
+            ),
+            array(
+                $template,
+                &$markerArray,
+                &$subpartArray,
+                &$wrappedSubpartArray,
+                $configurations->getFormatter(),
+                $confId
+            )
+        );
 
-		$this->assertTrue(is_array($markerArray));
-		$this->assertArrayHasKey('###SUBSCRIBER_ACTIVATIONLINKURL###', $markerArray);
-		$this->assertContains('mkpostman%5Bkey%5D=', $markerArray['###SUBSCRIBER_ACTIVATIONLINKURL###']);
-	}
+        $this->assertTrue(is_array($markerArray));
+        $this->assertArrayHasKey('###SUBSCRIBER_ACTIVATIONLINKURL###', $markerArray);
+        $this->assertContains('mkpostman%5Bkey%5D=', $markerArray['###SUBSCRIBER_ACTIVATIONLINKURL###']);
+    }
 
-	/**
-	 * returns a mock of
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Mail\Receiver\SubscriberReceiver
-	 */
-	protected function getReceiver()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver');
-		$receiver = $this->getMock(
-			'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
-			array(),
-			array($this->getSubscriberModel(array('confirmstring'=>'PreventPersist')))
-		);
+    /**
+     * returns a mock of
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Mail\Receiver\SubscriberReceiver
+     */
+    protected function getReceiver()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver');
+        $receiver = $this->getMock(
+            'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
+            array(),
+            array($this->getSubscriberModel(array('confirmstring' => 'PreventPersist')))
+        );
 
-		return $receiver;
-	}
+        return $receiver;
+    }
 }

@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
-	<sheets>
-		<sDEF>
-			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.tab.common</sheetTitle>
-				</TCEforms>
-				<type>array</type>
-				<el>
-					<action> <!-- Bezeichner ist frei wählbar -->
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.action</label>
-							<config>
-								<type>select</type>
-									<items type="array">
-										<numIndex index="1" type="array">
-											<numIndex index="0">LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.action.subscribe</numIndex>
-											<numIndex index="1">DMK\Mkpostman\Action\SubscribeAction</numIndex>
-										</numIndex>
-									</items>
-								<multiple>0</multiple>
-								<maxitems>10</maxitems>
-								<size>10</size>
-							</config>
-						</TCEforms>
-					</action>
-				</el>
-			</ROOT>
-		</sDEF>
-		<s_tssetup>
-			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tab.tssetup</sheetTitle>
-				</TCEforms>
-				<type>array</type>
-				<el>
-					<flexformTS>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tssetup</label>
-							<config>
-								<type>text</type>
-								<cols>80</cols>
-								<rows>10</rows>
-								<default></default>
-							</config>
-						</TCEforms>
-					</flexformTS>
-				</el>
-			</ROOT>
-		</s_tssetup>
-	</sheets>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.tab.common</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <action> <!-- Bezeichner ist frei wählbar -->
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.action</label>
+                            <config>
+                                <type>select</type>
+                                    <items type="array">
+                                        <numIndex index="1" type="array">
+                                            <numIndex index="0">LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.action.subscribe</numIndex>
+                                            <numIndex index="1">DMK\Mkpostman\Action\SubscribeAction</numIndex>
+                                        </numIndex>
+                                    </items>
+                                <multiple>0</multiple>
+                                <maxitems>10</maxitems>
+                                <size>10</size>
+                            </config>
+                        </TCEforms>
+                    </action>
+                </el>
+            </ROOT>
+        </sDEF>
+        <s_tssetup>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tab.tssetup</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <flexformTS>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tssetup</label>
+                            <config>
+                                <type>text</type>
+                                <cols>80</cols>
+                                <rows>10</rows>
+                                <default></default>
+                            </config>
+                        </TCEforms>
+                    </flexformTS>
+                </el>
+            </ROOT>
+        </s_tssetup>
+    </sheets>
 </T3DataStructure>

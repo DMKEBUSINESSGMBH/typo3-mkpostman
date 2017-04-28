@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mkforms version="2.0.0">
-	<meta>
-		<form formid="subscribe" name="Newsletter Subscribe form" />
-	</meta>
+    <meta>
+        <form formid="subscribe" name="Newsletter Subscribe form" />
+    </meta>
 
-	<control>
-		<!--
-			WARNING:
-				don't change the datahandler,
-				otherwise the data could not be stored!
-		-->
-		<datahandler:RAW>
-			<record>
-				<userobj
-					extension="tx_mkforms_util_FormBase"
-					method="fillForm"
-				/>
-			</record>
-			<callback>
-				<userobj
-					extension="tx_mkforms_util_FormBase"
-					method="processForm"
-				/>
-			</callback>
-		</datahandler:RAW>
+    <control>
+        <!--
+            WARNING:
+                don't change the datahandler,
+                otherwise the data could not be stored!
+        -->
+        <datahandler:RAW>
+            <record>
+                <userobj
+                    extension="tx_mkforms_util_FormBase"
+                    method="fillForm"
+                />
+            </record>
+            <callback>
+                <userobj
+                    extension="tx_mkforms_util_FormBase"
+                    method="processForm"
+                />
+            </callback>
+        </datahandler:RAW>
 
-		<renderer:TEMPLATE>
-			<template
-				subpart="###SUBSCRIBE_FORM###"
-				errortag="errors"
-			>
-				<path>
-					<userobj
-						extension="this"
-						method="getFormTemplate"
-					/>
-				</path>
-			</template>
-		</renderer:TEMPLATE>
-	</control>
+        <renderer:TEMPLATE>
+            <template
+                subpart="###SUBSCRIBE_FORM###"
+                errortag="errors"
+            >
+                <path>
+                    <userobj
+                        extension="this"
+                        method="getFormTemplate"
+                    />
+                </path>
+            </template>
+        </renderer:TEMPLATE>
+    </control>
 
-	<elements>
-		<!--
-			NOTE:
-				don't change the elements in this xml!
-				it is in productive use already!
-		-->
-		<renderlet:LISTBOX
-			name="subscriber-gender"
-			label="###LABEL_FORM_SUBSCRIBER_GENDER###"
-			addBlank="###LABEL_GENERAL_CHOOSE###"
-			blankValue="null"
-			strictSelectedCheck="true"
-		>
-			<data>
-				<items>
-					<item value="0" caption="###LABEL_GENDER_0###" />
-					<item value="1" caption="###LABEL_GENDER_1###" />
-				</items>
-			</data>
-		</renderlet:LISTBOX>
-		<renderlet:TEXT
-			name="subscriber-first_name"
-			label="###LABEL_FORM_SUBSCRIBER_FIRST_NAME###"
-		/>
-		<renderlet:TEXT
-			name="subscriber-last_name"
-			label="###LABEL_FORM_SUBSCRIBER_LAST_NAME###"
-		/>
+    <elements>
+        <!--
+            NOTE:
+                don't change the elements in this xml!
+                it is in productive use already!
+        -->
+        <renderlet:LISTBOX
+            name="subscriber-gender"
+            label="###LABEL_FORM_SUBSCRIBER_GENDER###"
+            addBlank="###LABEL_GENERAL_CHOOSE###"
+            blankValue="null"
+            strictSelectedCheck="true"
+        >
+            <data>
+                <items>
+                    <item value="0" caption="###LABEL_GENDER_0###" />
+                    <item value="1" caption="###LABEL_GENDER_1###" />
+                </items>
+            </data>
+        </renderlet:LISTBOX>
+        <renderlet:TEXT
+            name="subscriber-first_name"
+            label="###LABEL_FORM_SUBSCRIBER_FIRST_NAME###"
+        />
+        <renderlet:TEXT
+            name="subscriber-last_name"
+            label="###LABEL_FORM_SUBSCRIBER_LAST_NAME###"
+        />
 
-		<renderlet:TEXT
-			name="subscriber-email"
-			inputType="mail"
-			label="###LABEL_FORM_SUBSCRIBER_EMAIL###"
-			custom="required=&quot;required&quot;"
-		>
-			<validators>
-				<validator:STANDARD>
-					<required
-						message="###LABEL_FORM_SUBSCRIBER_EMAIL_REQUIRED###"
-					/>
-					<email
-						message="###LABEL_FORM_SUBSCRIBER_EMAIL_EMAIL###"
-					/>
-				</validator:STANDARD>
-			</validators>
-		</renderlet:TEXT>
+        <renderlet:TEXT
+            name="subscriber-email"
+            inputType="mail"
+            label="###LABEL_FORM_SUBSCRIBER_EMAIL###"
+            custom="required=&quot;required&quot;"
+        >
+            <validators>
+                <validator:STANDARD>
+                    <required
+                        message="###LABEL_FORM_SUBSCRIBER_EMAIL_REQUIRED###"
+                    />
+                    <email
+                        message="###LABEL_FORM_SUBSCRIBER_EMAIL_EMAIL###"
+                    />
+                </validator:STANDARD>
+            </validators>
+        </renderlet:TEXT>
 
-		<renderlet:SUBMIT
-			name="button-subscribe"
-			label="###LABEL_FORM_BUTTON_SUBSCRIBE###"
-		/>
+        <renderlet:SUBMIT
+            name="button-subscribe"
+            label="###LABEL_FORM_BUTTON_SUBSCRIBE###"
+        />
 
-	</elements>
+    </elements>
 
 </mkforms>

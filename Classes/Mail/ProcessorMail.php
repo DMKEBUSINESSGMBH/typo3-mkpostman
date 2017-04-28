@@ -35,106 +35,105 @@ namespace DMK\Mkpostman\Mail;
  */
 class ProcessorMail
 {
-	/**
-	 * The config object to use for mails
-	 *
-	 * @var \tx_rnbase_configurations
-	 */
-	private $configurations = null;
+    /**
+     * The config object to use for mails
+     *
+     * @var \tx_rnbase_configurations
+     */
+    private $configurations = null;
 
-	/**
-	 * The Constructor
-	 *
-	 * @param \tx_rnbase_configurations $configurations
-	 */
-	public function __construct(
-		\tx_rnbase_configurations $configurations
-	) {
-		$this->configurations = $configurations;
-	}
+    /**
+     * The Constructor
+     *
+     * @param \tx_rnbase_configurations $configurations
+     */
+    public function __construct(
+        \tx_rnbase_configurations $configurations
+    ) {
+        $this->configurations = $configurations;
+    }
 
-	/**
-	 * The configuration object
-	 *
-	 * @return \tx_rnbase_configurations
-	 */
-	protected function getConfigurations()
-	{
-		return $this->configurations;
-	}
-	/**
-	 * The conf id
-	 *
-	 * @return string
-	 */
-	protected function getConfId()
-	{
-		return 'mails.';
-	}
+    /**
+     * The configuration object
+     *
+     * @return \tx_rnbase_configurations
+     */
+    protected function getConfigurations()
+    {
+        return $this->configurations;
+    }
+    /**
+     * The conf id
+     *
+     * @return string
+     */
+    protected function getConfId()
+    {
+        return 'mails.';
+    }
 
-	/**
-	 * Is mkmailer loaded? otherwise throw exception
-	 *
-	 * @throws BadFunctionCallException
-	 *
-	 * @return void
-	 */
-	protected function checkMkmailer()
-	{
-		\tx_rnbase_util_Extensions::isLoaded('mkmailer', true);
-	}
+    /**
+     * Is mkmailer loaded? otherwise throw exception
+     *
+     * @throws BadFunctionCallException
+     *
+     * @return void
+     */
+    protected function checkMkmailer()
+    {
+        \tx_rnbase_util_Extensions::isLoaded('mkmailer', true);
+    }
 
-	/**
-	 * Creates a mailjob based on the receiver and the template object
-	 *
-	 * @param \tx_mkmailer_models_Template $template
-	 *
-	 * @return \tx_mkmailer_mail_MailJob
-	 */
-	protected function buildJob(
-		\tx_mkmailer_models_Template $template = null
-	) {
-		/* @var $job \tx_mkmailer_mail_MailJob */
-		$job = \tx_rnbase::makeInstance('tx_mkmailer_mail_MailJob');
-		if ($template instanceof \tx_mkmailer_models_Template) {
-			$job->setFrom($template->getFromAddress());
-			$job->setCCs($template->getCcAddress());
-			$job->setBCCs($template->getBccAddress());
-			$job->setSubject($template->getSubject());
-			$job->setContentText($template->getContentText());
-			$job->setContentHtml($template->getContentHtml());
-		}
+    /**
+     * Creates a mailjob based on the receiver and the template object
+     *
+     * @param \tx_mkmailer_models_Template $template
+     *
+     * @return \tx_mkmailer_mail_MailJob
+     */
+    protected function buildJob(
+        \tx_mkmailer_models_Template $template = null
+    ) {
+        /* @var $job \tx_mkmailer_mail_MailJob */
+        $job = \tx_rnbase::makeInstance('tx_mkmailer_mail_MailJob');
+        if ($template instanceof \tx_mkmailer_models_Template) {
+            $job->setFrom($template->getFromAddress());
+            $job->setCCs($template->getCcAddress());
+            $job->setBCCs($template->getBccAddress());
+            $job->setSubject($template->getSubject());
+            $job->setContentText($template->getContentText());
+            $job->setContentHtml($template->getContentHtml());
+        }
 
-		return $job;
-	}
+        return $job;
+    }
 
-	/**
-	 * Send an activation mail to the user
-	 *
-	 * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
-	 *
-	 * @return void
-	 */
-	public function sendSubscriberActivation(
-		\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
-	) {
-		$this->checkMkmailer();
+    /**
+     * Send an activation mail to the user
+     *
+     * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+     *
+     * @return void
+     */
+    public function sendSubscriberActivation(
+        \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+    ) {
+        $this->checkMkmailer();
 
-		\tx_rnbase::load('tx_mkmailer_util_ServiceRegistry');
-		$mailSrv = \tx_mkmailer_util_ServiceRegistry::getMailService();
+        \tx_rnbase::load('tx_mkmailer_util_ServiceRegistry');
+        $mailSrv = \tx_mkmailer_util_ServiceRegistry::getMailService();
 
-		$mailJob = $this->buildJob(
-			$mailSrv->getTemplate('mkpostman_subsciber_activation')
-		);
+        $mailJob = $this->buildJob(
+            $mailSrv->getTemplate('mkpostman_subsciber_activation')
+        );
 
-		$receiver = \DMK\Mkpostman\Factory::getSubscriberMailReceiver($subscriber);
-		$mailJob->addReceiver($receiver);
+        $receiver = \DMK\Mkpostman\Factory::getSubscriberMailReceiver($subscriber);
+        $mailJob->addReceiver($receiver);
 
-		$mailSrv->executeMailJob(
-			$mailJob,
-			$this->getConfigurations(),
-			$this->getConfId()
-		);
-
-	}
+        $mailSrv->executeMailJob(
+            $mailJob,
+            $this->getConfigurations(),
+            $this->getConfId()
+        );
+    }
 }

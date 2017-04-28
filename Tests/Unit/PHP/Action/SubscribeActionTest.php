@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\Action;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,517 +49,493 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeActionTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandeRequestForm()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('handleForm', 'handleActivation', 'handleSuccess')
-		);
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandeRequestForm()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('handleForm', 'handleActivation', 'handleSuccess')
+        );
 
-		$action
-			->expects(self::never())
-			->method('handleActivation')
-		;
-		$action
-			->expects(self::never())
-			->method('handleSuccess')
-		;
-		$action
-			->expects(self::once())
-			->method('handleForm')
-		;
+        $action
+            ->expects(self::never())
+            ->method('handleActivation');
+        $action
+            ->expects(self::never())
+            ->method('handleSuccess');
+        $action
+            ->expects(self::once())
+            ->method('handleForm');
 
-		$null = null;
-		$this->assertSame(
-			null,
-			$action->handleRequest(
-				$this->getMock('tx_rnbase_parameters'),
-				$null,
-				$null
-			)
-		);
-	}
+        $null = null;
+        $this->assertSame(
+            null,
+            $action->handleRequest(
+                $this->getMock('tx_rnbase_parameters'),
+                $null,
+                $null
+            )
+        );
+    }
 
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandeRequestActivationWithValidKey()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('handleForm', 'handleActivation', 'handleSuccess')
-		);
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandeRequestActivationWithValidKey()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('handleForm', 'handleActivation', 'handleSuccess')
+        );
 
 
-		$action
-			->expects(self::once())
-			->method('handleActivation')
-			->with(self::equalTo('valid'))
-			->will(self::returnValue(true))
-		;
-		$action
-			->expects(self::never())
-			->method('handleSuccess')
-		;
-		$action
-			->expects(self::never())
-			->method('handleForm')
-		;
-		/* @var $parameters \tx_rnbase_parameters */
-		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-		$parameters->offsetSet('key', 'valid');
-		$null = null;
-		$this->assertSame(
-			null,
-			$action->handleRequest(
-				$parameters,
-				$null,
-				$null
-			)
-		);
-	}
+        $action
+            ->expects(self::once())
+            ->method('handleActivation')
+            ->with(self::equalTo('valid'))
+            ->will(self::returnValue(true));
+        $action
+            ->expects(self::never())
+            ->method('handleSuccess');
+        $action
+            ->expects(self::never())
+            ->method('handleForm');
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('key', 'valid');
+        $null = null;
+        $this->assertSame(
+            null,
+            $action->handleRequest(
+                $parameters,
+                $null,
+                $null
+            )
+        );
+    }
 
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandeRequestActivationWithInvalidKey()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('handleForm', 'handleActivation', 'handleSuccess')
-		);
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandeRequestActivationWithInvalidKey()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('handleForm', 'handleActivation', 'handleSuccess')
+        );
 
 
-		$action
-			->expects(self::once())
-			->method('handleActivation')
-			->with(self::equalTo('invalid'))
-			->will(self::returnValue(false))
-		;
-		$action
-			->expects(self::never())
-			->method('handleSuccess')
-		;
-		$action
-			->expects(self::once())
-			->method('handleForm')
-		;
-		/* @var $parameters \tx_rnbase_parameters */
-		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-		$parameters->offsetSet('key', 'invalid');
-		$null = null;
-		$this->assertSame(
-			null,
-			$action->handleRequest(
-				$parameters,
-				$null,
-				$null
-			)
-		);
-	}
+        $action
+            ->expects(self::once())
+            ->method('handleActivation')
+            ->with(self::equalTo('invalid'))
+            ->will(self::returnValue(false));
+        $action
+            ->expects(self::never())
+            ->method('handleSuccess');
+        $action
+            ->expects(self::once())
+            ->method('handleForm');
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('key', 'invalid');
+        $null = null;
+        $this->assertSame(
+            null,
+            $action->handleRequest(
+                $parameters,
+                $null,
+                $null
+            )
+        );
+    }
 
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandeRequestSuccessWithValidKey()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('handleForm', 'handleActivation', 'handleSuccess')
-		);
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandeRequestSuccessWithValidKey()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('handleForm', 'handleActivation', 'handleSuccess')
+        );
 
-		$action
-			->expects(self::never())
-			->method('handleActivation')
-		;
-		$action
-			->expects(self::once())
-			->method('handleSuccess')
-			->with(self::equalTo('referrer:7'))
-			->will(self::returnValue(true))
-		;
-		$action
-			->expects(self::never())
-			->method('handleForm')
-		;
-		/* @var $parameters \tx_rnbase_parameters */
-		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-		$parameters->offsetSet('success', 'referrer:7');
-		$null = null;
-		$this->assertSame(
-			null,
-			$action->handleRequest(
-				$parameters,
-				$null,
-				$null
-			)
-		);
-	}
+        $action
+            ->expects(self::never())
+            ->method('handleActivation');
+        $action
+            ->expects(self::once())
+            ->method('handleSuccess')
+            ->with(self::equalTo('referrer:7'))
+            ->will(self::returnValue(true));
+        $action
+            ->expects(self::never())
+            ->method('handleForm');
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('success', 'referrer:7');
+        $null = null;
+        $this->assertSame(
+            null,
+            $action->handleRequest(
+                $parameters,
+                $null,
+                $null
+            )
+        );
+    }
 
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandeRequestSuccessWithInvalidKey()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMock(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('handleForm', 'handleActivation', 'handleSuccess')
-		);
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandeRequestSuccessWithInvalidKey()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('handleForm', 'handleActivation', 'handleSuccess')
+        );
 
-		$action
-			->expects(self::never())
-			->method('handleActivation')
-		;
-		$action
-			->expects(self::once())
-			->method('handleSuccess')
-			->with(self::equalTo('invalid'))
-			->will(self::returnValue(false))
-		;
-		$action
-			->expects(self::once())
-			->method('handleForm')
-		;
-		/* @var $parameters \tx_rnbase_parameters */
-		$parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-		$parameters->offsetSet('success', 'invalid');
-		$null = null;
-		$this->assertSame(
-			null,
-			$action->handleRequest(
-				$parameters,
-				$null,
-				$null
-			)
-		);
-	}
+        $action
+            ->expects(self::never())
+            ->method('handleActivation');
+        $action
+            ->expects(self::once())
+            ->method('handleSuccess')
+            ->with(self::equalTo('invalid'))
+            ->will(self::returnValue(false));
+        $action
+            ->expects(self::once())
+            ->method('handleForm');
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('success', 'invalid');
+        $null = null;
+        $this->assertSame(
+            null,
+            $action->handleRequest(
+                $parameters,
+                $null,
+                $null
+            )
+        );
+    }
 
-	/**
-	 * Test the handleActivation method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandleActivation()
-	{
-		// @TODO check if $doubleOptInUtil->activateByKey was called correctly!
-		// @TODO check if the performSuccessRedirect was called correctly
-		$this->markTestIncomplete();
-	}
+    /**
+     * Test the handleActivation method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandleActivation()
+    {
+        // @TODO check if $doubleOptInUtil->activateByKey was called correctly!
+        // @TODO check if the performSuccessRedirect was called correctly
+        $this->markTestIncomplete();
+    }
 
-	/**
-	 * Test the handleSuccess method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandleSuccess()
-	{
-		$this->markTestIncomplete();
-	}
+    /**
+     * Test the handleSuccess method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandleSuccess()
+    {
+        $this->markTestIncomplete();
+    }
 
-	/**
-	 * Test the fillData method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testFillDataWithoutUser()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMockForAbstract(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('getFeUserData')
-		);
-		$action
-			->expects(self::once())
-			->method('getFeUserData')
-			->will(self::returnValue(array()))
-		;
+    /**
+     * Test the fillData method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testFillDataWithoutUser()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMockForAbstract(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('getFeUserData')
+        );
+        $action
+            ->expects(self::once())
+            ->method('getFeUserData')
+            ->will(self::returnValue(array()));
 
-		$data = $this->callInaccessibleMethod($action, 'fillData', array());
+        $data = $this->callInaccessibleMethod($action, 'fillData', array());
 
-		$this->assertTrue(is_array($data));
-		$this->assertArrayHasKey('subscriber', $data);
-		$this->assertTrue(is_array($data['subscriber']));
-		$this->assertTrue(empty($data['subscriber']));
-	}
+        $this->assertTrue(is_array($data));
+        $this->assertArrayHasKey('subscriber', $data);
+        $this->assertTrue(is_array($data['subscriber']));
+        $this->assertTrue(empty($data['subscriber']));
+    }
 
-	/**
-	 * Test the fillData method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testFillDataWithUser()
-	{
-		$userdata = array(
-			'gender' => 1,
-			'first_name' => 'Michael',
-			'last_name' => 'Wagner',
-			'email' => 'mwagner\'s mail',
-		);
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMockForAbstract(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('getFeUserData')
-		);
-		$action
-			->expects(self::once())
-			->method('getFeUserData')
-			->will(self::returnValue($userdata))
-		;
+    /**
+     * Test the fillData method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testFillDataWithUser()
+    {
+        $userdata = array(
+            'gender' => 1,
+            'first_name' => 'Michael',
+            'last_name' => 'Wagner',
+            'email' => 'mwagner\'s mail',
+        );
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMockForAbstract(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('getFeUserData')
+        );
+        $action
+            ->expects(self::once())
+            ->method('getFeUserData')
+            ->will(self::returnValue($userdata));
 
-		$data = $this->callInaccessibleMethod($action, 'fillData', array());
+        $data = $this->callInaccessibleMethod($action, 'fillData', array());
 
-		$this->assertTrue(is_array($data));
-		$this->assertArrayHasKey('subscriber', $data);
-		$this->assertTrue(is_array($data['subscriber']));
-		$this->assertSame(
-			array_map('strval', $userdata),
-			$data['subscriber']
-		);
-	}
+        $this->assertTrue(is_array($data));
+        $this->assertArrayHasKey('subscriber', $data);
+        $this->assertTrue(is_array($data['subscriber']));
+        $this->assertSame(
+            array_map('strval', $userdata),
+            $data['subscriber']
+        );
+    }
 
-	/**
-	 * Test the findOrCreateSubscriber method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testFindOrCreateSubscriberForNewUser()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
-		$repo = $this->getMock(
-			'Mkpostman_Tests_DomainRepositorySubscriberRepository',
-			\get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
-		);
-		$repo
-			->expects(self::once())
-			->method('findByEmail')
-			->with($this->equalTo('mwagner@localhost.net'))
-			->will(self::returnValue(null))
-		;
-		$repo
-			->expects(self::once())
-			->method('createNewModel')
-			->will(
-				self::returnValue(
-					$this->getModel(
-						array(),
-						'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
-					)
-				)
-			)
-		;
+    /**
+     * Test the findOrCreateSubscriber method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testFindOrCreateSubscriberForNewUser()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+        $repo = $this->getMock(
+            'Mkpostman_Tests_DomainRepositorySubscriberRepository',
+            \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
+        );
+        $repo
+            ->expects(self::once())
+            ->method('findByEmail')
+            ->with($this->equalTo('mwagner@localhost.net'))
+            ->will(self::returnValue(null));
+        $repo
+            ->expects(self::once())
+            ->method('createNewModel')
+            ->will(
+                self::returnValue(
+                    $this->getModel(
+                        array(),
+                        'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+                    )
+                )
+            );
 
-		$configuration = $this->createConfigurations(
-			array(
-				'subscribe.' => array(
-					'subscriber.' => array(
-						'storage' => 14,
-					),
-				),
-			),
-			'mkpostman'
-		);
+        $configuration = $this->createConfigurations(
+            array(
+                'subscribe.' => array(
+                    'subscriber.' => array(
+                        'storage' => 14,
+                    ),
+                ),
+            ),
+            'mkpostman'
+        );
 
-		$action = $this->getMockForAbstract(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('getSubscriberRepository', 'getConfigurations')
-		);
-		$action
-			->expects(self::once())
-			->method('getSubscriberRepository')
-			->will(self::returnValue($repo))
-		;
-		$action
-			->expects(self::once())
-			->method('getConfigurations')
-			->will(self::returnValue($configuration))
-		;
+        $action = $this->getMockForAbstract(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('getSubscriberRepository', 'getConfigurations')
+        );
+        $action
+            ->expects(self::once())
+            ->method('getSubscriberRepository')
+            ->will(self::returnValue($repo));
+        $action
+            ->expects(self::once())
+            ->method('getConfigurations')
+            ->will(self::returnValue($configuration));
 
-		$model = $this->callInaccessibleMethod(
-			$action,
-			'findOrCreateSubscriber',
-			array(
-				'email' => 'mwagner@localhost.net',
-			)
-		);
+        $model = $this->callInaccessibleMethod(
+            $action,
+            'findOrCreateSubscriber',
+            array(
+                'email' => 'mwagner@localhost.net',
+            )
+        );
 
-		$this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
+        $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
-		// the created model should have a pid and should be disabled, nothing else
-		$this->assertCount(2, $model->getProperty());
-		$this->assertSame(1, $model->getDisabled());
-		$this->assertSame(14, $model->getpid());
-	}
+        // the created model should have a pid and should be disabled, nothing else
+        $this->assertCount(2, $model->getProperty());
+        $this->assertSame(1, $model->getDisabled());
+        $this->assertSame(14, $model->getpid());
+    }
 
-	/**
-	 * Test the findOrCreateSubscriber method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testFindOrCreateSubscriberForExistingUser()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
-		$subscriber = $this->getModel(
-			array(
-				'uid' => 5,
-				'pid' => 7,
-				'disabled' => 0,
-				'gender' => 1,
-				'first_name' => 'Michael',
-				'last_name' => 'Wagner',
-				'email' => 'mwagner@localhost.net',
-			),
-			'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
-		);
-		\tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
-		$repo = $this->getMock(
-			'Mkpostman_Tests_DomainRepositorySubscriberRepository',
-			\get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
-		);
-		$repo
-			->expects(self::once())
-			->method('findByEmail')
-			->with($this->equalTo('mwagner@localhost.net'))
-			->will(self::returnValue($subscriber))
-		;
-		$repo
-			->expects(self::never())
-			->method('createNewModel')
-		;
+    /**
+     * Test the findOrCreateSubscriber method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testFindOrCreateSubscriberForExistingUser()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
+        $subscriber = $this->getModel(
+            array(
+                'uid' => 5,
+                'pid' => 7,
+                'disabled' => 0,
+                'gender' => 1,
+                'first_name' => 'Michael',
+                'last_name' => 'Wagner',
+                'email' => 'mwagner@localhost.net',
+            ),
+            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+        );
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+        $repo = $this->getMock(
+            'Mkpostman_Tests_DomainRepositorySubscriberRepository',
+            \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
+        );
+        $repo
+            ->expects(self::once())
+            ->method('findByEmail')
+            ->with($this->equalTo('mwagner@localhost.net'))
+            ->will(self::returnValue($subscriber));
+        $repo
+            ->expects(self::never())
+            ->method('createNewModel');
 
-		$action = $this->getMockForAbstract(
-			'DMK\\Mkpostman\\Action\\SubscribeAction',
-			array('getSubscriberRepository', 'getConfigurations')
-		);
-		$action
-			->expects(self::once())
-			->method('getSubscriberRepository')
-			->will(self::returnValue($repo))
-		;
+        $action = $this->getMockForAbstract(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('getSubscriberRepository', 'getConfigurations')
+        );
+        $action
+            ->expects(self::once())
+            ->method('getSubscriberRepository')
+            ->will(self::returnValue($repo));
 
-		$model = $this->callInaccessibleMethod(
-			$action,
-			'findOrCreateSubscriber',
-			array(
-				'email' => 'mwagner@localhost.net',
-			)
-		);
+        $model = $this->callInaccessibleMethod(
+            $action,
+            'findOrCreateSubscriber',
+            array(
+                'email' => 'mwagner@localhost.net',
+            )
+        );
 
-		$this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
+        $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
-		$this->assertSame($model->getProperty(), $subscriber->getProperty());
-	}
+        $this->assertSame($model->getProperty(), $subscriber->getProperty());
+    }
 
-	/**
-	 * Test the getConfId method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testPerformSuccessRedirect()
-	{
-		$this->markTestIncomplete();
-	}
+    /**
+     * Test the getConfId method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testPerformSuccessRedirect()
+    {
+        $this->markTestIncomplete();
+    }
 
-	/**
-	 * Test the getConfId method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testGetConfIdShouldReturnsRightValue()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$this->assertSame('subscribe.', $action->getConfId());
-	}
+    /**
+     * Test the getConfId method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testGetConfIdShouldReturnsRightValue()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $this->assertSame('subscribe.', $action->getConfId());
+    }
 
-	/**
-	 * Test the getTemplateName method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testGetTemplateNameShouldReturnsRightValue()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$name = $this->callInaccessibleMethod($action, 'getTemplateName');
-		$this->assertSame('subscribe', $name);
-	}
+    /**
+     * Test the getTemplateName method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testGetTemplateNameShouldReturnsRightValue()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $name = $this->callInaccessibleMethod($action, 'getTemplateName');
+        $this->assertSame('subscribe', $name);
+    }
 
-	/**
-	 * Test the getViewClassName method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testGetViewClassShouldReturnsRightValue()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
-		$name  = $this->callInaccessibleMethod($action, 'getViewClassName');
-		$this->assertSame('DMK\\Mkpostman\\View\\SubscribeView', $name);
-	}
+    /**
+     * Test the getViewClassName method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testGetViewClassShouldReturnsRightValue()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $name  = $this->callInaccessibleMethod($action, 'getViewClassName');
+        $this->assertSame('DMK\\Mkpostman\\View\\SubscribeView', $name);
+    }
 }

@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
-	<file
-		source-language="en"
-		datatype="plaintext"
-		original="messages"
-		product-name="mkpostman"
-	>
-		<header/>
-		<body>
-			<trans-unit id="label_general_choose" xml:space="preserve">
-				<source>- Please Choose -</source>
-			</trans-unit>
-			<trans-unit id="label_gender_0" xml:space="preserve">
-				<source>Mr.</source>
-			</trans-unit>
-			<trans-unit id="label_gender_1" xml:space="preserve">
-				<source>Mrs.</source>
-			</trans-unit>
+    <file
+        source-language="en"
+        datatype="plaintext"
+        original="messages"
+        product-name="mkpostman"
+    >
+        <header/>
+        <body>
+            <trans-unit id="label_general_choose" xml:space="preserve">
+                <source>- Please Choose -</source>
+            </trans-unit>
+            <trans-unit id="label_gender_0" xml:space="preserve">
+                <source>Mr.</source>
+            </trans-unit>
+            <trans-unit id="label_gender_1" xml:space="preserve">
+                <source>Mrs.</source>
+            </trans-unit>
 
-			<trans-unit id="label_form_subscriber_gender" xml:space="preserve">
-				<source>Gender:</source>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_first_name" xml:space="preserve">
-				<source>First Name:</source>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_last_name" xml:space="preserve">
-				<source>Last Name:</source>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_email" xml:space="preserve">
-				<source>E-mail*:</source>
-			</trans-unit>
-			<trans-unit id="label_form_button_subscribe" xml:space="preserve">
-				<source>Subscribe</source>
-			</trans-unit>
+            <trans-unit id="label_form_subscriber_gender" xml:space="preserve">
+                <source>Gender:</source>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_first_name" xml:space="preserve">
+                <source>First Name:</source>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_last_name" xml:space="preserve">
+                <source>Last Name:</source>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_email" xml:space="preserve">
+                <source>E-mail*:</source>
+            </trans-unit>
+            <trans-unit id="label_form_button_subscribe" xml:space="preserve">
+                <source>Subscribe</source>
+            </trans-unit>
 
-			<trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
-				<source>The e-mail is required for subscibtion!</source>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
-				<source>Please enter a valid e-mail!</source>
-			</trans-unit>
-		</body>
-	</file>
+            <trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
+                <source>The e-mail is required for subscibtion!</source>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
+                <source>Please enter a valid e-mail!</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

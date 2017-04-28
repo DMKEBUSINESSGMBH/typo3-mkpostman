@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\Utility;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,370 +49,364 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class DoubleOptInUtilityTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the constructor method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testConstructorWithModel()
-	{
-		$this->getMock(
-			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-			array(),
-			array($this->getSubscriberModel())
-		);
-	}
+    /**
+     * Test the constructor method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testConstructorWithModel()
+    {
+        $this->getMock(
+            'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
+            array(),
+            array($this->getSubscriberModel())
+        );
+    }
 
-	/**
-	 * Test the constructor method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testConstructorWithKey()
-	{
-		$that = $this; // php 3.5 compatibility!
-		$util = $this->getMock(
-			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-			array('findSubscriberByKey'),
-			array(),
-			'',
-			false
-		);
+    /**
+     * Test the constructor method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testConstructorWithKey()
+    {
+        $that = $this; // php 3.5 compatibility!
+        $util = $this->getMock(
+            'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
+            array('findSubscriberByKey'),
+            array(),
+            '',
+            false
+        );
 
-		$util
-			->expects(self::once())
-			->method('findSubscriberByKey')
-			->with(
-				self::callback(
-					function ($keyData) use ($that) {
+        $util
+            ->expects(self::once())
+            ->method('findSubscriberByKey')
+            ->with(
+                self::callback(
+                    function ($keyData) use ($that) {
 
-						$that->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
-						$that->assertSame('5', $keyData->getUid());
-						$that->assertSame('abcdef1234567890', $keyData->getConfirmstring());
-						$that->assertSame('123456789abcdef', $keyData->getMailHash());
+                        $that->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+                        $that->assertSame('5', $keyData->getUid());
+                        $that->assertSame('abcdef1234567890', $keyData->getConfirmstring());
+                        $that->assertSame('123456789abcdef', $keyData->getMailHash());
 
-						return true;
-					}
-				)
-			)
-			->will(self::returnValue($this->getSubscriberModel()))
-		;
+                        return true;
+                    }
+                )
+            )
+            ->will(self::returnValue($this->getSubscriberModel()));
 
-		// now call the constructor
-		$reflectedClass = new \ReflectionClass(
-			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility'
-		);
-		$constructor = $reflectedClass->getConstructor();
-		$constructor->invoke($util, '5:abcdef1234567890:123456789abcdef');
-	}
+        // now call the constructor
+        $reflectedClass = new \ReflectionClass(
+            'DMK\\Mkpostman\\Utility\\DoubleOptInUtility'
+        );
+        $constructor = $reflectedClass->getConstructor();
+        $constructor->invoke($util, '5:abcdef1234567890:123456789abcdef');
+    }
 
-	/**
-	 * Test the constructor method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testConstructorWithInvalidData()
-	{
-		$this->setExpectedException(
-			'BadMethodCallException',
-			'',
-			1464951846
-		);
-		$this->getMock(
-			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-			array(),
-			array('')
-		);
-	}
+    /**
+     * Test the constructor method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testConstructorWithInvalidData()
+    {
+        $this->setExpectedException(
+            'BadMethodCallException',
+            '',
+            1464951846
+        );
+        $this->getMock(
+            'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
+            array(),
+            array('')
+        );
+    }
 
-	/**
-	 * Test the createConfirmString method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testCreateConfirmString()
-	{
-		$confirmString = $this->callInaccessibleMethod(
-			$this->getUtility(),
-			'createConfirmString'
-		);
+    /**
+     * Test the createConfirmString method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testCreateConfirmString()
+    {
+        $confirmString = $this->callInaccessibleMethod(
+            $this->getUtility(),
+            'createConfirmString'
+        );
 
-		// we only check for length and containing chars
-		$this->assertRegExp('/^[a-f0-9]{32}$/', $confirmString);
+        // we only check for length and containing chars
+        $this->assertRegExp('/^[a-f0-9]{32}$/', $confirmString);
 
-		return $confirmString;
-	}
+        return $confirmString;
+    }
 
-	/**
-	 * Test the updateConfirmString method
-	 *
-	 * @return void
-	 *
-	 * @depends testCreateConfirmString
-	 * @group unit
-	 * @test
-	 */
-	public function testUpdateConfirmString(
-		$confirmString
-	) {
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
-		$repo = $this->callInaccessibleMethod($util, 'getRepository');
+    /**
+     * Test the updateConfirmString method
+     *
+     * @return void
+     *
+     * @depends testCreateConfirmString
+     * @group unit
+     * @test
+     */
+    public function testUpdateConfirmString(
+        $confirmString
+    ) {
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $repo = $this->callInaccessibleMethod($util, 'getRepository');
 
-		$util
-			->expects(self::once())
-			->method('createConfirmString')
-			->will(self::returnValue($confirmString))
-		;
+        $util
+            ->expects(self::once())
+            ->method('createConfirmString')
+            ->will(self::returnValue($confirmString));
 
-		$repo
-			->expects(self::once())
-			->method('persist')
-			->with(self::equalTo($subscriber))
-		;
+        $repo
+            ->expects(self::once())
+            ->method('persist')
+            ->with(self::equalTo($subscriber));
 
-		$this->callInaccessibleMethod($util, 'updateConfirmString');
+        $this->callInaccessibleMethod($util, 'updateConfirmString');
 
-		// we only check for length and containing chars
-		$this->assertSame($confirmString, $subscriber->getConfirmstring());
-	}
+        // we only check for length and containing chars
+        $this->assertSame($confirmString, $subscriber->getConfirmstring());
+    }
 
-	/**
-	 * Test the buildActivationKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testCreateConfirmString
-	 * @group unit
-	 * @test
-	 */
-	public function testBuildActivationKey(
-		$confirmString
-	) {
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+    /**
+     * Test the buildActivationKey method
+     *
+     * @return void
+     *
+     * @depends testCreateConfirmString
+     * @group unit
+     * @test
+     */
+    public function testBuildActivationKey(
+        $confirmString
+    ) {
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setConfirmstring($confirmString);
 
-		$key = $this->callInaccessibleMethod($util, 'buildActivationKey', false);
+        $key = $this->callInaccessibleMethod($util, 'buildActivationKey', false);
 
-		// the key should contain the uid, confirmstring and the md5 of the mail
-		$this->assertSame(2, substr_count($key, ':'));
-		$parts = explode(':', $key);
-		$this->assertCount(3, $parts);
+        // the key should contain the uid, confirmstring and the md5 of the mail
+        $this->assertSame(2, substr_count($key, ':'));
+        $parts = explode(':', $key);
+        $this->assertCount(3, $parts);
 
-		$this->assertEquals($subscriber->getUid(), $parts[0]);
-		$this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
-		$this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
+        $this->assertEquals($subscriber->getUid(), $parts[0]);
+        $this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
+        $this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
 
-		return array($confirmString, $key);
-	}
+        return array($confirmString, $key);
+    }
 
-	/**
-	 * Test the buildActivationKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testCreateConfirmString
-	 * @group unit
-	 * @test
-	 */
-	public function testBuildActivationKeyEncoded(
-		$confirmString
-	) {
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+    /**
+     * Test the buildActivationKey method
+     *
+     * @return void
+     *
+     * @depends testCreateConfirmString
+     * @group unit
+     * @test
+     */
+    public function testBuildActivationKeyEncoded(
+        $confirmString
+    ) {
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setConfirmstring($confirmString);
 
-		$key = $this->callInaccessibleMethod($util, 'buildActivationKey', true);
+        $key = $this->callInaccessibleMethod($util, 'buildActivationKey', true);
 
-		$key = \base64_decode(\urldecode($key));
+        $key = \base64_decode(\urldecode($key));
 
-		// the key should contain the uid, confirmstring and the md5 of the mail
-		$this->assertSame(2, substr_count($key, ':'));
-		$parts = explode(':', $key);
-		$this->assertCount(3, $parts);
+        // the key should contain the uid, confirmstring and the md5 of the mail
+        $this->assertSame(2, substr_count($key, ':'));
+        $parts = explode(':', $key);
+        $this->assertCount(3, $parts);
 
-		$this->assertEquals($subscriber->getUid(), $parts[0]);
-		$this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
-		$this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
-	}
+        $this->assertEquals($subscriber->getUid(), $parts[0]);
+        $this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
+        $this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
+    }
 
-	/**
-	 * Test the decodeActivationKey method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testDecodeActivationKey()
-	{
-		$util = $this->getUtility();
-		$keyData = $this->callInaccessibleMethod(
-			$util,
-			'decodeActivationKey',
-			'firstIsUid:secondIsConfirmstring:thirdIsMailHash'
-		);
+    /**
+     * Test the decodeActivationKey method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testDecodeActivationKey()
+    {
+        $util = $this->getUtility();
+        $keyData = $this->callInaccessibleMethod(
+            $util,
+            'decodeActivationKey',
+            'firstIsUid:secondIsConfirmstring:thirdIsMailHash'
+        );
 
-		$this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
-		$this->assertSame('firstIsUid', $keyData->getUid());
-		$this->assertSame('secondIsConfirmstring', $keyData->getConfirmstring());
-		$this->assertSame('thirdIsMailHash', $keyData->getMailHash());
-	}
-	/**
-	 * Test the validateActivationKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testBuildActivationKey
-	 * @group unit
-	 * @test
-	 */
-	public function testValidateActivationKey(
-		array $params = array()
-	) {
-		list ($confirmString, $activationKey) = $params;
+        $this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+        $this->assertSame('firstIsUid', $keyData->getUid());
+        $this->assertSame('secondIsConfirmstring', $keyData->getConfirmstring());
+        $this->assertSame('thirdIsMailHash', $keyData->getMailHash());
+    }
+    /**
+     * Test the validateActivationKey method
+     *
+     * @return void
+     *
+     * @depends testBuildActivationKey
+     * @group unit
+     * @test
+     */
+    public function testValidateActivationKey(
+        array $params = array()
+    ) {
+        list ($confirmString, $activationKey) = $params;
 
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setConfirmstring($confirmString);
 
-		$this->assertTrue(
-			$this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
-		);
-	}
+        $this->assertTrue(
+            $this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
+        );
+    }
 
-	/**
-	 * Test the validateActivationKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testBuildActivationKey
-	 * @group unit
-	 * @test
-	 */
-	public function testValidateActivationKeyEncoded(
-		array $params = array()
-	) {
-		list ($confirmString, $activationKey) = $params;
+    /**
+     * Test the validateActivationKey method
+     *
+     * @return void
+     *
+     * @depends testBuildActivationKey
+     * @group unit
+     * @test
+     */
+    public function testValidateActivationKeyEncoded(
+        array $params = array()
+    ) {
+        list ($confirmString, $activationKey) = $params;
 
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setConfirmstring($confirmString);
 
-		$activationKey = \urlencode(\base64_encode($activationKey));
+        $activationKey = \urlencode(\base64_encode($activationKey));
 
-		$this->assertTrue(
-			$this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
-		);
-	}
+        $this->assertTrue(
+            $this->callInaccessibleMethod($util, 'validateActivationKey', $activationKey)
+        );
+    }
 
-	/**
-	 * Test the activateByKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testBuildActivationKey
-	 * @group unit
-	 * @test
-	 */
-	public function testActivateByKeyWithValidKey(
-		array $params = array()
-	) {
-		list ($confirmString, $activationKey) = $params;
+    /**
+     * Test the activateByKey method
+     *
+     * @return void
+     *
+     * @depends testBuildActivationKey
+     * @group unit
+     * @test
+     */
+    public function testActivateByKeyWithValidKey(
+        array $params = array()
+    ) {
+        list ($confirmString, $activationKey) = $params;
 
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
-		$repo = $this->callInaccessibleMethod($util, 'getRepository');
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $repo = $this->callInaccessibleMethod($util, 'getRepository');
 
-		$repo
-			->expects(self::once())
-			->method('persist')
-			->with(self::equalTo($subscriber))
-		;
+        $repo
+            ->expects(self::once())
+            ->method('persist')
+            ->with(self::equalTo($subscriber));
 
-		$subscriber->setDisabled(1);
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setDisabled(1);
+        $subscriber->setConfirmstring($confirmString);
 
-		$this->assertTrue($util->activateByKey($activationKey));
+        $this->assertTrue($util->activateByKey($activationKey));
 
-		$this->assertSame('', $subscriber->getConfirmstring());
-		$this->assertSame(0, $subscriber->getDisabled());
-	}
+        $this->assertSame('', $subscriber->getConfirmstring());
+        $this->assertSame(0, $subscriber->getDisabled());
+    }
 
-	/**
-	 * Test the activateByKey method
-	 *
-	 * @return void
-	 *
-	 * @depends testCreateConfirmString
-	 * @group unit
-	 * @test
-	 */
-	public function testActivateByKeyWithInvalidKey(
-		$confirmString
-	) {
+    /**
+     * Test the activateByKey method
+     *
+     * @return void
+     *
+     * @depends testCreateConfirmString
+     * @group unit
+     * @test
+     */
+    public function testActivateByKeyWithInvalidKey(
+        $confirmString
+    ) {
 
-		$util = $this->getUtility(array('createConfirmString'));
-		$subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
-		$repo = $this->callInaccessibleMethod($util, 'getRepository');
+        $util = $this->getUtility(array('createConfirmString'));
+        $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $repo = $this->callInaccessibleMethod($util, 'getRepository');
 
-		$repo
-			->expects(self::never())
-			->method('persist')
-		;
+        $repo
+            ->expects(self::never())
+            ->method('persist');
 
-		$subscriber->setDisabled(1);
-		$subscriber->setConfirmstring($confirmString);
+        $subscriber->setDisabled(1);
+        $subscriber->setConfirmstring($confirmString);
 
-		$this->assertFalse($util->activateByKey('5:in:valid'));
+        $this->assertFalse($util->activateByKey('5:in:valid'));
 
-		$this->assertSame($confirmString, $subscriber->getConfirmstring());
-		$this->assertSame(1, $subscriber->getDisabled());
-	}
+        $this->assertSame($confirmString, $subscriber->getConfirmstring());
+        $this->assertSame(1, $subscriber->getDisabled());
+    }
 
-	/**
-	 * Creates a util instace mock
-	 *
-	 * @return PHPUnit_Framework_MockObject_MockObject|DMK\Mkpostman\Utility\DoubleOptInUtility
-	 */
-	protected function getUtility(
-		array $methods = array()
-	) {
-		\tx_rnbase::load('DMK\\Mkpostman\\Utility\\DoubleOptInUtility');
-		$util = $this->getMock(
-			'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-			array_merge(
-				array('getRepository'),
-				$methods
-			),
-			array($this->getSubscriberModel())
-		);
+    /**
+     * Creates a util instace mock
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject|DMK\Mkpostman\Utility\DoubleOptInUtility
+     */
+    protected function getUtility(
+        array $methods = array()
+    ) {
+        \tx_rnbase::load('DMK\\Mkpostman\\Utility\\DoubleOptInUtility');
+        $util = $this->getMock(
+            'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
+            array_merge(
+                array('getRepository'),
+                $methods
+            ),
+            array($this->getSubscriberModel())
+        );
 
-		$util
-			->expects(self::any())
-			->method('getRepository')
-			->will(self::returnValue($this->getSubscriberRepository()))
-		;
+        $util
+            ->expects(self::any())
+            ->method('getRepository')
+            ->will(self::returnValue($this->getSubscriberRepository()));
 
-		return $util;
-	}
+        return $util;
+    }
 }

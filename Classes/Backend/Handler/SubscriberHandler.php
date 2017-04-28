@@ -34,53 +34,53 @@ namespace DMK\Mkpostman\Backend\Handler;
  * @author Michael Wagner
  */
 class SubscriberHandler
-	extends \Tx_Rnbase_Backend_Handler_SearchHandler
+    extends \Tx_Rnbase_Backend_Handler_SearchHandler
 {
 
-	/**
-	 * Returns a unique ID for this handler.
-	 * This is used to created the subpart in template.
-	 *
-	 * @return string
-	 */
-	public function getSubModuleId()
-	{
-		return 'mkpostman_subscriber_main';
-	}
+    /**
+     * Returns a unique ID for this handler.
+     * This is used to created the subpart in template.
+     *
+     * @return string
+     */
+    public function getSubModuleId()
+    {
+        return 'mkpostman_subscriber_main';
+    }
 
-	/**
-	 * Returns the label for Handler in SubMenu. You can use a label-Marker.
-	 *
-	 * @return string
-	 */
-	public function getSubLabel()
-	{
-		return '';
-	}
+    /**
+     * Returns the label for Handler in SubMenu. You can use a label-Marker.
+     *
+     * @return string
+     */
+    public function getSubLabel()
+    {
+        return '';
+    }
 
-	/**
-	 * The class for the searcher
-	 *
-	 * @return string
-	 */
-	protected function getListerClass()
-	{
-		return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister';
-	}
+    /**
+     * The class for the searcher
+     *
+     * @return string
+     */
+    protected function getListerClass()
+    {
+        return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister';
+    }
 
-	/**
-	 * Prepares the handler
-	 *
-	 * @return void
-	 */
-	protected function prepare()
-	{
-		$options = $this->getOptions();
+    /**
+     * Prepares the handler
+     *
+     * @return void
+     */
+    protected function prepare()
+    {
+        $options = $this->getOptions();
 
-		$repo = \DMK\Mkpostman\Factory::getSubscriberRepository();
-		$options->setBaseTableName(
-			$repo->getEmptyModel()->getTableName()
-		);
-		$options->setNewEntryLabel('###LABEL_BUTTON_NEW_SUBSCRIBER###');
-	}
+        $repo = \DMK\Mkpostman\Factory::getSubscriberRepository();
+        $options->setBaseTableName(
+            $repo->getEmptyModel()->getTableName()
+        );
+        $options->setNewEntryLabel('###LABEL_BUTTON_NEW_SUBSCRIBER###');
+    }
 }

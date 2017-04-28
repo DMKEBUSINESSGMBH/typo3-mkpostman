@@ -35,71 +35,73 @@ namespace DMK\Mkpostman\Action;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class AbstractAction
-	extends \tx_rnbase_action_BaseIOC
+abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
 {
-	/**
-	 * A storage object
-	 *
-	 * @var Tx_Rnbase_Domain_Model_Data
-	 */
-	private $storage = null;
+    /**
+     * A storage object
+     *
+     * @var Tx_Rnbase_Domain_Model_Data
+     */
+    private $storage = null;
 
-	/**
-	 * Lets do the magic
-	 *
-	 * @param tx_rnbase_IParameters $parameters
-	 * @param tx_rnbase_configurations $configurations
-	 * @param ArrayObject $viewdata
-	 *
-	 * @return string Errorstring or NULL
-	 */
-	// @codingStandardsIgnoreStart (interface/abstract mistake)
-	protected function handleRequest(&$parameters, &$configurations, &$viewdata)
-	{
-		// @codingStandardsIgnoreEnd
-		return $this->doRequest();
-	}
+    /**
+     * Lets do the magic
+     *
+     * @param tx_rnbase_IParameters $parameters
+     * @param tx_rnbase_configurations $configurations
+     * @param ArrayObject $viewdata
+     *
+     * @return string Errorstring or NULL
+     */
+    // @codingStandardsIgnoreStart (interface/abstract mistake)
+    protected function handleRequest(&$parameters, &$configurations, &$viewdata)
+    {
+        // @codingStandardsIgnoreEnd
+        return $this->doRequest();
+    }
 
-	/**
-	 * Wrapper method clean code
-	 *
-	 * @return string Errorstring or NULL
-	 */
-	abstract protected function doRequest();
-	/*{
-		$parameters = $this->getParameters();
-		$configurations = $this->getConfigurations();
-		$viewdata = $this->getViewData();
+    /**
+     * Wrapper method clean code
+     *
+     * @return string Errorstring or NULL
+     */
+    abstract protected function doRequest();
 
-		return null;
-	}*/
+    /*
+     * {
+     * $parameters = $this->getParameters();
+     * $configurations = $this->getConfigurations();
+     * $viewdata = $this->getViewData();
+     *
+     * return null;
+     * }
+     */
 
-	/**
-	 * A Storage object for the childclasses
-	 *
-	 * @return Tx_Rnbase_Domain_Model_Data
-	 */
-	protected function getStorage()
-	{
-		if ($this->storage === null) {
-			\tx_rnbase::load('Tx_Rnbase_Domain_Model_Data');
-			$this->storage = \Tx_Rnbase_Domain_Model_Data::getInstance();
-		}
+    /**
+     * A Storage object for the childclasses
+     *
+     * @return Tx_Rnbase_Domain_Model_Data
+     */
+    protected function getStorage()
+    {
+        if ($this->storage === null) {
+            \tx_rnbase::load('Tx_Rnbase_Domain_Model_Data');
+            $this->storage = \Tx_Rnbase_Domain_Model_Data::getInstance();
+        }
 
-		return $this->storage;
-	}
+        return $this->storage;
+    }
 
-	/**
-	 * Sets some data to the view
-	 *
-	 * @param string $name
-	 * @param mixed $data
-	 *
-	 * @return void
-	 */
-	protected function setToView($name, $data)
-	{
-		$this->getViewData()->offsetSet($name, $data);
-	}
+    /**
+     * Sets some data to the view
+     *
+     * @param string $name
+     * @param mixed $data
+     *
+     * @return void
+     */
+    protected function setToView($name, $data)
+    {
+        $this->getViewData()->offsetSet($name, $data);
+    }
 }

@@ -36,159 +36,161 @@ use \DMK\Mkpostman\Backend\Decorator\SubscriberDecorator;
  * @author Michael Wagner
  */
 class SubscriberLister
-	extends \Tx_Rnbase_Backend_Lister_AbstractLister
+    extends \Tx_Rnbase_Backend_Lister_AbstractLister
 {
-	/**
-	 * The Subscriber repository
-	 *
-	 * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
-	 */
-	protected function getRepository()
-	{
-		return \DMK\Mkpostman\Factory::getSubscriberRepository();
-	}
+    /**
+     * The Subscriber repository
+     *
+     * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
+     */
+    protected function getRepository()
+    {
+        return \DMK\Mkpostman\Factory::getSubscriberRepository();
+    }
 
-	/**
-	 * Liefert die Spalten, in denen gesucht werden soll
-	 *
-	 * @return array
-	 */
-	protected function getSearchColumns()
-	{
-		return array(
-			'SUBSCRIBER.uid',
-			'SUBSCRIBER.first_name',
-			'SUBSCRIBER.last_name',
-			'SUBSCRIBER.email',
-		);
-	}
+    /**
+     * Liefert die Spalten, in denen gesucht werden soll
+     *
+     * @return array
+     */
+    protected function getSearchColumns()
+    {
+        return array(
+            'SUBSCRIBER.uid',
+            'SUBSCRIBER.first_name',
+            'SUBSCRIBER.last_name',
+            'SUBSCRIBER.email',
+        );
+    }
 
-	/**
-	 * Returns the complete search form
-	 *
-	 * @return 	string
-	 */
-	public function getSearchFormData()
-	{
+    /**
+     * Returns the complete search form
+     *
+     * @return  string
+     */
+    public function getSearchFormData()
+    {
 
-		$data = parent::getSearchFormData();
-		$filter = $this->getFilter();
+        $data = parent::getSearchFormData();
+        $filter = $this->getFilter();
 
-		// override the disabled filter
-		$data['disabled'] = array(
-			'field' => \Tx_Rnbase_Backend_Utility::getFuncMenu(
-				$this->getOptions()->getPid(),
-				'SET[' . $this->getListerId() . 'Disabled]',
-				$filter->getProperty('disabled'),
-				array(
-					0 => '###LABEL_FILTER_STATE_0###',
-					1 => '###LABEL_FILTER_STATE_1###',
-				)
-			),
-			'label' => '###LABEL_FILTER_STATE###',
-		);
+        // override the disabled filter
+        $data['disabled'] = array(
+            'field' => \Tx_Rnbase_Backend_Utility::getFuncMenu(
+                $this->getOptions()->getPid(),
+                'SET[' . $this->getListerId() . 'Disabled]',
+                $filter->getProperty('disabled'),
+                array(
+                    0 => '###LABEL_FILTER_STATE_0###',
+                    1 => '###LABEL_FILTER_STATE_1###',
+                )
+            ),
+            'label' => '###LABEL_FILTER_STATE###',
+        );
 
-		return $data;
-	}
+        return $data;
+    }
 
-	/**
-	 * Initializes the fields and options for the repository search
-	 *
-	 * @param array $fields
-	 * @param array $options
-	 */
-	protected function prepareFieldsAndOptions(
-		array &$fields,
-		array &$options
-	) {
-		parent::prepareFieldsAndOptions($fields, $options);
+    /**
+     * Initializes the fields and options for the repository search
+     *
+     * @param array $fields
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function prepareFieldsAndOptions(
+        array &$fields,
+        array &$options
+    ) {
+        parent::prepareFieldsAndOptions($fields, $options);
 
-		if ($this->getOptions()->hasPid()) {
-			$fields['SUBSCRIBER.pid'][OP_EQ_INT] = $this->getOptions()->getPid();
-		}
-	}
+        if ($this->getOptions()->hasPid()) {
+            $fields['SUBSCRIBER.pid'][OP_EQ_INT] = $this->getOptions()->getPid();
+        }
+    }
 
-	/**
-	 * The decorator to render the rows
-	 *
-	 * @return string
-	 */
-	protected function getDecoratorClass()
-	{
-		return 'DMK\\Mkpostman\\Backend\\Decorator\\SubscriberDecorator';
-	}
+    /**
+     * The decorator to render the rows
+     *
+     * @return string
+     */
+    protected function getDecoratorClass()
+    {
+        return 'DMK\\Mkpostman\\Backend\\Decorator\\SubscriberDecorator';
+    }
 
-	/**
-	 * Liefert die Spalten für den Decorator.
-	 *
-	 * @param array $columns
-	 *
-	 * @return array
-	 */
-	protected function addDecoratorColumns(
-		array &$columns
-	) {
-		($this
-			->addDecoratorColumnEmail($columns)
-			->addDecoratorColumnName($columns)
-			->addDecoratorColumnActions($columns)
-		);
+    /**
+     * Liefert die Spalten für den Decorator.
+     *
+     * @param array $columns
+     *
+     * @return array
+     */
+    protected function addDecoratorColumns(
+        array &$columns
+    ) {
+        ($this
+            ->addDecoratorColumnEmail($columns)
+            ->addDecoratorColumnName($columns)
+            ->addDecoratorColumnActions($columns)
+        );
 
-		return $columns;
-	}
+        return $columns;
+    }
 
-	/**
-	 * Adds the column 'uid' to the be list.
-	 *
-	 * @param array $columns
-	 *
-	 * @return SubscriberLister
-	 */
-	protected function addDecoratorColumnEmail(
-		array &$columns
-	) {
-		$columns['email'] = array(
-			'title' => 'label_tableheader_email',
-			'decorator' => $this->getDecorator(),
-		);
+    /**
+     * Adds the column 'uid' to the be list.
+     *
+     * @param array $columns
+     *
+     * @return SubscriberLister
+     */
+    protected function addDecoratorColumnEmail(
+        array &$columns
+    ) {
+        $columns['email'] = array(
+            'title' => 'label_tableheader_email',
+            'decorator' => $this->getDecorator(),
+        );
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Adds the column 'uid' to the be list.
-	 *
-	 * @param array $columns
-	 *
-	 * @return SubscriberLister
-	 */
-	protected function addDecoratorColumnName(
-		array &$columns
-	) {
-		$columns['name'] = array(
-			'title' => 'label_tableheader_name',
-			'decorator' =>  $this->getDecorator(),
-		);
+    /**
+     * Adds the column 'uid' to the be list.
+     *
+     * @param array $columns
+     *
+     * @return SubscriberLister
+     */
+    protected function addDecoratorColumnName(
+        array &$columns
+    ) {
+        $columns['name'] = array(
+            'title' => 'label_tableheader_name',
+            'decorator' =>  $this->getDecorator(),
+        );
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Adds the column 'actions' to the be list.
-	 * this column contains the edit, hide, remove, ... actions.
-	 *
-	 * @param array $columns
-	 *
-	 * @return SubscriberLister
-	 */
-	protected function addDecoratorColumnActions(
-		array &$columns
-	) {
-		$columns['actions'] = array(
-			'title' => 'label_tableheader_actions',
-			'decorator' =>  $this->getDecorator(),
-		);
+    /**
+     * Adds the column 'actions' to the be list.
+     * this column contains the edit, hide, remove, ... actions.
+     *
+     * @param array $columns
+     *
+     * @return SubscriberLister
+     */
+    protected function addDecoratorColumnActions(
+        array &$columns
+    ) {
+        $columns['actions'] = array(
+            'title' => 'label_tableheader_actions',
+            'decorator' =>  $this->getDecorator(),
+        );
 
-		return $this;
-	}
+        return $this;
+    }
 }

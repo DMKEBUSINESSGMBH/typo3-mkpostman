@@ -26,17 +26,17 @@ namespace DMK\Mkpostman\Action;
 
 // for non composer autoload support
 if (!\class_exists('tx_rnbase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'rn_base',
-		'class.tx_rnbase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'rn_base',
+        'class.tx_rnbase.php'
+    );
 }
 // for non composer autoload support
 if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-	require_once \tx_rnbase_util_Extensions::extPath(
-		'mkpostman',
-		'Tests/Unit/PHP/BaseTestCase.php'
-	);
+    require_once \tx_rnbase_util_Extensions::extPath(
+        'mkpostman',
+        'Tests/Unit/PHP/BaseTestCase.php'
+    );
 }
 
 /**
@@ -49,78 +49,77 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  *          GNU Lesser General Public License, version 3 or later
  */
 class AbstractActionTest
-	extends \DMK\Mkpostman\Tests\BaseTestCase
+    extends \DMK\Mkpostman\Tests\BaseTestCase
 {
-	/**
-	 * Test the getStorage method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testGetStorageReturnsRightInstance()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
-		$storage = $this->callInaccessibleMethod($action, 'getStorage');
-		$this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $storage);
-	}
+    /**
+     * Test the getStorage method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testGetStorageReturnsRightInstance()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
+        $storage = $this->callInaccessibleMethod($action, 'getStorage');
+        $this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $storage);
+    }
 
-	/**
-	 * Test the handleRequest method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testHandleRequestCallsDoRequest()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
+    /**
+     * Test the handleRequest method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testHandleRequestCallsDoRequest()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
 
-		$action
-			->expects(self::once())
-			->method('doRequest')
-			->with()
-			->will(self::returnArgument(0))
-		;
+        $action
+            ->expects(self::once())
+            ->method('doRequest')
+            ->with()
+            ->will(self::returnArgument(0));
 
-		$dummy = new \ArrayObject();
+        $dummy = new \ArrayObject();
 
-		$reflectionObject = new \ReflectionObject($action);
-		$reflectionMethod = $reflectionObject->getMethod('handleRequest');
-		$reflectionMethod->setAccessible(true);
+        $reflectionObject = new \ReflectionObject($action);
+        $reflectionMethod = $reflectionObject->getMethod('handleRequest');
+        $reflectionMethod->setAccessible(true);
 
-		$ret = $reflectionMethod->invokeArgs(
-			$action,
-			array(&$dummy, &$dummy, &$dummy)
-		);
+        $ret = $reflectionMethod->invokeArgs(
+            $action,
+            array(&$dummy, &$dummy, &$dummy)
+        );
 
-		// the handleRequest expects returns the first argument
-		// this argument should be null. doRequest has no argument!
-		$this->assertSame(null, $ret);
-	}
+        // the handleRequest expects returns the first argument
+        // this argument should be null. doRequest has no argument!
+        $this->assertSame(null, $ret);
+    }
 
-	/**
-	 * Test the getTableName method
-	 *
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 */
-	public function testSetToViewShouldStoreDataCorrectly()
-	{
-		\tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
-		$action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
+    /**
+     * Test the getTableName method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testSetToViewShouldStoreDataCorrectly()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
+        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
 
-		$configuration = \tx_rnbase::makeInstance('tx_rnbase_configurations');
-		$action->setConfigurations($configuration);
+        $configuration = \tx_rnbase::makeInstance('tx_rnbase_configurations');
+        $action->setConfigurations($configuration);
 
-		$this->callInaccessibleMethod($action, 'setToView', 'test', '57');
+        $this->callInaccessibleMethod($action, 'setToView', 'test', '57');
 
-		$this->assertSame('57', $configuration->getViewData()->offsetGet('test'));
-	}
+        $this->assertSame('57', $configuration->getViewData()->offsetGet('test'));
+    }
 }

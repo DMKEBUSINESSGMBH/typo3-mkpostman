@@ -2,78 +2,78 @@ includeLibs.tx_rnbase_controller = EXT:rn_base/class.tx_rnbase_controller.php
 
 plugin.tx_mkpostman = USER
 plugin.tx_mkpostman {
-	userFunc = tx_rnbase_controller->main
-	defaultAction = DMK\Mkpostman\Action\SubscribeAction
-	extensionKey = mkpostman
-	qualifier = mkpostman
-	templatePath = {$plugin.tx_mkpostman.templatePath}
-	locallangFilename {
-		fronted = EXT:mkpostman/Resources/Private/Language/Frontend.xlf
-	}
+    userFunc = tx_rnbase_controller->main
+    defaultAction = DMK\Mkpostman\Action\SubscribeAction
+    extensionKey = mkpostman
+    qualifier = mkpostman
+    templatePath = {$plugin.tx_mkpostman.templatePath}
+    locallangFilename {
+        fronted = EXT:mkpostman/Resources/Private/Language/Frontend.xlf
+    }
 }
 
 tt_content.list.20.tx_mkpostman =< plugin.tx_mkpostman
 
 plugin.tx_mkpostman {
 
-	### ########### ###
-	### mail config ###
-	### ########### ###
+    ### ########### ###
+    ### mail config ###
+    ### ########### ###
 
-	mails.subscriber =< lib.mkmailer.basetemplate
-	mails.subscriber {
-		default {
-			dcname = COA
-			dcname {
-				if.isTrue.data = field:last_name
-				10 = TEXT
-				10.field = gender
-				10.wrap = {LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.|}
-				10.insertData = 1
-				10.noTrimWrap = || |
+    mails.subscriber =< lib.mkmailer.basetemplate
+    mails.subscriber {
+        default {
+            dcname = COA
+            dcname {
+                if.isTrue.data = field:last_name
+                10 = TEXT
+                10.field = gender
+                10.wrap = {LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.gender.|}
+                10.insertData = 1
+                10.noTrimWrap = || |
 
-				20 = TEXT
-				20.field = first_name
-				20.noTrimWrap = || |
-				20.fieldRequired = first_name
+                20 = TEXT
+                20.field = first_name
+                20.noTrimWrap = || |
+                20.fieldRequired = first_name
 
-				30 = TEXT
-				30.field = last_name
-			}
-		}
+                30 = TEXT
+                30.field = last_name
+            }
+        }
 
-		subscriberSubject < .default
-		subscriberText < .default
-		subscriberHtml < .default
+        subscriberSubject < .default
+        subscriberText < .default
+        subscriberHtml < .default
 
-		links.activation {
-			pid = 0
-			absurl = 1
-		}
-	}
+        links.activation {
+            pid = 0
+            absurl = 1
+        }
+    }
 
-	### ############# ###
-	### action config ###
-	### ############# ###
+    ### ############# ###
+    ### action config ###
+    ### ############# ###
 
-	subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
-	subscribe {
-		### don't cache the plugin and cnovert to user int
-		toUserInt = 1
+    subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
+    subscribe {
+        ### don't cache the plugin and cnovert to user int
+        toUserInt = 1
 
-		### the basic form config, required by mkforms
-		formconfig = < config.tx_mkforms
+        ### the basic form config, required by mkforms
+        formconfig = < config.tx_mkforms
 
-		### the subscriber form xml
-		xml = EXT:mkpostman/Resources/Private/Form/Subscribe.xml
+        ### the subscriber form xml
+        xml = EXT:mkpostman/Resources/Private/Form/Subscribe.xml
 
-		### set the storage for new subscribers
-		subscriber.storage = {$plugin.tx_mkpostman.subscriberStorage}
+        ### set the storage for new subscribers
+        subscriber.storage = {$plugin.tx_mkpostman.subscriberStorage}
 
-		### the redirect urls after subscribtion or activation, 0 means, the current page is used
-		redirect {
-			subscribe.pid = 0
-			activate.pid = 0
-		}
-	}
+        ### the redirect urls after subscribtion or activation, 0 means, the current page is used
+        redirect {
+            subscribe.pid = 0
+            activate.pid = 0
+        }
+    }
 }

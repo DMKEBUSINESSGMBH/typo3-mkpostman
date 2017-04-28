@@ -35,64 +35,66 @@ namespace DMK\Mkpostman\Backend\Handler;
  * @author Michael Wagner
  */
 class SubscriberExportHandler
-	extends SubscriberHandler implements \tx_mklib_mod1_export_IModFunc
+    extends SubscriberHandler implements \tx_mklib_mod1_export_IModFunc
 {
-	/**
-	 * The class for the searcher
-	 *
-	 * @return string
-	 */
-	protected function getListerClass()
-	{
-		return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberExportLister';
-	}
+    /**
+     * The class for the searcher
+     *
+     * @return string
+     */
+    protected function getListerClass()
+    {
+        return 'DMK\\Mkpostman\\Backend\\Lister\\SubscriberExportLister';
+    }
 
-	/**
-	 * The confid for the modfunc
-	 *
-	 * Only an alias for the optional mklib based export
-	 *
-	 * @return string
-	 */
-	public function getConfId()
-	{
-		return $this->getSubID() . '.';
-	}
+    /**
+     * The confid for the modfunc
+     *
+     * Only an alias for the optional mklib based export
+     *
+     * @return string
+     */
+    public function getConfId()
+    {
+        return $this->getSubID() . '.';
+    }
 
-	/**
-	 * Only an alias for the optional mklib based export
-	 *
-	 * @return \DMK\Mkpostman\Backend\Lister\SubscriberExportLister
-	 */
-	public function getSearcher()
-	{
-		return $this->getLister();
-	}
+    /**
+     * Only an alias for the optional mklib based export
+     *
+     * @return \DMK\Mkpostman\Backend\Lister\SubscriberExportLister
+     */
+    public function getSearcher()
+    {
+        return $this->getLister();
+    }
 
-	/**
-	 * Base listing
-	 *
-	 * @param string $template
-	 * @param array $markerArray
-	 *
-	 * @return string
-	 */
-	protected function showSearch(
-		$template,
-		array &$markerArray = null,
-		array &$subpartArray = null,
-		array &$wrappedSubpartArray = null
-	) {
-		/* @var $exportHandler \tx_mklib_mod1_export_Handler */
-		$exportHandler = \tx_rnbase::makeInstance(
-			'tx_mklib_mod1_export_Handler',
-			$this
-		);
-		// check for exports
-		$exportHandler->handleExport();
-		// parse template
-		$template = $exportHandler->parseTemplate($template);
+    /**
+     * Base listing
+     *
+     * @param string $template
+     * @param array $markerArray
+     * @param array $subpartArray
+     * @param array $wrappedSubpartArray
+     *
+     * @return string
+     */
+    protected function showSearch(
+        $template,
+        array &$markerArray = null,
+        array &$subpartArray = null,
+        array &$wrappedSubpartArray = null
+    ) {
+        /* @var $exportHandler \tx_mklib_mod1_export_Handler */
+        $exportHandler = \tx_rnbase::makeInstance(
+            'tx_mklib_mod1_export_Handler',
+            $this
+        );
+        // check for exports
+        $exportHandler->handleExport();
+        // parse template
+        $template = $exportHandler->parseTemplate($template);
 
-		return parent::showSearch($template, $markerArray);
-	}
+        return parent::showSearch($template, $markerArray);
+    }
 }

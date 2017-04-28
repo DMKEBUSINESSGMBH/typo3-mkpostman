@@ -34,127 +34,127 @@ namespace DMK\Mkpostman\Backend\Decorator;
  * @author Michael Wagner
  */
 class SubscriberDecorator
-	extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
+    extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
 {
-	/**
-	 * Wraps the Value.
-	 * A childclass can extend this and wrap each value in a spac.
-	 * For example a strikethrough for disabled entries.
-	 *
-	 * @param string $formatedValue
-	 * @param \Tx_Rnbase_Domain_Model_DataInterface $entry
-	 * @param string $columnName
-	 *
-	 * @return string
-	 */
-	protected function wrapValue(
-		$formatedValue,
-		\Tx_Rnbase_Domain_Model_DataInterface $entry,
-		$columnName
-	) {
-		return sprintf(
-			'<span style="color:%3$s">%2$s</span>',
-			CRLF,
-			$formatedValue,
-			$entry->getDisabled() ? '#600' : '#060'
-		);
-	}
+    /**
+     * Wraps the Value.
+     * A childclass can extend this and wrap each value in a spac.
+     * For example a strikethrough for disabled entries.
+     *
+     * @param string $formatedValue
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $entry
+     * @param string $columnName
+     *
+     * @return string
+     */
+    protected function wrapValue(
+        $formatedValue,
+        \Tx_Rnbase_Domain_Model_DataInterface $entry,
+        $columnName
+    ) {
+        return sprintf(
+            '<span style="color:%3$s">%2$s</span>',
+            CRLF,
+            $formatedValue,
+            $entry->getDisabled() ? '#600' : '#060'
+        );
+    }
 
-	/**
-	 * Renders the useractions
-	 *
-	 * @param \Tx_Rnbase_Domain_Model_DataInterface $item
-	 *
-	 * @return string
-	 */
-	protected function formatActionsColumn(
-		\Tx_Rnbase_Domain_Model_DataInterface $item
-	) {
-		\tx_rnbase::load('tx_rnbase_util_TCA');
+    /**
+     * Renders the useractions
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return string
+     */
+    protected function formatActionsColumn(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    ) {
+        \tx_rnbase::load('tx_rnbase_util_TCA');
 
-		$return = '';
+        $return = '';
 
-		$tableName = $item->getTableName();
-		// we use the real uid, not the uid of the parent!
-		$uid = $item->getProperty('uid');
+        $tableName = $item->getTableName();
+        // we use the real uid, not the uid of the parent!
+        $uid = $item->getProperty('uid');
 
-		$return .= $this->getFormTool()->createEditLink(
-			$tableName,
-			$uid,
-			''
-		);
+        $return .= $this->getFormTool()->createEditLink(
+            $tableName,
+            $uid,
+            ''
+        );
 
-		$return .= $this->getFormTool()->createHideLink(
-			$tableName,
-			$uid,
-			$item->getDisabled()
-		);
+        $return .= $this->getFormTool()->createHideLink(
+            $tableName,
+            $uid,
+            $item->getDisabled()
+        );
 
-		$return .= $this->getFormTool()->createDeleteLink(
-			$tableName,
-			$uid,
-			'',
-			array(
-				'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###'
+        $return .= $this->getFormTool()->createDeleteLink(
+            $tableName,
+            $uid,
+            '',
+            array(
+                'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###'
 
-			)
-		);
+            )
+        );
 
-		return $return;
-	}
+        return $return;
+    }
 
-	/**
-	 * Renders the label column.
-	 *
-	 * @param \Tx_Rnbase_Domain_Model_DataInterface $item
-	 *
-	 * @return string
-	 */
-	protected function formatEmailColumn(
-		\Tx_Rnbase_Domain_Model_DataInterface $item
-	) {
+    /**
+     * Renders the label column.
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return string
+     */
+    protected function formatEmailColumn(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    ) {
 
-		$lastModifyDateTime = $item->getLastModifyDateTime();
-		$creationDateTime = $item->getCreationDateTime();
+        $lastModifyDateTime = $item->getLastModifyDateTime();
+        $creationDateTime = $item->getCreationDateTime();
 
-		return sprintf(
-			'<span title="UID: %3$d %1$sCreation: %4$s %1$sLast Change: %5$s">%2$s</span>',
-			CRLF,
-			$item->getEmail(),
-			$item->getProperty('uid'),
-			$creationDateTime ? $creationDateTime->format(\DateTime::ATOM) : '-',
-			$lastModifyDateTime ? $lastModifyDateTime->format(\DateTime::ATOM) : '-'
-		);
-	}
-	/**
-	 * Renders the label column.
-	 *
-	 * @param \Tx_Rnbase_Domain_Model_DataInterface $item
-	 *
-	 * @return string
-	 */
-	protected function formatNameColumn(
-		\Tx_Rnbase_Domain_Model_DataInterface $item
-	) {
-		$title = array_filter(
-			array(
-				\tx_rnbase_util_Lang::sL(
-					'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:' .
-						'tx_mkpostman_subscribers.gender.' . (int) $item->getGender()
-				),
-				$item->getFirstName(),
-				$item->getLastName()
-			)
-		);
+        return sprintf(
+            '<span title="UID: %3$d %1$sCreation: %4$s %1$sLast Change: %5$s">%2$s</span>',
+            CRLF,
+            $item->getEmail(),
+            $item->getProperty('uid'),
+            $creationDateTime ? $creationDateTime->format(\DateTime::ATOM) : '-',
+            $lastModifyDateTime ? $lastModifyDateTime->format(\DateTime::ATOM) : '-'
+        );
+    }
+    /**
+     * Renders the label column.
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return string
+     */
+    protected function formatNameColumn(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    ) {
+        $title = array_filter(
+            array(
+                \tx_rnbase_util_Lang::sL(
+                    'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:' .
+                        'tx_mkpostman_subscribers.gender.' . (int) $item->getGender()
+                ),
+                $item->getFirstName(),
+                $item->getLastName()
+            )
+        );
 
 
 
-		if (count($title) > 1) {
-			$title = implode(' ', $title);
-		} else {
-			$title = 'unknown';
-		}
+        if (count($title) > 1) {
+            $title = implode(' ', $title);
+        } else {
+            $title = 'unknown';
+        }
 
-		return $title;
-	}
+        return $title;
+    }
 }

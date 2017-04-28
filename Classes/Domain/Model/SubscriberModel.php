@@ -67,15 +67,15 @@ namespace DMK\Mkpostman\Domain\Model;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscriberModel
-	extends \Tx_Rnbase_Domain_Model_Base
+    extends \Tx_Rnbase_Domain_Model_Base
 {
-	/**
-	 * Liefert den aktuellen Tabellenname
-	 *
-	 * @return Tabellenname als String
-	 */
-	public function getTableName()
-	{
-		return 'tx_mkpostman_subscribers';
-	}
+    /**
+     * Liefert den aktuellen Tabellenname
+     *
+     * @return Tabellenname als String
+     */
+    public function getTableName()
+    {
+        return 'tx_mkpostman_subscribers';
+    }
 }

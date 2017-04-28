@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
-	<file
-		source-language="en"
-		target-language="de"
-		datatype="plaintext"
-		original="messages"
-		product-name="mkpostman"
-	>
-		<header/>
-		<body>
-			<trans-unit id="label_general_choose" xml:space="preserve">
-				<target>- Bitte wählen -</target>
-			</trans-unit>
-			<trans-unit id="label_gender_0" xml:space="preserve">
-				<target>Herr</target>
-			</trans-unit>
-			<trans-unit id="label_gender_1" xml:space="preserve">
-				<target>Frau</target>
-			</trans-unit>
+    <file
+        source-language="en"
+        target-language="de"
+        datatype="plaintext"
+        original="messages"
+        product-name="mkpostman"
+    >
+        <header/>
+        <body>
+            <trans-unit id="label_general_choose" xml:space="preserve">
+                <target>- Bitte wählen -</target>
+            </trans-unit>
+            <trans-unit id="label_gender_0" xml:space="preserve">
+                <target>Herr</target>
+            </trans-unit>
+            <trans-unit id="label_gender_1" xml:space="preserve">
+                <target>Frau</target>
+            </trans-unit>
 
-			<trans-unit id="label_form_subscriber_gender" xml:space="preserve">
-				<target>Anrede:</target>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_first_name" xml:space="preserve">
-				<target>Vorname:</target>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_last_name" xml:space="preserve">
-				<target>nachname:</target>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_email" xml:space="preserve">
-				<target>E-Mail*:</target>
-			</trans-unit>
-			<trans-unit id="label_form_button_subscribe" xml:space="preserve">
-				<target>Anmelden</target>
-			</trans-unit>
+            <trans-unit id="label_form_subscriber_gender" xml:space="preserve">
+                <target>Anrede:</target>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_first_name" xml:space="preserve">
+                <target>Vorname:</target>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_last_name" xml:space="preserve">
+                <target>nachname:</target>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_email" xml:space="preserve">
+                <target>E-Mail*:</target>
+            </trans-unit>
+            <trans-unit id="label_form_button_subscribe" xml:space="preserve">
+                <target>Anmelden</target>
+            </trans-unit>
 
-			<trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
-				<target>Bitte geben Sie Ihre E-Mail-Adresse an!</target>
-			</trans-unit>
-			<trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
-				<target>Bitte geben Sie eine valide E-mail-Adresse an!</target>
-			</trans-unit>
-		</body>
-	</file>
+            <trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
+                <target>Bitte geben Sie Ihre E-Mail-Adresse an!</target>
+            </trans-unit>
+            <trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
+                <target>Bitte geben Sie eine valide E-mail-Adresse an!</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
