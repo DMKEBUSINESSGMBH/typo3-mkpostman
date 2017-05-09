@@ -1,6 +1,6 @@
 {
     "name": "dmk/mkpostman",
-    "version": "1.0.4",
+"version" : "1.0.5",
     "type": "typo3-cms-extension",
     "keywords": [
         "TYPO3 CMS",
