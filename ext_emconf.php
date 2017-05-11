@@ -2,6 +2,7 @@
 // ## #####################################################################
 // ## Extension Manager/Repository config file for ext "hpsplaner".
 // ## #####################################################################
+
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'MK Postman',
     'description' => '',
@@ -11,7 +12,7 @@ $EM_CONF[$_EXTKEY] = array(
     'author_company' => 'DMK E-BUSINESS GmbH',
     'shy' => '',
     'dependencies' => 'rn_base,mkforms,mkmailer',
-'version' => '1.0.5',
+    'version' => '3.0.0',
     'conflicts' => '',
     'priority' => '',
     'module' => '',
@@ -24,19 +25,20 @@ $EM_CONF[$_EXTKEY] = array(
     'lockType' => '',
     'constraints' => array(
         'depends' => array(
-            'mkmailer' => '2.0.8-',
-            'mkforms' => '2.0.11-',
+            'rn_base' => '1.4.0-',
+            'typo3' => '6.2.14-8.7.99',
+            'mkmailer' => '3.0.0-',
+            'mkforms' => '3.0.0-',
             'rn_base' => '1.2.5-',
-            'typo3' => '6.2.10-8.7.99'
         ),
         'conflicts' => array(),
         'suggests' => array(
-            'mklib' => '2.0.4-'
+            'mklib' => '3.0.0-',
         )
     ),
     'autoload' => array(
         'psr-4' => array(
-            'DMK\\Mkpostman\\' => 'Classes'
-        )
-    )
+            'DMK\\Mkpostman\\' => 'Classes',
+        ),
+    ),
 );

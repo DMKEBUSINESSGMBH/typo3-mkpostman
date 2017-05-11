@@ -1,6 +1,6 @@
 {
     "name": "dmk/mkpostman",
-"version" : "1.0.5",
+    "version": "3.0.0",
     "type": "typo3-cms-extension",
     "keywords": [
         "TYPO3 CMS",
@@ -17,10 +17,10 @@
         }
     ],
     "require": {
-        "typo3/cms": ">=6.2.10 <=8.7.99",
-        "digedag/rn-base": ">=1.2.5",
-        "dmk/mkmailer": ">=2.0.8",
-        "dmk/mkforms": ">=2.0.11"
+        "typo3/cms": "~6.2.14 || ~7.6 || ~8.7",
+        "digedag/rn-base": ">=1.4",
+        "dmk/mkmailer": ">=3",
+        "dmk/mkforms": ">=3"
     },
     "require-dev": {
         "namelesscoder/typo3-repository-client": "^1.2",
