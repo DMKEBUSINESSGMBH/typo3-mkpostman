@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "namelesscoder/typo3-repository-client": "^1.2",
+        "nimut/testing-framework": "^1.0",
         "mikey179/vfsStream": "^1.4",
         "phpunit/phpunit": "^4.7"
     },
@@ -43,7 +44,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "DMK\\Mkpostman\\Tests\\": "Tests/Unit/PHP","TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
+            "DMK\\Mkpostman\\Tests\\" : "Tests/Unit/PHP",
+            "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
             "TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
         }
     },
@@ -53,6 +55,12 @@
         "preferred-install": {
             "typo3/cms": "source"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/mklog ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mklog"
+        ]
     },
     "extra": {
         "typo3/cms": {
