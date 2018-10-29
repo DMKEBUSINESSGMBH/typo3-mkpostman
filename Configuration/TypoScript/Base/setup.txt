@@ -58,7 +58,7 @@ plugin.tx_mkpostman {
 
     subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
     subscribe {
-        ### don't cache the plugin and cnovert to user int
+        ### don't cache the plugin, convert to user int
         toUserInt = 1
 
         ### the basic form config, required by mkforms

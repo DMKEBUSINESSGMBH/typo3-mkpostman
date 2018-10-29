@@ -11,7 +11,7 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <action> <!-- Bezeichner ist frei wählbar -->
+                    <action>
                         <TCEforms>
                             <exclude>1</exclude>
                             <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.action</label>
@@ -24,21 +24,29 @@
                                         </numIndex>
                                     </items>
                                 <multiple>0</multiple>
-                                <maxitems>10</maxitems>
-                                <size>10</size>
+                                <maxitems>1</maxitems>
+                                <size>1</size>
                             </config>
                         </TCEforms>
                     </action>
-                </el>
-            </ROOT>
-        </sDEF>
-        <s_tssetup>
-            <ROOT>
-                <TCEforms>
-                    <sheetTitle>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tab.tssetup</sheetTitle>
-                </TCEforms>
-                <type>array</type>
-                <el>
+                    <subscribeFormHandler>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.subscribeFormHandler</label>
+                            <config>
+                                <type>select</type>
+                                <items type="array">
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.subscribeFormHandler.mkforms</numIndex>
+                                        <numIndex index="1">DMK\Mkpostman\Form\Handler\SubscribeMkformsHandler</numIndex>
+                                    </numIndex>
+                                </items>
+                                <multiple>0</multiple>
+                                <maxitems>1</maxitems>
+                                <size>1</size>
+                            </config>
+                        </TCEforms>
+                    </subscribeFormHandler>
                     <flexformTS>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -53,6 +61,6 @@
                     </flexformTS>
                 </el>
             </ROOT>
-        </s_tssetup>
+        </sDEF>
     </sheets>
 </T3DataStructure>

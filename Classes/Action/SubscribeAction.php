@@ -4,7 +4,7 @@ namespace DMK\Mkpostman\Action;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2016 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2016-2018 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +25,7 @@ namespace DMK\Mkpostman\Action;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action with mkforms
+ * MK Postman subscribe action
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
@@ -34,8 +34,119 @@ namespace DMK\Mkpostman\Action;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeAction
-    extends AbstractSubscribeAction
+    extends AbstractAction
 {
+    /**
+     * Referrer key after subscribtion success
+     *
+     * @var string
+     */
+    const SUCCESS_REFERRER_SUBSCRIBE = 'subscribe';
+
+    /**
+     * Referrer key after activation success
+     *
+     * @var string
+     */
+    const SUCCESS_REFERRER_ACTIVATE = 'activate';
+
+    /**
+     * Start the dance...
+     *
+     * @param \tx_rnbase_parameters $parameters
+     * @param \tx_rnbase_configurations $configurations
+     * @param \ArrayObject $viewData
+     *
+     * @return null|string
+     */
+    public function doRequest()
+    {
+        $parameters = $this->getParameters();
+
+        // check for an subscriber activation
+        $key = $parameters->get('key');
+        if (!empty($key) && $this->handleActivation($key)) {
+            return null;
+        }
+
+        // check for success after a subscription or activation
+        $success = $parameters->get('success');
+        if (!empty($success) && $this->handleSuccess($success)) {
+            return null;
+        }
+
+        // render the subscribtion form
+        return $this->handleForm();
+    }
+
+    /**
+     * Activates a subscriber by key
+     *
+     * @param string $activationKey
+     *
+     * @return bool
+     */
+    protected function handleActivation(
+        $activationKey
+    ) {
+        try {
+            $doubleOptInUtil = \DMK\Mkpostman\Factory::getDoubleOptInUtility(
+                $activationKey
+            );
+        } catch (\BadMethodCallException $e) {
+            if ($e->getCode() != 1464951846) {
+                throw $e;
+            }
+
+            return false;
+        }
+
+        if ($doubleOptInUtil->activateByKey($activationKey)) {
+            // after a successful activation we perform a redirect to success page
+            $this->performSuccessRedirect(
+                self::SUCCESS_REFERRER_ACTIVATE,
+                $doubleOptInUtil->getSubscriber()
+            );
+        }
+    }
+
+    /**
+     * Activates a subscriber by key
+     *
+     * @param string $success
+     *
+     * @return bool
+     */
+    protected function handleSuccess(
+        $success
+    ) {
+        $success = \DMK\Mkpostman\Factory::getCryptUtility()->urlDencode($success);
+        list($referrer, $uid) = explode(':', $success);
+
+        switch ($referrer) {
+            case self::SUCCESS_REFERRER_SUBSCRIBE:
+                break;
+
+            case self::SUCCESS_REFERRER_ACTIVATE:
+                break;
+
+            default:
+                return false;
+        }
+
+        $this->setToView(
+            'main_view_key',
+            'success_' . $referrer
+        );
+
+        $this->setToView(
+            'subscriber',
+            $this->getSubscriberRepository()->findByUid($uid)
+        );
+
+        return true;
+    }
+
     /**
      * Renders the subscribtion form
      *
@@ -43,80 +154,122 @@ class SubscribeAction
      */
     protected function handleForm()
     {
-        $configurations = $this->getConfigurations();
-        $confId = $this->getConfId();
 
-        $form = \tx_mkforms_forms_Factory::createForm('mkpostman');
+        $handlerClass = $this->getConfigurations()->get($this->getTemplateName() . 'FormHandler');
 
-        $form->init(
-            $this,
-            $configurations->get($confId . 'xml'),
-            false,
-            $configurations,
-            $confId . 'formconfig.'
-        );
+        /* @var $handler \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface */
+        $handler = \tx_rnbase::makeInstance($handlerClass, $this);
 
-        $this->setToView('form', $form->render());
-        $this->setToView('fullySubmitted', $form->isFullySubmitted());
-        $this->setToView('hasValidationErrors', $form->hasValidationErrors());
-    }
+        if (!$handler instanceof \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface) {
+            throw new \LogicException(
+                'Invalid subscribe form handler found.'
+            );
+        }
 
-    /**
-     * Prefills the subscribtin form with fe userdada
-     *
-     * @param    array              $params
-     * @param    \tx_ameosformidable $form
-     *
-     * @return    array
-     */
-    public function fillForm(array $params, \tx_ameosformidable $form)
-    {
-        $data = [];
+        $handler->handleForm();
 
-        // prefill with feuserdata,
-        // in form we need all values as string to perform some strict checks (gender)!
-        $data['subscriber'] = \array_map('strval', $this->getFeUserData());
+        if (!$handler->isSubmitted()) {
+            return;
+        }
 
-        return $this->multipleTableStructure2FlatArray(
-            $data,
-            $form
+        $subscriber = $handler->getSubscriber();
+
+        // if there is a new subscriber or the exciting is disabled, send double opt in
+        if ($subscriber->isHidden()) {
+            $this->performDoubleOptIn($subscriber);
+        }
+
+        $this->getSubscriberRepository()->persist($subscriber);
+
+        // after a successful submit we perform a redirect to success page
+        // if the subscriber is already subscribed, send activated, otherwise subscribed
+        $this->performSuccessRedirect(
+            ($subscriber->isHidden() ?
+                self::SUCCESS_REFERRER_SUBSCRIBE :
+                self::SUCCESS_REFERRER_ACTIVATE
+            ),
+            $subscriber
         );
     }
 
     /**
-     * Only a Wrapper for tx_mkforms_util_FormBase::multipleTableStructure2FlatArray
+     * Sends the double opt in mail
      *
-     * @param array $data
-     * @param \tx_ameosformidable $form
-     * @return array
+     * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+     *
+     * @return void
      */
-    protected function multipleTableStructure2FlatArray(array $data, \tx_ameosformidable $form)
-    {
-        return \tx_mkforms_util_FormBase::multipleTableStructure2FlatArray(
-            $data,
-            $form,
+    protected function performDoubleOptIn(
+        \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+    ) {
+        $processor = \DMK\Mkpostman\Factory::getProcessorMail(
+            $this->getConfigurations()
+        );
+        $processor->sendSubscriberActivation($subscriber);
+    }
+
+    /**
+     * Performs a sucess redirect
+     *
+     * @param string $referrer
+     * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+     *
+     * @return void
+     */
+    protected function performSuccessRedirect(
+        $referrer,
+        \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+    ) {
+        $link = $this->getConfigurations()->createLink();
+        $link->initByTS(
             $this->getConfigurations(),
-            $this->getConfId()
+            $this->getConfId() . 'redirect.' . $referrer . '.',
+            array(
+                'success' => \DMK\Mkpostman\Factory::getCryptUtility()->urlEncode(
+                    $referrer . ':' . $subscriber->getUid()
+                )
+            )
         );
+        $link->redirect();
     }
 
     /**
-     * Process form data
+     * Returns the subscriber repository
      *
-     * @param array              $data
-     * @param \tx_ameosformidable $form
+     * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
-    public function processForm($data, &$form)
+    protected function getSubscriberRepository()
     {
-        // Prepare data
-        \tx_rnbase::load('tx_mkforms_util_FormBase');
-        $data = \tx_mkforms_util_FormBase::flatArray2MultipleTableStructure(
-            $data,
-            $form,
-            $this->getConfigurations(),
-            $this->getConfId()
-        );
+        return \DMK\Mkpostman\Factory::getSubscriberRepository();
+    }
 
-        $this->processSubscriberData($data['subscriber']);
+    /**
+     * Confid
+     *
+     * @return string
+     */
+    public function getConfId()
+    {
+        return 'subscribe.';
+    }
+
+    /**
+     * Templatename and confid
+     *
+     * @return string
+     */
+    protected function getTemplateName()
+    {
+        return 'subscribe';
+    }
+
+    /**
+     * Viewclassname
+     *
+     * @return string
+     */
+    protected function getViewClassName()
+    {
+        return 'DMK\\Mkpostman\\View\\SubscribeView';
     }
 }
