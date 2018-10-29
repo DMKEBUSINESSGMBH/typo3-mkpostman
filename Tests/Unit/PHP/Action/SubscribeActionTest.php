@@ -64,9 +64,13 @@ class SubscribeActionTest
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('handleForm', 'handleActivation', 'handleSuccess')
+            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
         );
 
+        $action
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
         $action
             ->expects(self::never())
             ->method('handleActivation');
@@ -77,14 +81,9 @@ class SubscribeActionTest
             ->expects(self::once())
             ->method('handleForm');
 
-        $null = null;
         $this->assertSame(
             null,
-            $action->handleRequest(
-                $this->getMock('tx_rnbase_parameters'),
-                $null,
-                $null
-            )
+            $this->callInaccessibleMethod($action, 'doRequest')
         );
     }
 
@@ -101,10 +100,16 @@ class SubscribeActionTest
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('handleForm', 'handleActivation', 'handleSuccess')
+            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
         );
 
-
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('key', 'valid');
+        $action
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue($parameters));
         $action
             ->expects(self::once())
             ->method('handleActivation')
@@ -116,17 +121,10 @@ class SubscribeActionTest
         $action
             ->expects(self::never())
             ->method('handleForm');
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-        $parameters->offsetSet('key', 'valid');
-        $null = null;
+
         $this->assertSame(
             null,
-            $action->handleRequest(
-                $parameters,
-                $null,
-                $null
-            )
+            $this->callInaccessibleMethod($action, 'doRequest')
         );
     }
 
@@ -143,9 +141,16 @@ class SubscribeActionTest
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('handleForm', 'handleActivation', 'handleSuccess')
+            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
         );
 
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('key', 'invalid');
+        $action
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue($parameters));
 
         $action
             ->expects(self::once())
@@ -158,17 +163,10 @@ class SubscribeActionTest
         $action
             ->expects(self::once())
             ->method('handleForm');
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-        $parameters->offsetSet('key', 'invalid');
-        $null = null;
+
         $this->assertSame(
             null,
-            $action->handleRequest(
-                $parameters,
-                $null,
-                $null
-            )
+            $this->callInaccessibleMethod($action, 'doRequest')
         );
     }
 
@@ -185,8 +183,16 @@ class SubscribeActionTest
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('handleForm', 'handleActivation', 'handleSuccess')
+            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
         );
+
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('success', 'referrer:7');
+        $action
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue($parameters));
 
         $action
             ->expects(self::never())
@@ -199,17 +205,10 @@ class SubscribeActionTest
         $action
             ->expects(self::never())
             ->method('handleForm');
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-        $parameters->offsetSet('success', 'referrer:7');
-        $null = null;
+
         $this->assertSame(
             null,
-            $action->handleRequest(
-                $parameters,
-                $null,
-                $null
-            )
+            $this->callInaccessibleMethod($action, 'doRequest')
         );
     }
 
@@ -226,8 +225,16 @@ class SubscribeActionTest
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('handleForm', 'handleActivation', 'handleSuccess')
+            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
         );
+
+        /* @var $parameters \tx_rnbase_parameters */
+        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        $parameters->offsetSet('success', 'invalid');
+        $action
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue($parameters));
 
         $action
             ->expects(self::never())
@@ -240,17 +247,10 @@ class SubscribeActionTest
         $action
             ->expects(self::once())
             ->method('handleForm');
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
-        $parameters->offsetSet('success', 'invalid');
-        $null = null;
+
         $this->assertSame(
             null,
-            $action->handleRequest(
-                $parameters,
-                $null,
-                $null
-            )
+            $this->callInaccessibleMethod($action, 'doRequest')
         );
     }
 
@@ -292,22 +292,24 @@ class SubscribeActionTest
      */
     public function testFillDataWithoutUser()
     {
+        \tx_rnbase::load('tx_ameosformidable');
+        $form = $this->getMock('tx_ameosformidable');
+
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getFeUserData')
+            array('getFeUserData', 'multipleTableStructure2FlatArray')
         );
         $action
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue(array()));
+        $action
+            ->expects(self::once())
+            ->method('multipleTableStructure2FlatArray')
+            ->with($this->equalTo(['subscriber' => []]), $form);
 
-        $data = $this->callInaccessibleMethod($action, 'fillData', array());
-
-        $this->assertTrue(is_array($data));
-        $this->assertArrayHasKey('subscriber', $data);
-        $this->assertTrue(is_array($data['subscriber']));
-        $this->assertTrue(empty($data['subscriber']));
+        $this->callInaccessibleMethod($action, 'fillForm', [], $form);
     }
 
     /**
@@ -320,31 +322,32 @@ class SubscribeActionTest
      */
     public function testFillDataWithUser()
     {
-        $userdata = array(
+        $userdata = [
             'gender' => 1,
             'first_name' => 'Michael',
             'last_name' => 'Wagner',
             'email' => 'mwagner\'s mail',
-        );
+        ];
+
+        \tx_rnbase::load('tx_ameosformidable');
+        $form = $this->getMock('tx_ameosformidable');
+
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getFeUserData')
+            array('getFeUserData', 'multipleTableStructure2FlatArray')
         );
         $action
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue($userdata));
 
-        $data = $this->callInaccessibleMethod($action, 'fillData', array());
+        $action
+            ->expects(self::once())
+            ->method('multipleTableStructure2FlatArray')
+            ->with($this->equalTo(['subscriber' => $userdata]), $form);
 
-        $this->assertTrue(is_array($data));
-        $this->assertArrayHasKey('subscriber', $data);
-        $this->assertTrue(is_array($data['subscriber']));
-        $this->assertSame(
-            array_map('strval', $userdata),
-            $data['subscriber']
-        );
+        $this->callInaccessibleMethod($action, 'fillForm', [], $form);
     }
 
     /**

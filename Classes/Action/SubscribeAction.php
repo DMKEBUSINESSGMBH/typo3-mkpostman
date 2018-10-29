@@ -24,10 +24,8 @@ namespace DMK\Mkpostman\Action;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_mkforms_action_FormBase');
-
 /**
- * MK Postman subscribe action
+ * MK Postman subscribe action with mkforms
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
@@ -36,7 +34,7 @@ namespace DMK\Mkpostman\Action;
  *          GNU Lesser General Public License, version 3 or later
  */
 class SubscribeAction
-    extends \tx_mkforms_action_FormBase
+    extends AbstractAction
 {
     /**
      * Referrer key after subscribtion success
@@ -60,10 +58,9 @@ class SubscribeAction
      *
      * @return null|string
      */
-    // @codingStandardsIgnoreStart (interface/abstract mistake)
-    public function handleRequest(&$parameters, &$configurations, &$viewData)
+    public function doRequest()
     {
-        // @codingStandardsIgnoreEnd
+        $parameters = $this->getParameters();
 
         // check for an subscriber activation
         $key = $parameters->get('key');
@@ -152,15 +149,26 @@ class SubscribeAction
     /**
      * Renders the subscribtion form
      *
-     * @return null|string
+     * @return void
      */
     protected function handleForm()
     {
-        return parent::handleRequest(
-            $this->getParameters(),
-            $this->getConfigurations(),
-            $this->getViewData()
+        $configurations = $this->getConfigurations();
+        $confId = $this->getConfId();
+
+        $form = \tx_mkforms_forms_Factory::createForm('mkpostman');
+
+        $form->init(
+            $this,
+            $configurations->get($confId . 'xml'),
+            false,
+            $configurations,
+            $confId . 'formconfig.'
         );
+
+        $this->setToView('form', $form->render());
+        $this->setToView('fullySubmitted', $form->isFullySubmitted());
+        $this->setToView('hasValidationErrors', $form->hasValidationErrors());
     }
 
     /**
@@ -176,18 +184,60 @@ class SubscribeAction
     /**
      * Prefills the subscribtin form with fe userdada
      *
-     * @param array $params Parameters from the form
+     * @param    array              $params
+     * @param    \tx_ameosformidable $form
      *
-     * @return array
+     * @return    array
      */
-    protected function fillData(
-        array $params
-    ) {
+    public function fillForm(array $params, \tx_ameosformidable $form)
+    {
+        $data = [];
+
         // prefill with feuserdata,
         // in form we need all values as string to perform some strict checks (gender)!
-        $params['subscriber'] = \array_map('strval', $this->getFeUserData());
+        $data['subscriber'] = \array_map('strval', $this->getFeUserData());
 
-        return $params;
+        return $this->multipleTableStructure2FlatArray(
+            $data,
+            $form
+        );
+    }
+
+    /**
+     * Only a Wrapper for tx_mkforms_util_FormBase::multipleTableStructure2FlatArray
+     *
+     * @param array $data
+     * @param \tx_ameosformidable $form
+     * @return array
+     */
+    protected function multipleTableStructure2FlatArray(array $data, \tx_ameosformidable $form)
+    {
+        return \tx_mkforms_util_FormBase::multipleTableStructure2FlatArray(
+            $data,
+            $form,
+            $this->getConfigurations(),
+            $this->getConfId()
+        );
+    }
+
+    /**
+     * Process form data
+     *
+     * @param array              $data
+     * @param \tx_ameosformidable $form
+     */
+    public function processForm($data, &$form)
+    {
+        // Prepare data
+        \tx_rnbase::load('tx_mkforms_util_FormBase');
+        $data = \tx_mkforms_util_FormBase::flatArray2MultipleTableStructure(
+            $data,
+            $form,
+            $this->getConfigurations(),
+            $this->getConfId()
+        );
+
+        $this->processSubscriberData($data['subscriber']);
     }
 
     /**
