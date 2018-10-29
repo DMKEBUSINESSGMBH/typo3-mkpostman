@@ -95,9 +95,9 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
      *
      * @return bool
      */
-    public function isSubmitted()
+    public function isFinished()
     {
-        return $this->getForm()->isFullySubmitted();
+        return $this->getSubscriber() !== null && $this->getForm()->isFullySubmitted();
     }
 
     /**

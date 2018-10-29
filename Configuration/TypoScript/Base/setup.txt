@@ -10,6 +10,15 @@ plugin.tx_mkpostman {
     locallangFilename {
         fronted = EXT:mkpostman/Resources/Private/Language/Frontend.xlf
     }
+    ### the fluid things ###
+    view {
+        templateRootPaths.0 = EXT:mkpostman/Resources/Private/Templates/Frontend/Templates/
+        partialRootPaths.0 = EXT:mkpostman/Resources/Private/Templates/Frontend/Partials/
+        layoutRootPaths.0 = EXT:mkpostman/Resources/Private/Templates/Frontend/Layouts/
+    }
+    settings {
+
+    }
 }
 
 tt_content.list.20.tx_mkpostman =< plugin.tx_mkpostman
@@ -58,6 +67,8 @@ plugin.tx_mkpostman {
 
     subscribeTemplate = {$plugin.tx_mkpostman.templatePath}/Subscribe.html
     subscribe {
+        template.file = {$plugin.tx_mkpostman.templatePath}/Templates/Subscribe.html
+
         ### don't cache the plugin, convert to user int
         toUserInt = 1
 

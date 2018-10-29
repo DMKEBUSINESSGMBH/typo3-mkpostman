@@ -47,6 +47,16 @@
                             </config>
                         </TCEforms>
                     </subscribeFormHandler>
+                    <subscribe.legacyTemplate>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.subscribeLegacyTemplate</label>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </subscribe.legacyTemplate>
                     <flexformTS>
                         <TCEforms>
                             <exclude>1</exclude>

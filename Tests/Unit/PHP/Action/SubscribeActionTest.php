@@ -318,10 +318,13 @@ class SubscribeActionTest
      * @group unit
      * @test
      */
-    public function testGetTemplateNameShouldReturnsRightValue()
+    public function testGetTemplateNameShouldReturnsRightValueForLegacyTemplate()
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            ['isLegacyTemplate']
+        );
         $name = $this->callInaccessibleMethod($action, 'getTemplateName');
         $this->assertSame('subscribe', $name);
     }
@@ -334,11 +337,18 @@ class SubscribeActionTest
      * @group unit
      * @test
      */
-    public function testGetViewClassShouldReturnsRightValue()
+    public function testGetViewClassShouldReturnsRightValueForLegacyTemplate()
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
-        $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
-        $name  = $this->callInaccessibleMethod($action, 'getViewClassName');
+        $action = $this->getMock(
+            'DMK\\Mkpostman\\Action\\SubscribeAction',
+            array('isLegacyTemplate')
+        );
+        $action
+            ->expects($this->once())
+            ->method('isLegacyTemplate')
+            ->will($this->returnValue(true));
+        $name = $this->callInaccessibleMethod($action, 'getViewClassName');
         $this->assertSame('DMK\\Mkpostman\\View\\SubscribeView', $name);
     }
 }

@@ -40,7 +40,7 @@ interface FormHandlerInterface
      *
      * @return bool
      */
-    public function isSubmitted();
+    public function isFinished();
 
     /**
      * Renders the subscribtion form

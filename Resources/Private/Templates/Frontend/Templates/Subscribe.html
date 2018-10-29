@@ -1,0 +1,38 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	data-namespace-typo3-fluid="true"
+>
+
+	<f:comment><!-- we support typo3 including 7 LTS! --></f:comment>
+
+	<f:if condition="{main_view_key}">
+		<f:comment><!-- we have a main_view_key --></f:comment>
+		<f:then>
+			<f:if condition="{main_view_key} == 'success_subscribe'">
+				<f:comment><!-- render the subscribe success page --></f:comment>
+				<f:then>
+					<f:render partial="Subscribe/SubscribeSuccess" arguments="{subscriber: subscriber}" />
+				</f:then>
+			</f:if>
+
+			<f:comment><!-- render the activation success page --></f:comment>
+			<f:if condition="{main_view_key} == 'success_activate'">
+				<f:comment><!-- render the subscribe success page --></f:comment>
+				<f:then>
+					<f:render partial="Subscribe/ActivateSuccess" arguments="{subscriber: subscriber}" />
+				</f:then>
+			</f:if>
+		</f:then>
+
+		<f:comment><!-- we have a formular rendered by mkforms --></f:comment>
+		<f:else>
+			<f:if condition="{form}">
+				<f:render partial="Subscribe/Form" arguments="{form: form, subscriber: subscriber}" />
+			</f:if>
+		</f:else>
+	</f:if>
+
+	<f:debug>{_all}</f:debug>
+
+</html>
+

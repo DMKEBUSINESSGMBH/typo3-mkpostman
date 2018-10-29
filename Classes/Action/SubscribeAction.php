@@ -168,7 +168,7 @@ class SubscribeAction
 
         $handler->handleForm();
 
-        if (!$handler->isSubmitted()) {
+        if (!$handler->isFinished()) {
             return;
         }
 
@@ -234,6 +234,49 @@ class SubscribeAction
     }
 
     /**
+     * Should we use the lagacy marker template?
+     * @return bool
+     */
+    protected function isLegacyTemplate()
+    {
+        return $this->getConfigurations()->getBool($this->getConfId() . 'legacyTemplate');
+    }
+
+    /**
+     * Viewclassname
+     *
+     * @return string
+     */
+    protected function getViewClassName()
+    {
+        if ($this->isLegacyTemplate()) {
+            return 'DMK\\Mkpostman\\View\\SubscribeView';
+        }
+
+        return 'Sys25\\RnBase\\Fluid\\View\\Action';
+    }
+
+    /**
+     * Liefert den Pfad zum Template
+     *
+     * @return string
+     */
+    protected function getTemplateFile()
+    {
+        // use the old template from `subscribeTemplate`
+        if ($this->isLegacyTemplate()) {
+            return $this->getConfigurations()->get(
+                $this->getTemplateName() . 'Template', true
+            );
+        }
+
+        // use the new template from `subscribe.template.file`
+        return $this->getConfigurations()->get(
+            $this->getConfId() . 'template.file', true
+        );
+    }
+
+    /**
      * Returns the subscriber repository
      *
      * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
@@ -261,15 +304,5 @@ class SubscribeAction
     protected function getTemplateName()
     {
         return 'subscribe';
-    }
-
-    /**
-     * Viewclassname
-     *
-     * @return string
-     */
-    protected function getViewClassName()
-    {
-        return 'DMK\\Mkpostman\\View\\SubscribeView';
     }
 }

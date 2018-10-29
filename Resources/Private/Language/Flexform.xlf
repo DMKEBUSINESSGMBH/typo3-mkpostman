@@ -24,6 +24,9 @@
             <trans-unit id="plugin.mkpostman.flexform.subscribeFormHandler" xml:space="preserve">
                 <source>Subscribe Form Handler</source>
             </trans-unit>
+            <trans-unit id="plugin.mkpostman.flexform.subscribeLegacyTemplate" xml:space="preserve">
+                <source>Use Legacy Markertemplates for subscribtion</source>
+            </trans-unit>
             <trans-unit id="plugin.mkpostman.flexform.subscribeFormHandler.mkforms" xml:space="preserve">
                 <source>MK Forms</source>
             </trans-unit>
