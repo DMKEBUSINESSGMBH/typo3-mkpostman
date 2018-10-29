@@ -59,7 +59,7 @@
     "scripts": {
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
-            "[ -L .Build/Web/typo3conf/ext/mklog ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mklog"
+            "[ -L .Build/Web/typo3conf/ext/mkpostman ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mkpostman"
         ]
     },
     "extra": {

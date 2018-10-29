@@ -1,5 +1,6 @@
 ### travis builds
 /.Build
+composer.lock
 
 ### eclipse files
 /.buildpath
