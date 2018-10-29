@@ -37,12 +37,7 @@ namespace DMK\Mkpostman\Action;
  */
 abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
 {
-    /**
-     * A storage object
-     *
-     * @var Tx_Rnbase_Domain_Model_Data
-     */
-    private $storage = null;
+    use \Tx_Rnbase_Domain_Model_StorageTrait;
 
     /**
      * Lets do the magic
@@ -66,7 +61,6 @@ abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
      * @return string Errorstring or NULL
      */
     abstract protected function doRequest();
-
     /*
      * {
      * $parameters = $this->getParameters();
@@ -76,21 +70,6 @@ abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
      * return null;
      * }
      */
-
-    /**
-     * A Storage object for the childclasses
-     *
-     * @return Tx_Rnbase_Domain_Model_Data
-     */
-    protected function getStorage()
-    {
-        if ($this->storage === null) {
-            \tx_rnbase::load('Tx_Rnbase_Domain_Model_Data');
-            $this->storage = \Tx_Rnbase_Domain_Model_Data::getInstance();
-        }
-
-        return $this->storage;
-    }
 
     /**
      * Sets some data to the view
