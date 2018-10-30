@@ -30,7 +30,7 @@ namespace DMK\Mkpostman\View;
  * MK Postman abstract view
  *
  * @package TYPO3
- * @subpackage Tx_Hpsplaner
+ * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later

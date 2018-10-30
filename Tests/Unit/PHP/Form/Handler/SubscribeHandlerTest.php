@@ -4,7 +4,7 @@ namespace DMK\Mkpostman\Action;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2016 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2018 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,7 +48,7 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeMkformsHandlerTest
+class SubscribeHandlerTest
     extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
@@ -61,31 +61,31 @@ class SubscribeMkformsHandlerTest
      */
     public function testFillDataWithoutUser()
     {
-        \tx_rnbase::load('tx_mkforms_forms_Base');
-        $form = $this->getMock('tx_mkforms_forms_Base');
-
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
-            'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
-            array('getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'),
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            array('getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'),
             array(),
             '',
             false
         );
         $handler
-            ->expects(self::any())
-            ->method('getForm')
-            ->will(self::returnValue($form));
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue(array()));
-        $handler
-            ->expects(self::once())
-            ->method('multipleTableStructure2FlatArray')
-            ->with($this->equalTo(['subscriber' => []]));
 
-        $this->callInaccessibleMethod($handler, 'fillForm', []);
+        $handler->handleForm();
+        /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
+        $subscriber = $handler->getSubscriber();
+
+        $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $subscriber);
+        $this->assertCount(1, $subscriber->getProperties());
+        $this->assertArrayHasKey('uid', $subscriber->getProperties());
+        $this->assertSame($subscriber->getUid(), 0);
     }
 
     /**
@@ -105,32 +105,34 @@ class SubscribeMkformsHandlerTest
             'email' => 'mwagner\'s mail',
         ];
 
-        \tx_rnbase::load('tx_mkforms_forms_Base');
-        $form = $this->getMock('tx_mkforms_forms_Base');
-
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMockForAbstract(
-            'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
-            array('getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'),
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            array('getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'),
             array(),
             '',
             false
         );
-
         $handler
-            ->expects(self::any())
-            ->method('getForm')
-            ->will(self::returnValue($form));
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue($userdata));
 
-        $handler
-            ->expects(self::once())
-            ->method('multipleTableStructure2FlatArray')
-            ->with($this->equalTo(['subscriber' => $userdata]));
+        $handler->handleForm();
+        /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
+        $subscriber = $handler->getSubscriber();
 
-        $this->callInaccessibleMethod($handler, 'fillForm', []);
+        $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $subscriber);
+        $this->assertCount(5, $subscriber->getProperties());
+        $this->assertArrayHasKey('uid', $subscriber->getProperties());
+        $this->assertArrayHasKey('gender', $subscriber->getProperties());
+        $this->assertArrayHasKey('first_name', $subscriber->getProperties());
+        $this->assertArrayHasKey('last_name', $subscriber->getProperties());
+        $this->assertArrayHasKey('email', $subscriber->getProperties());
+        $this->assertSame($subscriber->getProperties(), array_merge(['uid' => 0], $userdata));
     }
 }

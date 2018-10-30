@@ -33,17 +33,12 @@ namespace DMK\Mkpostman\Form\Handler;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFormHandlerInterface
+class SubscribeMkformsHandler extends AbstractSubscribeHandler
 {
     /**
      * @var \tx_mkforms_forms_Base
      */
     private $form;
-
-    /**
-     * @var \DMK\Mkpostman\Domain\Model\SubscriberModel
-     */
-    private $subscriber;
 
     /**
      * Renders the subscribtion form
@@ -102,14 +97,6 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
     }
 
     /**
-     * @return \DMK\Mkpostman\Domain\Model\SubscriberModel
-     */
-    public function getSubscriber()
-    {
-        return $this->subscriber;
-    }
-
-    /**
      * Prefills the subscribtin form with fe userdada.
      *
      * Is called by the mkforms subscribe form xml
@@ -165,83 +152,6 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
         );
 
         $this->processSubscriberData($data['subscriber']);
-    }
-
-    /**
-     * Process the subscriber data after valid form submit
-     *
-     * @param array $data Form data splitted by tables
-     *
-     * @return void
-     */
-    protected function processSubscriberData(
-        array $data
-    ) {
-        // try to find an exciting subscriber
-        $subscriber = $this->findOrCreateSubscriber($data);
-
-        // set the data from the form to the model
-        foreach ($data as $field => $value) {
-            $subscriber->setProperty($field, $value);
-        }
-
-        // before a double opt in mail was send, we has to persist the model, we need the uid!
-        $this->getSubscriberRepository()->persist($subscriber);
-
-        $this->subscriber = $subscriber;
-    }
-
-    /**
-     * Finds an exsisting subscriber by mail or creates a new one.
-     *
-     * @param array $data
-     *
-     * @return \DMK\Mkpostman\Domain\Model\SubscriberModel
-     */
-    protected function findOrCreateSubscriber(
-        array $data = array()
-    ) {
-        $repo = $this->getSubscriberRepository();
-
-        // try to find an exciting subscriber
-        if (!empty($data['email'])) {
-            $subscriber = $repo->findByEmail($data['email']);
-        }
-
-        // otherwise create a new one
-        if (!$subscriber) {
-            $subscriber = $repo->createNewModel();
-            // a new subscriber initialy is disabled and has to be confirmed
-            $subscriber->setDisabled(1);
-            // set the storage pid for the new subscriber
-            $subscriber->setPid(
-                $this->getConfigurations()->getInt(
-                    $this->getConfId() . 'subscriber.storage'
-                )
-            );
-        }
-
-        return $subscriber;
-    }
-
-    /**
-     * Returns the subscriber repository
-     *
-     * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
-     */
-    protected function getSubscriberRepository()
-    {
-        return \DMK\Mkpostman\Factory::getSubscriberRepository();
-    }
-
-    /**
-     * The record of the current feuser, if any is logged in.
-     *
-     * @return array
-     */
-    protected function getFeUserData()
-    {
-        return (array) $GLOBALS['TSFE']->fe_user->user;
     }
 
     /**
