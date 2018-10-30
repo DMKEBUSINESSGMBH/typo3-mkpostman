@@ -38,7 +38,7 @@ final class Factory
     /**
      * Returns a storage
      *
-     * @return Tx_Rnbase_Domain_Model_Data
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     protected static function getStorage()
     {
@@ -56,7 +56,7 @@ final class Factory
     /**
      * Returns a cache
      *
-     * @return tx_rnbase_cache_ICache
+     * @return \tx_rnbase_cache_ICache
      */
     public static function getCache()
     {

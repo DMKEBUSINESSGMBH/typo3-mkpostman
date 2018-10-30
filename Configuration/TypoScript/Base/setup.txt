@@ -81,10 +81,11 @@ plugin.tx_mkpostman {
         ### set the storage for new subscribers
         subscriber.storage = {$plugin.tx_mkpostman.subscriberStorage}
 
-        ### the redirect urls after subscribtion or activation, 0 means, the current page is used
+        ### the redirect urls after subscribtion activation or unsubscribe, 0 means, the current page is used
         redirect {
             subscribe.pid = 0
             activate.pid = 0
+            unsubscribe.pid = 0
         }
     }
 }

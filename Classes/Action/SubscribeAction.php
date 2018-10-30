@@ -44,6 +44,13 @@ class SubscribeAction
     const SUCCESS_REFERRER_SUBSCRIBE = 'subscribe';
 
     /**
+     * Referrer key after subscribtion success
+     *
+     * @var string
+     */
+    const SUCCESS_REFERRER_UNSUBSCRIBE = 'unsubscribe';
+
+    /**
      * Referrer key after activation success
      *
      * @var string
@@ -66,6 +73,12 @@ class SubscribeAction
         // check for an subscriber activation
         $key = $parameters->get('key');
         if (!empty($key) && $this->handleActivation($key)) {
+            return null;
+        }
+
+        // check for an unsubscribe
+        $key = $parameters->get('unsubscribe');
+        if (!empty($key) && $this->handleUsubscribe($key)) {
             return null;
         }
 
@@ -111,6 +124,37 @@ class SubscribeAction
     }
 
     /**
+     * Disables a subscriber by key
+     *
+     * @param string $activationKey
+     *
+     * @return bool
+     */
+    protected function handleUsubscribe(
+        $activationKey
+    ) {
+        try {
+            $doubleOptInUtil = \DMK\Mkpostman\Factory::getDoubleOptInUtility(
+                $activationKey
+            );
+        } catch (\BadMethodCallException $e) {
+            if ($e->getCode() != 1464951846) {
+                throw $e;
+            }
+
+            return false;
+        }
+
+        if ($doubleOptInUtil->deactivateByKey($activationKey)) {
+            // after a successful activation we perform a redirect to success page
+            $this->performSuccessRedirect(
+                self::SUCCESS_REFERRER_UNSUBSCRIBE,
+                $doubleOptInUtil->getSubscriber()
+            );
+        }
+    }
+
+    /**
      * Activates a subscriber by key
      *
      * @param string $success
@@ -128,6 +172,9 @@ class SubscribeAction
                 break;
 
             case self::SUCCESS_REFERRER_ACTIVATE:
+                break;
+
+            case self::SUCCESS_REFERRER_UNSUBSCRIBE:
                 break;
 
             default:
@@ -230,6 +277,7 @@ class SubscribeAction
                 )
             )
         );
+
         $link->redirect();
     }
 

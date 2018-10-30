@@ -6,7 +6,7 @@ MK POSTMAN
 [![Build Status](https://img.shields.io/travis/DMKEBUSINESSGMBH/typo3-mkpostman.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/DMKEBUSINESSGMBH/typo3-mkpostman)
 [![License](https://img.shields.io/packagist/l/dmk/mkpostman.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/mkpostman)
 
-##E-mail marketing system for the TYPO3 CMS
+## E-mail marketing system for the TYPO3 CMS
 
 ### Installation
 Install TYPO3 via composer. Maybe you can use our [TYPO3-Composer-Webroot Project](https://github.com/DMKEBUSINESSGMBH/typo3-composer-webroot)

@@ -22,6 +22,14 @@
 					<f:render partial="Subscribe/ActivateSuccess" arguments="{subscriber: subscriber}" />
 				</f:then>
 			</f:if>
+
+			<f:comment><!-- render the activation success page --></f:comment>
+			<f:if condition="{main_view_key} == 'success_unsubscribe'">
+				<f:comment><!-- render the subscribe success page --></f:comment>
+				<f:then>
+					<f:render partial="Subscribe/UnsubscribeSuccess" arguments="{subscriber: subscriber}" />
+				</f:then>
+			</f:if>
 		</f:then>
 
 		<f:comment><!-- we have a formular rendered by mkforms --></f:comment>

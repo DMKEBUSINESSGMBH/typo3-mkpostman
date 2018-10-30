@@ -8,3 +8,5 @@ UsersManual
 
  * [Installation](Installation.md)
  * [Subscription](Subscription.md)
+ * [Unsubscribe](UsersManual/Unsubscription.md)
+ * [Directmail](UsersManual/Directmail.md)

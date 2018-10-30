@@ -27,7 +27,7 @@ namespace DMK\Mkpostman\Utility;
 use \DMK\Mkpostman\Domain\Model\SubscriberModel;
 
 /**
- * MK Postman Double-Opt-In utility
+ * MK Postman Double-Opt-In and Opt-Out utility
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
@@ -158,7 +158,7 @@ class DoubleOptInUtility
      *
      * @param string $activationKey
      *
-     * @return Tx_Rnbase_Domain_Model_Data
+     * @return \Tx_Rnbase_Domain_Model_Data
      */
     protected function decodeActivationKey(
         $activationKey
@@ -227,6 +227,52 @@ class DoubleOptInUtility
     }
 
     /**
+     * Creates a activation key for the subscriber
+     * uid:confirmstring:mailmd5
+     *
+     * @param bool $urlencode
+     *
+     * @return string
+     */
+    public function buildUnsubscribeKey(
+        $urlencode = false
+    ) {
+        $subscriber = $this->getSubscriber();
+
+        if (!$subscriber->isPersisted()) {
+            throw new \Exception(
+                'The subscriber has to ber persisted to create an activation key'
+            );
+        }
+        if (!$subscriber->getEmail()) {
+            throw new \Exception(
+                'The subscriber needs a email to create an activation key'
+            );
+        }
+
+        if (!$subscriber->getConfirmstring()) {
+            $this->updateConfirmString();
+        }
+
+        $key = implode(
+            ':',
+            array(
+                $subscriber->getUid(),
+                $subscriber->getConfirmstring(),
+                md5($subscriber->getEmail())
+            )
+        );
+
+        // make the key base64 and url encoded
+        if ($urlencode) {
+            $crypt = \DMK\Mkpostman\Factory::getCryptUtility();
+            $key = $crypt->urlEncode($key);
+        }
+
+        return $key;
+    }
+
+    /**
      * Validates the activation key and activates the subscriber
      *
      * @param string $activationKey
@@ -236,13 +282,39 @@ class DoubleOptInUtility
     public function activateByKey(
         $activationKey
     ) {
+        return $this->modifyByKey($activationKey, 0);
+    }
+
+    /**
+     * Validates the activation key and activates the subscriber
+     *
+     * @param string $activationKey
+     *
+     * @return bool
+     */
+    public function deactivateByKey(
+        $activationKey
+    ) {
+        return $this->modifyByKey($activationKey, 1);
+    }
+
+    /**
+     * Validates the activation key and activates the subscriber
+     *
+     * @param string $activationKey
+     *
+     * @return bool
+     */
+    private function modifyByKey(
+        $activationKey, $disabled
+    ) {
         if (!$this->validateActivationKey($activationKey)) {
             return false;
         }
 
         $subscriber = $this->getSubscriber();
         $subscriber->setConfirmstring('');
-        $subscriber->setDisabled(0);
+        $subscriber->setDisabled($disabled);
 
         $this->getRepository()->persist($subscriber);
 

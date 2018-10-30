@@ -16,6 +16,10 @@ CREATE TABLE tx_mkpostman_subscribers (
     email varchar(255) DEFAULT '' NOT NULL,
     confirmstring varchar(32) DEFAULT '' NOT NULL,
 
+    ### fields for direct_mail
+    name varchar(140) DEFAULT '' NOT NULL,
+    module_sys_dmail_html tinyint(3) unsigned NOT NULL default '1',
+
     PRIMARY KEY (uid),
     KEY parent (pid),
     KEY email (email)
