@@ -25,7 +25,10 @@
                 <source>Subscribe Form Handler</source>
             </trans-unit>
             <trans-unit id="plugin.mkpostman.flexform.subscribeLegacyTemplate" xml:space="preserve">
-                <source>Use Legacy Markertemplates for subscribtion</source>
+                <source>Use Legacy Markertemplates for subscribtion with MK Forms</source>
+            </trans-unit>
+            <trans-unit id="plugin.mkpostman.flexform.subscribeFormHandler.internal" xml:space="preserve">
+                <source>Standalone</source>
             </trans-unit>
             <trans-unit id="plugin.mkpostman.flexform.subscribeFormHandler.mkforms" xml:space="preserve">
                 <source>MK Forms</source>

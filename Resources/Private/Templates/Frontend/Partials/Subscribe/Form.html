@@ -1,8 +1,40 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
 
-	<f:format.raw>
-		{form}
-	</f:format.raw>
+    <f:form object="{subscriber}" objectName="mkpostman[subscriber]" actionUri="" method="post">
+
+        <fieldset>
+            <label>
+                <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_gender" />
+
+                <f:form.select property="gender" options="{form.options.gender}" />
+            </label>
+            <label>
+                <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_first_name" />
+                <f:form.textfield property="first_name" />
+            </label>
+            <label>
+                <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_last_name" />
+                <f:form.textfield property="last_name" />
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <f:if condition="{form.errors.email}">
+                <f:then>
+                    <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_email_email" />
+                </f:then>
+            </f:if>
+            <label>
+                <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_email" />
+                <f:form.textfield property="email" />
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <f:form.submit name="mkpostman[subscribe]" value="Absenden" />
+        </fieldset>
+
+    </f:form>
 
 </html>

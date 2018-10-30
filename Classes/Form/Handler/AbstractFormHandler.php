@@ -69,7 +69,7 @@ abstract class AbstractFormHandler
     /**
      * Returns request parameters
      *
-     * @return tx_rnbase_IParameters
+     * @return \tx_rnbase_IParameters
      */
     public function getParameters()
     {

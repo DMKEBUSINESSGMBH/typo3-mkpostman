@@ -154,7 +154,6 @@ class SubscribeAction
      */
     protected function handleForm()
     {
-
         $handlerClass = $this->getConfigurations()->get($this->getTemplateName() . 'FormHandler');
 
         /* @var $handler \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface */
@@ -168,11 +167,12 @@ class SubscribeAction
 
         $handler->handleForm();
 
+        $subscriber = $handler->getSubscriber();
+        $this->setToView('subscriber', $subscriber);
+
         if (!$handler->isFinished()) {
             return;
         }
-
-        $subscriber = $handler->getSubscriber();
 
         // if there is a new subscriber or the exciting is disabled, send double opt in
         if ($subscriber->isHidden()) {

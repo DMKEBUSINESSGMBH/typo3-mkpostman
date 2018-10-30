@@ -26,7 +26,7 @@
                 <target>Vorname:</target>
             </trans-unit>
             <trans-unit id="label_form_subscriber_last_name" xml:space="preserve">
-                <target>nachname:</target>
+                <target>Nachname:</target>
             </trans-unit>
             <trans-unit id="label_form_subscriber_email" xml:space="preserve">
                 <target>E-Mail*:</target>

@@ -25,7 +25,7 @@ namespace DMK\Mkpostman\Form\Handler;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action with mkforms
+ * MK Postman subscribe action
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
@@ -33,17 +33,17 @@ namespace DMK\Mkpostman\Form\Handler;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFormHandlerInterface
+class SubscribeHandler extends AbstractFormHandler implements SubscribeFormHandlerInterface
 {
-    /**
-     * @var \tx_mkforms_forms_Base
-     */
-    private $form;
-
     /**
      * @var \DMK\Mkpostman\Domain\Model\SubscriberModel
      */
     private $subscriber;
+
+    /**
+     * @var array
+     */
+    private $validationErrors = [];
 
     /**
      * Renders the subscribtion form
@@ -52,43 +52,45 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
      */
     public function handleForm()
     {
-        $form = $this->createForm();
+        $this->setToView('handler', 'standalone');
 
-        $this->setToView('form', $form->render());
-        $this->setToView('handler', 'mkforms');
+        // create model to fill the form
+        $this->subscriber = $this->getSubscriberRepository()->getEmptyModel();
+        // force uid to be 0, so it can not be overridden by setProperty!
+        $this->subscriber->setUid(0);
+        // prefill with current fe user data
+        $this->subscriber->setProperty($this->getFeUserData());
 
-        return $this;
-    }
+        // now check if there are a submit
+        if ($this->getParameters()->get('subscribe')) {
+            $data = $this->getParameters()->get('subscriber');
+            if ($this->validateSubscriberData($data))
+            {
+                $this->processSubscriberData($data);
+            }
+            else {
+                // prefill with current fe user data
+                $this->subscriber->setProperty($data);
+            }
+        }
 
-    /**
-     * Creates the Form
-     *
-     * @return \tx_mkforms_forms_Base
-     */
-    protected function createForm()
-    {
-        $configurations = $this->getConfigurations();
-        $confId = $this->getConfId();
-
-        $this->form = \tx_mkforms_forms_Factory::createForm('mkpostman');
-
-        $this->form->init(
-            $this,
-            $configurations->get($confId . 'xml'),
-            false,
-            $configurations,
-            $confId . 'formconfig.'
+        // @TODO: refactor this!
+        $this->setToView(
+            'form',
+            [
+                'errorcount' => count($this->validationErrors),
+                'errors' => $this->validationErrors,
+                'options' => [
+                    'gender' => [
+                        '' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_general_choose'),
+                        '0' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_0'),
+                        '1' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_1'),
+                    ]
+                ]
+            ]
         );
 
-        return $this->form;
-    }
-
-    /**
-     * @return \tx_mkforms_forms_Base
-     */
-    protected function getForm()
-    {
-        return $this->form;
+        return $this;
     }
 
     /**
@@ -98,7 +100,12 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
      */
     public function isFinished()
     {
-        return $this->getSubscriber() !== null && $this->getForm()->isFullySubmitted();
+        return (
+            empty($this->validationErrors) &&
+            $this->getSubscriber() &&
+            $this->getSubscriber()->getUid()> 0 &&
+            $this->getParameters()->get('subscribe')
+        );
     }
 
     /**
@@ -110,61 +117,21 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
     }
 
     /**
-     * Prefills the subscribtin form with fe userdada.
+     * Process the subscriber data after valid form submit
      *
-     * Is called by the mkforms subscribe form xml
+     * @param array $data Form data splitted by tables
      *
-     * @param array $params
-     *
-     * @return array
+     * @return bool
      */
-    public function fillForm(array $params)
-    {
-        $data = [];
+    protected function validateSubscriberData(
+        array $data
+    ) {
+        if (empty($data['email']) || !\Tx_Rnbase_Utility_T3General::validEmail($data['email'])) {
+            $this->validationErrors['email'] = true;
+            return false;
+        }
 
-        // prefill with feuserdata,
-        // in form we need all values as string to perform some strict checks (gender)!
-        $data['subscriber'] = \array_map('strval', $this->getFeUserData());
-
-        return $this->multipleTableStructure2FlatArray($data);
-    }
-
-    /**
-     * Only a Wrapper for tx_mkforms_util_FormBase::multipleTableStructure2FlatArray
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function multipleTableStructure2FlatArray(array $data)
-    {
-        return \tx_mkforms_util_FormBase::multipleTableStructure2FlatArray(
-            $data,
-            $this->getForm(),
-            $this->getConfigurations(),
-            $this->getConfId()
-        );
-    }
-
-    /**
-     * Process form data.
-     *
-     * Is called by the mkforms subscribe form xml
-     *
-     * @param array $data
-     */
-    public function processForm($data)
-    {
-        // Prepare data
-        \tx_rnbase::load('tx_mkforms_util_FormBase');
-        $data = \tx_mkforms_util_FormBase::flatArray2MultipleTableStructure(
-            $data,
-            $this->getForm(),
-            $this->getConfigurations(),
-            $this->getConfId()
-        );
-
-        $this->processSubscriberData($data['subscriber']);
+        return true;
     }
 
     /**
@@ -225,16 +192,6 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
     }
 
     /**
-     * Returns the subscriber repository
-     *
-     * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
-     */
-    protected function getSubscriberRepository()
-    {
-        return \DMK\Mkpostman\Factory::getSubscriberRepository();
-    }
-
-    /**
      * The record of the current feuser, if any is logged in.
      *
      * @return array
@@ -245,19 +202,12 @@ class SubscribeMkformsHandler extends AbstractFormHandler implements SubscribeFo
     }
 
     /**
-     * The TemplatePath for the mkforms xml subscribe form
+     * Returns the subscriber repository
      *
-     * @return string
+     * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
-    public function getFormTemplate()
+    protected function getSubscriberRepository()
     {
-        \tx_rnbase::load('tx_rnbase_util_Files');
-
-        return \tx_rnbase_util_Files::getFileAbsFileName(
-            $this->getConfigurations()->get(
-                'subscribeTemplate',
-                true
-            )
-        );
+        return \DMK\Mkpostman\Factory::getSubscriberRepository();
     }
 }

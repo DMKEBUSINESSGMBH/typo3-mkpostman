@@ -37,6 +37,10 @@
                                 <type>select</type>
                                 <items type="array">
                                     <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.subscribeFormHandler.internal</numIndex>
+                                        <numIndex index="1">DMK\Mkpostman\Form\Handler\SubscribeHandler</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
                                         <numIndex index="0">LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.subscribeFormHandler.mkforms</numIndex>
                                         <numIndex index="1">DMK\Mkpostman\Form\Handler\SubscribeMkformsHandler</numIndex>
                                     </numIndex>
