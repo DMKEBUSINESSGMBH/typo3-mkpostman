@@ -51,10 +51,27 @@ In the template currently the following markers available:
 
 ### Form Templating
 
-The subscription form uses the powerful
-[MK Forms](https://github.com/DMKEBUSINESSGMBH/typo3-mkforms/) extension.
+There are currently two ways to build the form, which you can select in the MK Postman Plugin.
 
-The form is based on a xml. This form xml is configured by TS and can be overridden:
+You can use the powerful
+[MK Forms](https://github.com/DMKEBUSINESSGMBH/typo3-mkforms/) extension or the build in fluid form.
+
+#### Standalone
+
+The standalone Subscription Form comes with a Fluid Template
+
+The Template and The Partial with the all formular elements are defined in the Template.
+
+```
+plugin.tx_mkpostman.subscribe.template.file = EXT:mkpostman/Resources/Private/Templates/Frontend/Templates/Subscribe.html
+```
+
+Note, that all fields with the prefix *mkpostman[subscriber]* will be stored in the
+table *tx_mkpostman_subscribers*. All other fields will be ignoren on process.
+
+#### MK Forms
+
+When you use the MK Forms integration, the form is based on a xml. This form xml is configured by TS and can be overridden:
 
 ```
 plugin.tx_mkpostman.subscribe.xml = EXT:mkpostman/Resources/Private/Form/Subscribe.xml
@@ -69,8 +86,9 @@ table *tx_mkpostman_subscribers*. All other fields will be ignoren on process.
 
 After the subscription form was surefully submitted,
 there will be a redirect to a confirm page.  
-By default the same page as the current subscription form will be used
-and the subpart *###SUBSCRIBE_SUCCESS_SUBSCRIBE###* of the subscribe-template will be outputted.  
+By default the same page as the current subscription form will be used.
+For the legacy marker template the subpart *###SUBSCRIBE_SUCCESS_SUBSCRIBE###* of the subscribe-template will be outputted.
+For the new Fluid template the SubscribeSuccess partial will be outputted.
 A diffrent page for the redirect after the form submit can be defined in TypoScript
 
 ```
@@ -82,7 +100,8 @@ plugin.tx_mkpostman.subscribe.redirect.subscribe.pid = 7
 After the activation link from the double-opt-in mail was processed by MK Postman,
 there will be a redirect to a confirm page.  
 By default it is the same page as the current activation page
-and the subpart *###SUBSCRIBE_SUCCESS_ACTIVATE###* of the subscribe-template will be outputted.  
+For the legacy marker template the subpart *###SUBSCRIBE_SUCCESS_ACTIVATE###* of the subscribe-template will be outputted.
+For the new Fluid template the ActivateSuccess partial will be outputted.  
 A diffrent page for the redirect after the form submit can be defined in TypoScript
 
 ```

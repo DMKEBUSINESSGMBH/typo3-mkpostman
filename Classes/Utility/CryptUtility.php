@@ -27,7 +27,7 @@ namespace DMK\Mkpostman\Utility;
 \tx_rnbase::load('Tx_Rnbase_Interface_Singleton');
 
 /**
- * MK Postman Double-Opt-In utility
+ * MK Postman crypt utility
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman

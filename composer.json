@@ -19,14 +19,16 @@
     "require": {
         "typo3/cms": "~6.2.14 || ~7.6 || ~8.7",
         "digedag/rn-base": ">=1.4",
-        "dmk/mkmailer": ">=3",
-        "dmk/mkforms": ">=3"
+        "dmk/mkmailer": ">=3"
     },
     "require-dev": {
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.0",
         "mikey179/vfsStream": "^1.4",
         "phpunit/phpunit": "^4.7"
+    },
+    "suggest": {
+        "dmk/mkforms": "Use the powerful MK Forms extension to build the subscription form ('\"dmk/mkforms\": \">=3\"')."
     },
     "support": {
         "email": "dev@dmk-ebusiness.de",
