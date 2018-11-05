@@ -109,6 +109,16 @@ class DoubleOptInUtility
     }
 
     /**
+     * Returns the log manager
+     *
+     * @return \DMK\Mkpostman\Domain\Manager\LogManager
+     */
+    protected function getLogManager()
+    {
+        return \DMK\Mkpostman\Factory::getLogManager();
+    }
+
+    /**
      * Updates subscriber model with a new confirmstring
      * and persist the changes
      *
@@ -282,7 +292,13 @@ class DoubleOptInUtility
     public function activateByKey(
         $activationKey
     ) {
-        return $this->modifyByKey($activationKey, 0);
+        if (!$this->modifyByKey($activationKey, 0)) {
+            return false;
+        }
+
+        $this->getLogManager()->createActivatedBySubscriber($this->getSubscriber());
+
+        return true;
     }
 
     /**
@@ -295,7 +311,13 @@ class DoubleOptInUtility
     public function deactivateByKey(
         $activationKey
     ) {
-        return $this->modifyByKey($activationKey, 1);
+        if (!$this->modifyByKey($activationKey, 1)) {
+            return false;
+        }
+
+        $this->getLogManager()->createUnsubscribedBySubscriber($this->getSubscriber());
+
+        return true;
     }
 
     /**

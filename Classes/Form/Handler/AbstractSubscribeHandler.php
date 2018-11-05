@@ -1,6 +1,8 @@
 <?php
 namespace DMK\Mkpostman\Form\Handler;
 
+use DMK\Mkpostman\Factory;
+
 /***************************************************************
  * Copyright notice
  *
@@ -80,6 +82,8 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
         // before a double opt in mail was send, we has to persist the model, we need the uid!
         $this->getSubscriberRepository()->persist($subscriber);
 
+        $this->getLogManager()->createSubscribedBySubscriber($subscriber);
+
         $this->setSubscriber($subscriber);
     }
 
@@ -134,5 +138,15 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
     protected function getSubscriberRepository()
     {
         return \DMK\Mkpostman\Factory::getSubscriberRepository();
+    }
+
+    /**
+     * Returns the log manager
+     *
+     * @return \DMK\Mkpostman\Domain\Manager\LogManager
+     */
+    protected function getLogManager()
+    {
+        return \DMK\Mkpostman\Factory::getLogManager();
     }
 }

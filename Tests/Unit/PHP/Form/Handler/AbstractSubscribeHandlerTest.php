@@ -170,7 +170,6 @@ class AbstractSubscribeHandlerTest
             ->expects(self::never())
             ->method('createNewModel');
 
-
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
@@ -199,5 +198,83 @@ class AbstractSubscribeHandlerTest
         $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
 
         $this->assertSame($model->getProperty(), $subscriber->getProperty());
+    }
+
+    /**
+     * Test the findOrCreateSubscriber method
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testProcessSubscriberData()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
+        $subscriber = $this->getModel(
+            array(
+                'uid' => 5,
+                'pid' => 7,
+                'disabled' => 0,
+                'gender' => 1,
+                'first_name' => 'Michael',
+                'last_name' => 'Wagner',
+                'email' => 'mwagner@localhost.net',
+            ),
+            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+        );
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
+        $repo = $this->getMock(
+            'Mkpostman_Tests_DomainRepositorySubscriberRepository',
+            \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
+        );
+        $repo
+            ->expects(self::once())
+            ->method('persist')
+            ->with($this->equalTo($subscriber));
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
+        $logManager = $this->getMock(
+            'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
+        );
+        $logManager
+            ->expects($this->once())
+            ->method('createSubscribedBySubscriber')
+            ->with($subscriber);
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
+        $handler = $this->getMockForAbstract(
+            'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
+            array('findOrCreateSubscriber', 'getSubscriberRepository', 'getLogManager', 'setSubscriber'),
+            array(),
+            '',
+            false
+        );
+
+        $handler
+            ->expects(self::once())
+            ->method('findOrCreateSubscriber')
+            ->with($this->equalTo(['email' => 'mwagner@localhost.net']))
+            ->will(self::returnValue($subscriber));
+        $handler
+            ->expects(self::once())
+            ->method('getSubscriberRepository')
+            ->will(self::returnValue($repo));
+        $handler
+            ->expects(self::once())
+            ->method('getLogManager')
+            ->will(self::returnValue($logManager));
+        $handler
+            ->expects(self::once())
+            ->method('setSubscriber')
+            ->with($this->equalTo($subscriber));
+
+        $this->callInaccessibleMethod(
+            $handler,
+            'processSubscriberData',
+            array(
+                'email' => 'mwagner@localhost.net',
+            )
+        );
     }
 }

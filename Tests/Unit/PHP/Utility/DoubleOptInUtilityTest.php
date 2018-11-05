@@ -200,6 +200,7 @@ class DoubleOptInUtilityTest
     public function testBuildActivationKey(
         $confirmString
     ) {
+
         $util = $this->getUtility(array('createConfirmString'));
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
@@ -338,7 +339,13 @@ class DoubleOptInUtilityTest
 
         $util = $this->getUtility(array('createConfirmString'));
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $logManager = $this->callInaccessibleMethod($util, 'getLogManager');
         $repo = $this->callInaccessibleMethod($util, 'getRepository');
+
+        $logManager
+            ->expects(self::once())
+            ->method('createActivatedBySubscriber')
+            ->with(self::equalTo($subscriber));
 
         $repo
             ->expects(self::once())
@@ -369,7 +376,13 @@ class DoubleOptInUtilityTest
 
         $util = $this->getUtility(array('createConfirmString'));
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
+        $logManager = $this->callInaccessibleMethod($util, 'getLogManager');
         $repo = $this->callInaccessibleMethod($util, 'getRepository');
+
+        $logManager
+            ->expects(self::never())
+            ->method('createUnsubscribedBySubscriber')
+            ->with(self::equalTo($subscriber));
 
         $repo
             ->expects(self::never())
@@ -392,15 +405,25 @@ class DoubleOptInUtilityTest
     protected function getUtility(
         array $methods = array()
     ) {
+        $subscriberModel = $this->getSubscriberModel();
         \tx_rnbase::load('DMK\\Mkpostman\\Utility\\DoubleOptInUtility');
         $util = $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
             array_merge(
-                array('getRepository'),
+                array('getRepository', 'getLogManager'),
                 $methods
             ),
-            array($this->getSubscriberModel())
+            array($subscriberModel)
         );
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
+        $logManager = $this->getMock(
+            'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
+        );
+        $util
+            ->expects(self::any())
+            ->method('getLogManager')
+            ->will(self::returnValue($logManager));
 
         $util
             ->expects(self::any())

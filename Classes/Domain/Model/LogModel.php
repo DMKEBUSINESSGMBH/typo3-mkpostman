@@ -1,8 +1,6 @@
 <?php
 namespace DMK\Mkpostman\Domain\Model;
 
-use DMK\Mkpostman\Factory;
-
 /***************************************************************
  * Copyright notice
  *
@@ -25,6 +23,8 @@ use DMK\Mkpostman\Factory;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use DMK\Mkpostman\Factory;
 
 \tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 

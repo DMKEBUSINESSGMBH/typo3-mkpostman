@@ -78,6 +78,30 @@ final class Factory
     }
 
     /**
+     * Returns the log repository
+     *
+     * @return \DMK\Mkpostman\Domain\Repository\LogRepository
+     */
+    public static function getLogRepository()
+    {
+        return \tx_rnbase::makeInstance(
+            'DMK\\Mkpostman\\Domain\\Repository\\LogRepository'
+        );
+    }
+
+    /**
+     * Returns the log manager
+     *
+     * @return \DMK\Mkpostman\Domain\Manager\LogManager
+     */
+    public static function getLogManager()
+    {
+        return \tx_rnbase::makeInstance(
+            'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
+        );
+    }
+
+    /**
      * Creates the mail processor
      *
      * @param \tx_rnbase_configurations $configurations
