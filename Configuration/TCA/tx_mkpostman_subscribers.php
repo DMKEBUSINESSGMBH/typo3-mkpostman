@@ -19,7 +19,7 @@ return array(
         'dividers2tabs' => true
     ),
     'interface' => array(
-        'showRecordFieldList' => 'name,disabled,contact,vatregno'
+        'showRecordFieldList' => 'email'
     ),
     'columns' => array(
         'disabled' => array(

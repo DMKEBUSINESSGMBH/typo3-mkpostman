@@ -24,3 +24,25 @@ CREATE TABLE tx_mkpostman_subscribers (
     KEY parent (pid),
     KEY email (email)
 );
+
+#
+# TABLE STRUCTURE FOR TABLE 'tx_mkpostman_logs'
+#
+CREATE TABLE tx_mkpostman_logs (
+    uid int(11) NOT NULL auto_increment,
+    pid int(11) DEFAULT '0' NOT NULL,
+    tstamp int(11) DEFAULT '0' NOT NULL,
+    crdate int(11) DEFAULT '0' NOT NULL,
+    deleted tinyint(4) DEFAULT '0' NOT NULL,
+
+    cruser_id int(11) DEFAULT '0' NOT NULL,
+    subscriber_id int(11) DEFAULT '0' NOT NULL,
+
+    ### registered, activated, unsubscribed
+    state tinyint(4) DEFAULT '0' NOT NULL,
+    description tinytext DEFAULT '' NOT NULL,
+
+    PRIMARY KEY (uid),
+    KEY parent (pid),
+    KEY subscriber (subscriber_id)
+);
