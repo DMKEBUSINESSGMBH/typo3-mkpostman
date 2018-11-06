@@ -4,7 +4,7 @@ namespace DMK\Mkpostman\Domain\Repository;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2016 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2018 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,7 +48,7 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberRepositoryTest
+class LogRepositoryTest
     extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
@@ -64,7 +64,7 @@ class SubscriberRepositoryTest
         $this->assertEquals(
             'tx_rnbase_util_SearchGeneric',
             $this->callInaccessibleMethod(
-                $this->getSubscriberRepository(),
+                $this->getLogRepository(),
                 'getSearchClass'
             )
         );
@@ -81,73 +81,17 @@ class SubscriberRepositoryTest
     public function testGetEmptyModelShouldBeBaseModelWithPageTable()
     {
         $model = $this->callInaccessibleMethod(
-            $this->getSubscriberRepository(),
+            $this->getLogRepository(),
             'getEmptyModel'
         );
         $this->assertInstanceOf(
-            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel',
+            'DMK\\Mkpostman\\Domain\\Model\\LogModel',
             $model
         );
         $this->assertSame(
-            'tx_mkpostman_subscribers',
+            'tx_mkpostman_logs',
             $model->getTablename()
         );
-    }
-
-    /**
-     * Test the findByEmail method.
-     *
-     * @return void
-     *
-     * @group unit
-     * @test
-     */
-    public function testFindByEmailCallsSearchCorrectly()
-    {
-        $that = $this; // php 3.5 compatibility!
-        $mail = 'mwagner@localhost.net';
-        $repo = $this->getSubscriberRepository();
-        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
-
-        $searcher
-            ->expects(self::once())
-            ->method('search')
-            ->with(
-                $this->callback(
-                    function ($fields) use ($that, $mail) {
-                        $that->assertTrue(is_array($fields));
-
-                        // only the mail should be filtered
-                        $that->assertCount(1, $fields);
-                        $that->assertArrayHasKey('SUBSCRIBER.email', $fields);
-                        $that->assertTrue(is_array($fields['SUBSCRIBER.email']));
-
-                        // only the eq str should be performed
-                        $that->assertCount(1, $fields['SUBSCRIBER.email']);
-                        $that->assertArrayHasKey(OP_EQ, $fields['SUBSCRIBER.email']);
-                        $that->assertSame($mail, $fields['SUBSCRIBER.email'][OP_EQ]);
-
-                        return true;
-                    }
-                ),
-                $this->callback(
-                    function ($options) use ($that) {
-                        $that->assertTrue(is_array($options));
-
-                        // the limit should be set, the mail in uniq!
-                        $that->assertArrayHasKey('limit', $options);
-                        $that->assertSame(1, $options['limit']);
-
-                        // enablefields be are set, we want disabled/inactive subscribers!
-                        $that->assertArrayHasKey('enablefieldsbe', $options);
-                        $that->assertTrue($options['enablefieldsbe']);
-
-                        return true;
-                    }
-                )
-            );
-
-        $repo->findByEmail($mail);
     }
 
     /**
@@ -161,7 +105,7 @@ class SubscriberRepositoryTest
     public function testFindByUidCallsSearchCorrectly()
     {
         $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
+        $repo = $this->getLogRepository();
         $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
         $searcher
@@ -174,13 +118,13 @@ class SubscriberRepositoryTest
 
                         // only the mail should be filtered
                         $that->assertCount(1, $fields);
-                        $that->assertArrayHasKey('SUBSCRIBER.uid', $fields);
-                        $that->assertTrue(is_array($fields['SUBSCRIBER.uid']));
+                        $that->assertArrayHasKey('LOG.uid', $fields);
+                        $that->assertTrue(is_array($fields['LOG.uid']));
 
                         // only the eq str should be performed
-                        $that->assertCount(1, $fields['SUBSCRIBER.uid']);
-                        $that->assertArrayHasKey(OP_EQ_INT, $fields['SUBSCRIBER.uid']);
-                        $that->assertSame(7, $fields['SUBSCRIBER.uid'][OP_EQ_INT]);
+                        $that->assertCount(1, $fields['LOG.uid']);
+                        $that->assertArrayHasKey(OP_EQ_INT, $fields['LOG.uid']);
+                        $that->assertSame(14, $fields['LOG.uid'][OP_EQ_INT]);
 
                         return true;
                     }
@@ -193,16 +137,12 @@ class SubscriberRepositoryTest
                         $that->assertArrayHasKey('limit', $options);
                         $that->assertSame(1, $options['limit']);
 
-                        // enablefields be are set, we want disabled/inactive subscribers!
-                        $that->assertArrayHasKey('enablefieldsbe', $options);
-                        $that->assertTrue($options['enablefieldsbe']);
-
                         return true;
                     }
                 )
             );
 
-        $repo->findByUid(7);
+        $repo->findByUid(14);
     }
 
     /**
@@ -216,7 +156,7 @@ class SubscriberRepositoryTest
     public function testPrepareGenericSearcherShouldBeTheRightSearchdefConfig()
     {
         $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
+        $repo = $this->getLogRepository();
         $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
         $searcher
@@ -242,16 +182,16 @@ class SubscriberRepositoryTest
                         $that->assertArrayHasKey('basetable', $sd);
                         $that->assertSame($sd['basetable'], $tablename);
                         $that->assertArrayHasKey('basetablealias', $sd);
-                        $that->assertSame($sd['basetablealias'], 'SUBSCRIBER');
+                        $that->assertSame($sd['basetablealias'], 'LOG');
                         $that->assertArrayHasKey('wrapperclass', $sd);
                         $that->assertSame($sd['wrapperclass'], get_class($repo->getEmptyModel()));
 
                         $that->assertArrayHasKey('alias', $sd);
                         $that->assertTrue(is_array($sd['alias']));
-                        $that->assertArrayHasKey('SUBSCRIBER', $sd['alias']);
-                        $that->assertTrue(is_array($sd['alias']['SUBSCRIBER']));
-                        $that->assertArrayHasKey('table', $sd['alias']['SUBSCRIBER']);
-                        $that->assertSame($sd['alias']['SUBSCRIBER']['table'], $tablename);
+                        $that->assertArrayHasKey('LOG', $sd['alias']);
+                        $that->assertTrue(is_array($sd['alias']['LOG']));
+                        $that->assertArrayHasKey('table', $sd['alias']['LOG']);
+                        $that->assertSame($sd['alias']['LOG']['table'], $tablename);
 
                         return true;
                     }
@@ -273,7 +213,7 @@ class SubscriberRepositoryTest
     public function testPrepareGenericSearcherShouldUseCollection()
     {
         $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
+        $repo = $this->getLogRepository();
         $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
 
         $searcher

@@ -70,7 +70,7 @@ class LogRepository
     ) {
         return $this->searchSingle(
             array (
-                'Log.uid' => array(
+                'LOG.uid' => array(
                     OP_EQ_INT => $uid
                 )
             )
@@ -117,7 +117,7 @@ class LogRepository
                 'basetablealias' => 'LOG',
                 'wrapperclass' => get_class($model),
                 'alias' => array(
-                    'SUBSCRIBER' => array(
+                    'LOG' => array(
                         'table' => $model->getTableName()
                     )
                 )

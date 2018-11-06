@@ -83,6 +83,8 @@ class LogManager
      *
      * @param SubscriberModel $subscriber
      * @param int $state LogModel::STATE_*
+     *
+     * @return void
      */
     protected function createLogBySubscriber(
         SubscriberModel $subscriber,
@@ -106,7 +108,7 @@ class LogManager
     }
 
     /**
-     * creates the log description
+     * Creates the log description
      *
      * @param LogModel $logEntry
      *
@@ -114,8 +116,7 @@ class LogManager
      */
     protected function createDescription(
         LogModel $logEntry
-    )
-    {
+    ) {
         // $log = '{subscriber/beuser} has {state} for {email}';
         $msg = '%1$s has %2$s for %3$s';
 
@@ -130,7 +131,10 @@ class LogManager
     }
 
     /**
-     * @param $state
+     * Returns the Name of the User ID
+     *
+     * @param int $uid
+     *
      * @return string
      */
     protected function getBeUserName(
@@ -138,6 +142,7 @@ class LogManager
     ) {
         if ($uid == \tx_rnbase_util_TYPO3::getBEUserUID()) {
             $beuser = \tx_rnbase_util_TYPO3::getBEUser();
+
             return $beuser->user['username'];
         }
 
@@ -155,13 +160,14 @@ class LogManager
     }
 
     /**
+     * Converts the state id to a human readable label
      * @param int $state
      * @return string
      */
     protected function getStateLabel(
         $state
     ) {
-        switch($state) {
+        switch ($state) {
             case LogModel::STATE_SUBSCRIBED:
                 return 'Subscribed';
             case LogModel::STATE_ACTIVATED:

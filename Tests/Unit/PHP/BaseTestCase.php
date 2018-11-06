@@ -38,7 +38,7 @@ if (!\class_exists('tx_rnbase')) {
  * Basis Testcase
  *
  * @package TYPO3
- * @subpackage Tx_Hpsplaner
+ * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -106,6 +106,33 @@ abstract class BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
+            array('getSearcher', 'persist')
+        );
+
+        $repo
+            ->expects(self::any())
+            ->method('getSearcher')
+            ->will(self::returnValue($searcher));
+
+        return $repo;
+    }
+
+    /**
+     * Creates the repo mock
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getLogRepository()
+    {
+        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
+        $searcher = $this->getMock(
+            'tx_rnbase_util_SearchGeneric',
+            array('search')
+        );
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\LogRepository');
+        $repo = $this->getMock(
+            'DMK\\Mkpostman\\Domain\\Repository\\LogRepository',
             array('getSearcher', 'persist')
         );
 
