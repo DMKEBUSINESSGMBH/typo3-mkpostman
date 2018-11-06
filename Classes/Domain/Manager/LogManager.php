@@ -39,6 +39,7 @@ use DMK\Mkpostman\Factory;
  */
 class LogManager
 {
+
     /**
      * Creates an subscibed log for the subscriber
      *
@@ -118,7 +119,7 @@ class LogManager
         LogModel $logEntry
     ) {
         // $log = '{subscriber/beuser} has {state} for {email}';
-        $msg = '%1$s has %2$s for %3$s';
+        $msg = '%1$s has %3$s %2$s';
 
         $who = 'Subscriber';
         if ($logEntry->getCruserId() > 0) {

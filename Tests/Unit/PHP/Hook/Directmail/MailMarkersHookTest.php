@@ -1,5 +1,5 @@
 <?php
-namespace DMK\Mkpostman\Utility;
+namespace DMK\Mkpostman\Hook\Directmail;
 
 /***************************************************************
  * Copyright notice

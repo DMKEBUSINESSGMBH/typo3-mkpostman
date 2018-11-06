@@ -18,3 +18,7 @@ if (\tx_rnbase_util_TYPO3::isExtLoaded('direct_mail')) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/direct_mail']['res/scripts/class.dmailer.php']['mailMarkersHook']
         ['mkpostman'] = 'DMK\\Mkpostman\\Hook\\Directmail\\MailMarkersHook->main';
 }
+
+// add process datamap
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] =
+    'EXT:mkpostman/Classes/Hook/LogWriterHook.php:DMK\\Mkpostman\\Hook\\LogWriterHook';

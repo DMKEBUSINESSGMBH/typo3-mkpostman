@@ -214,7 +214,7 @@ class LogManagerTest
                     'state' => 1,
                     'email' => 'foo@bar.baz', // used only for testing, not a column
                 ],
-                'description' => 'BE-User (1) has 1 for foo@bar.baz',
+                'description' => 'BE-User (1) has foo@bar.baz 1',
             ],
             __LINE__ => [
                 'record' => [
@@ -222,7 +222,7 @@ class LogManagerTest
                     'state' => 2,
                     'email' => 'sub@scri.ber', // used only for testing, not a column
                 ],
-                'description' => 'Subscriber has 2 for sub@scri.ber',
+                'description' => 'Subscriber has sub@scri.ber 2',
             ],
         ];
     }
@@ -255,6 +255,10 @@ class LogManagerTest
     public function getStateLabelData()
     {
         return [
+            __LINE__ => [
+                'state' => 815,
+                'label' => '',
+            ],
             __LINE__ => [
                 'state' => 0,
                 'label' => '',
