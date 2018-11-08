@@ -90,6 +90,9 @@ class SubscriberDecorator
             $item->getDisabled()
         );
 
+
+        $return .= $this->getLogAction($item);
+
         $return .= $this->getFormTool()->createDeleteLink(
             $tableName,
             $uid,
@@ -156,5 +159,53 @@ class SubscriberDecorator
         }
 
         return $title;
+    }
+
+    /**
+     * Add a rudimentary log icon with only a tooltip
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return string
+     */
+    protected function getLogAction(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    )
+    {
+        $logs = $this->getLogs($item);
+        $logToolTip = [];
+        /* @var $log \DMK\Mkpostman\Domain\Model\LogModel */
+        foreach ($logs as $log)
+        {
+            $logToolTip[] = $log->getDescription();
+        }
+
+        if (count($logToolTip) > 15) {
+            $logToolTip = array_merge(
+                array_slice($logToolTip, 0, 5),
+                ['...'],
+                array_slice($logToolTip, -9)
+            );
+        }
+
+        return sprintf(
+            '<a href="#" class="btn btn-default btn-sm" title="%2$s">%1$s</a>',
+            \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon('tcarecords-tx_mkpostman_logs-default'),
+            count($logs) . ' Log(s): ' . CRLF . implode(CRLF, $logToolTip)
+        );
+    }
+
+    /**
+     * Returns a log collection for the subscribers.
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return null|\Tx_Rnbase_Domain_Model_DomainInterface
+     */
+    protected function getLogs(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    )
+    {
+        return \DMK\Mkpostman\Factory::getLogRepository()->findBySubscriber($item);
     }
 }
