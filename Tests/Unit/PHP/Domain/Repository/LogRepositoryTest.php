@@ -146,6 +146,53 @@ class LogRepositoryTest
     }
 
     /**
+     * Test the findBySubscriber method.
+     *
+     * @return void
+     *
+     * @group unit
+     * @test
+     */
+    public function testFindBySubscriberCallsSearchCorrectly()
+    {
+        $subscriber = $this->getSubscriberModel();
+        $repo = $this->getLogRepository();
+        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+
+        $searcher
+            ->expects(self::once())
+            ->method('search')
+            ->with(
+                $this->callback(
+                    function ($fields) {
+                        $this->assertTrue(is_array($fields));
+
+                        // only the mail should be filtered
+                        $this->assertCount(1, $fields);
+                        $this->assertArrayHasKey('LOG.subscriber_id', $fields);
+                        $this->assertTrue(is_array($fields['LOG.subscriber_id']));
+
+                        // only the eq str should be performed
+                        $this->assertCount(1, $fields['LOG.subscriber_id']);
+                        $this->assertArrayHasKey(OP_EQ_INT, $fields['LOG.subscriber_id']);
+                        $this->assertSame(5, $fields['LOG.subscriber_id'][OP_EQ_INT]);
+
+                        return true;
+                    }
+                ),
+                $this->callback(
+                    function ($options) {
+                        $this->assertTrue(is_array($options));
+
+                        return true;
+                    }
+                )
+            );
+
+        $repo->findBySubscriber($subscriber);
+    }
+
+    /**
      * Test the prepareGenericSearcher method.
      *
      * @return void

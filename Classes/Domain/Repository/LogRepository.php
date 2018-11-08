@@ -1,6 +1,8 @@
 <?php
 namespace DMK\Mkpostman\Domain\Repository;
 
+use DMK\Mkpostman\Domain\Model\SubscriberModel;
+
 /***************************************************************
  * Copyright notice
  *
@@ -59,7 +61,7 @@ class LogRepository
     }
 
     /**
-     * Finds a subscriber by email
+     * Finds a log by uid
      *
      * @param int $uid
      *
@@ -76,6 +78,27 @@ class LogRepository
             )
         );
     }
+
+    /**
+     * Finds logs by subscriber
+     *
+     * @param SubscriberModel $subscriber
+     *
+     * @return \Tx_Rnbase_Domain_Model_DomainInterface|null
+     */
+    public function findBySubscriber(
+        SubscriberModel $subscriber
+    ) {
+        return $this->search(
+            array (
+                'LOG.subscriber_id' => array(
+                    OP_EQ_INT => $subscriber->getUid()
+                )
+            ),
+            array()
+        );
+    }
+
     /**
      * On default, return hidden and deleted fields in backend
      *
