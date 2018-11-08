@@ -47,8 +47,7 @@ class TcaUtility
         /* @var $log \DMK\Mkpostman\Domain\Model\LogModel */
         foreach ($logs as $log)
         {
-            $logDesc[] = $log->getDescription();
-
+            $logDesc[] = $log->getCreationDateTime()->format('Y-m-d H:i:s') . ': ' . $log->getDescription();
         }
 
         return '<ol><li>' . implode('</li><li>', $logDesc). '</li></ol>';

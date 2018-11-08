@@ -177,7 +177,7 @@ class SubscriberDecorator
         /* @var $log \DMK\Mkpostman\Domain\Model\LogModel */
         foreach ($logs as $log)
         {
-            $logToolTip[] = $log->getDescription();
+            $logToolTip[] = $log->getCreationDateTime()->format('Y-m-d H:i:s') . ': ' . $log->getDescription();
         }
 
         if (count($logToolTip) > 15) {
