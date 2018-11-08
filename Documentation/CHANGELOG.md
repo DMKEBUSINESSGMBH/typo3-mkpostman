@@ -1,9 +1,10 @@
 Changelog
 =========
 
-3.?.?
+3.1.0
 -----
 
+ * log protocol for subscribers added
  * documentation added to use MK Postman Subscribers as direct mail recipient list
  * unsubscribe link support for direct mail added
  * unsubscribe functionality added
