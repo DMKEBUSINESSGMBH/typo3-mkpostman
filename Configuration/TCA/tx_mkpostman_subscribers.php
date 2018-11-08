@@ -16,7 +16,7 @@ return array(
         'searchFields' => 'name,',
         'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman') .
             'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
-        'dividers2tabs' => false,
+        'dividers2tabs' => true,
     ),
     'interface' => array(
         'showRecordFieldList' => 'email'
@@ -85,6 +85,15 @@ return array(
                 'eval' => 'trim,required,unique'
             )
         ),
+        'logs' => array(
+            'exclude' => 1,
+            'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.logs',
+            'config' => array(
+                'type' => 'user',
+                'size' => '20',
+                'userFunc' => 'DMK\\Mkpostman\\Utility\\TcaUtility->getLogsForSubscriber'
+            )
+        ),
         'module_sys_dmail_category' => array(
             'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
             'exclude' => 1,
@@ -116,7 +125,14 @@ return array(
     ),
     'types' => array(
         '0' => array(
-            'showitem' => 'disabled, email, gender, first_name, last_name, confirmstring, module_sys_dmail_category, module_sys_dmail_html'
+            'showitem' => '
+                --div--;LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.tab.general,
+                disabled, email, gender, first_name, last_name, confirmstring, 
+                --div--;LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.tab.directmail,
+                module_sys_dmail_category, module_sys_dmail_html,
+                --div--;LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_subscribers.tab.log,
+                logs,
+            '
         )
     )
 );
