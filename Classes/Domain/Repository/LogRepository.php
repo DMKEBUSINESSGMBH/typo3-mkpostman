@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Repository;
 
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
@@ -29,21 +30,18 @@ use DMK\Mkpostman\Domain\Model\SubscriberModel;
 \tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
- * Log repo
+ * Log repo.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogRepository
-    extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
     /**
-     * Liefert den Namen der Suchklasse
+     * Liefert den Namen der Suchklasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getSearchClass()
     {
@@ -53,7 +51,7 @@ class LogRepository
     /**
      * Liefert die Model Klasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getWrapperClass()
     {
@@ -61,7 +59,7 @@ class LogRepository
     }
 
     /**
-     * Finds a log by uid
+     * Finds a log by uid.
      *
      * @param int $uid
      *
@@ -71,16 +69,16 @@ class LogRepository
         $uid
     ) {
         return $this->searchSingle(
-            array (
+            array(
                 'LOG.uid' => array(
-                    OP_EQ_INT => $uid
-                )
+                    OP_EQ_INT => $uid,
+                ),
             )
         );
     }
 
     /**
-     * Finds logs by subscriber
+     * Finds logs by subscriber.
      *
      * @param SubscriberModel $subscriber
      *
@@ -90,22 +88,20 @@ class LogRepository
         SubscriberModel $subscriber
     ) {
         return $this->search(
-            array (
+            array(
                 'LOG.subscriber_id' => array(
-                    OP_EQ_INT => $subscriber->getUid()
-                )
+                    OP_EQ_INT => $subscriber->getUid(),
+                ),
             ),
             array()
         );
     }
 
     /**
-     * On default, return hidden and deleted fields in backend
+     * On default, return hidden and deleted fields in backend.
      *
      * @param array $fields
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareFieldsAndOptions(
         array &$fields,
@@ -116,11 +112,9 @@ class LogRepository
     }
 
     /**
-     * Prepares the simple generic searcher
+     * Prepares the simple generic searcher.
      *
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareGenericSearcher(
         array &$options
@@ -141,9 +135,9 @@ class LogRepository
                 'wrapperclass' => get_class($model),
                 'alias' => array(
                     'LOG' => array(
-                        'table' => $model->getTableName()
-                    )
-                )
+                        'table' => $model->getTableName(),
+                    ),
+                ),
             ),
             // searcher config overrides
             $options['searchdef']

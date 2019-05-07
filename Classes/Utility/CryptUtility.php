@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Utility;
 
 /***************************************************************
@@ -27,19 +28,16 @@ namespace DMK\Mkpostman\Utility;
 \tx_rnbase::load('Tx_Rnbase_Interface_Singleton');
 
 /**
- * MK Postman crypt utility
+ * MK Postman crypt utility.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CryptUtility
-    implements \Tx_Rnbase_Interface_Singleton
+class CryptUtility implements \Tx_Rnbase_Interface_Singleton
 {
     /**
-     * Encodes an Parameter for Url
+     * Encodes an Parameter for Url.
      *
      * @param string $value
      *
@@ -52,7 +50,7 @@ class CryptUtility
     }
 
     /**
-     * Decodes a var for the url
+     * Decodes a var for the url.
      *
      * @param string $value
      *

@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
@@ -27,50 +28,41 @@ namespace DMK\Mkpostman\Domain\Model;
 \tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 
 /**
- * Subscriber Model
+ * Subscriber Model.
  *
- * @method int getGender()
+ * @method int                         getGender()
  * @method Tx_Rnbase_Domain_Model_Data setGender() setGender(int $gender)
- * @method bool hasGender()
+ * @method bool                        hasGender()
  * @method Tx_Rnbase_Domain_Model_Data unsGender()
- *
- * @method string getFirstName()
+ * @method string                      getFirstName()
  * @method Tx_Rnbase_Domain_Model_Data setFirstName() setFirstName(string $firstname)
- * @method bool hasFirstName()
+ * @method bool                        hasFirstName()
  * @method Tx_Rnbase_Domain_Model_Data unsFirstName()
- *
- * @method string getLastName()
+ * @method string                      getLastName()
  * @method Tx_Rnbase_Domain_Model_Data setLastName() setLastName(string $lastname)
- * @method bool hasLastName()
+ * @method bool                        hasLastName()
  * @method Tx_Rnbase_Domain_Model_Data unsLastName()
- *
- * @method string getEmail()
+ * @method string                      getEmail()
  * @method Tx_Rnbase_Domain_Model_Data setEmail() setEmail(string $email)
- * @method bool hasEmail()
+ * @method bool                        hasEmail()
  * @method Tx_Rnbase_Domain_Model_Data unsEmail()
- *
- * @method string getConfirmstring()
+ * @method string                      getConfirmstring()
  * @method Tx_Rnbase_Domain_Model_Data setConfirmstring() setConfirmstring(string $confirmstring)
- * @method bool hasConfirmstring()
+ * @method bool                        hasConfirmstring()
  * @method Tx_Rnbase_Domain_Model_Data unsConfirmstring()
- *
- * @method int getDisabled()
+ * @method int                         getDisabled()
  * @method Tx_Rnbase_Domain_Model_Data setDisabled() setDisabled(int $disabled)
- *
- * @method int getDeleted()
+ * @method int                         getDeleted()
  * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberModel
-    extends \Tx_Rnbase_Domain_Model_Base
+class SubscriberModel extends \Tx_Rnbase_Domain_Model_Base
 {
     /**
-     * Liefert den aktuellen Tabellenname
+     * Liefert den aktuellen Tabellenname.
      *
      * @return Tabellenname als String
      */

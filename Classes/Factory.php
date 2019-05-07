@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman;
  ***************************************************************/
 
 /**
- * MK Postman Factory
+ * MK Postman Factory.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -36,15 +35,15 @@ namespace DMK\Mkpostman;
 final class Factory
 {
     /**
-     * Returns a storage
+     * Returns a storage.
      *
      * @return \Tx_Rnbase_Domain_Model_Data
      */
-    protected static function getStorage()
+    private static function getStorage()
     {
         static $storage = null;
 
-        if ($storage === null) {
+        if (null === $storage) {
             $storage = \tx_rnbase::makeInstance(
                 'Tx_Rnbase_Domain_Model_Data'
             );
@@ -54,7 +53,7 @@ final class Factory
     }
 
     /**
-     * Returns a cache
+     * Returns a cache.
      *
      * @return \tx_rnbase_cache_ICache
      */
@@ -66,7 +65,7 @@ final class Factory
     }
 
     /**
-     * Returns the subscriber repository
+     * Returns the subscriber repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
@@ -78,7 +77,7 @@ final class Factory
     }
 
     /**
-     * Returns the log repository
+     * Returns the log repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\LogRepository
      */
@@ -90,7 +89,7 @@ final class Factory
     }
 
     /**
-     * Returns the log manager
+     * Returns the log manager.
      *
      * @return \DMK\Mkpostman\Domain\Manager\LogManager
      */
@@ -102,7 +101,7 @@ final class Factory
     }
 
     /**
-     * Creates the mail processor
+     * Creates the mail processor.
      *
      * @param \tx_rnbase_configurations $configurations
      *
@@ -118,7 +117,7 @@ final class Factory
     }
 
     /**
-     * Creates mail receiver
+     * Creates mail receiver.
      *
      * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
      *
@@ -134,7 +133,7 @@ final class Factory
     }
 
     /**
-     * Creates an double opt in util instance with an subscriber
+     * Creates an double opt in util instance with an subscriber.
      *
      * @param string|DMK\Mkpostman\Domain\Model\SubscriberModel $subscriberOrActivationKey
      *
@@ -150,7 +149,7 @@ final class Factory
     }
 
     /**
-     * Creates the crypt utility
+     * Creates the crypt utility.
      *
      * @return \DMK\Mkpostman\Utility\CryptUtility
      */

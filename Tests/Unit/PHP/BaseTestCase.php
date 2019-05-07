@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Tests;
 
 /***************************************************************
@@ -33,24 +34,18 @@ if (!\class_exists('tx_rnbase')) {
 }
 \tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
-
 /**
- * Basis Testcase
+ * Basis Testcase.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class BaseTestCase
-    extends \tx_rnbase_tests_BaseTestCase
+abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     protected function setUp()
     {
@@ -59,15 +54,13 @@ abstract class BaseTestCase
     /**
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
-     *
-     * @return void
      */
     protected function tearDown()
     {
     }
 
     /**
-     * Returns a subscriber model mock
+     * Returns a subscriber model mock.
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
      */
@@ -91,7 +84,7 @@ abstract class BaseTestCase
     }
 
     /**
-     * Creates the repo mock
+     * Creates the repo mock.
      *
      * @return PHPUnit_Framework_MockObject_MockObject
      */
@@ -118,7 +111,7 @@ abstract class BaseTestCase
     }
 
     /**
-     * Creates the repo mock
+     * Creates the repo mock.
      *
      * @return PHPUnit_Framework_MockObject_MockObject
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Action;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscribtion action test
+ * Subscribtion action test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeActionTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -88,9 +85,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -129,9 +125,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -171,9 +166,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -213,9 +207,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -255,9 +248,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleActivation method
+     * Test the handleActivation method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -270,9 +262,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the handleSuccess method
+     * Test the handleSuccess method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -283,9 +274,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the getConfId method
+     * Test the getConfId method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -296,9 +286,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the getConfId method
+     * Test the getConfId method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -311,9 +300,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the getTemplateName method
+     * Test the getTemplateName method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -330,9 +318,8 @@ class SubscribeActionTest
     }
 
     /**
-     * Test the getViewClassName method
+     * Test the getViewClassName method.
      *
-     * @return void
      *
      * @group unit
      * @test

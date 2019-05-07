@@ -1,4 +1,5 @@
 <?php
+
 // ## #####################################################################
 // ## Extension Manager/Repository config file for ext "hpsplaner".
 // ## #####################################################################
@@ -34,7 +35,7 @@ $EM_CONF[$_EXTKEY] = array(
         'suggests' => array(
             'mkforms' => '3.0.0-',
             'mklib' => '3.0.0-',
-        )
+        ),
     ),
     'autoload' => array(
         'psr-4' => array(

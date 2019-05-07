@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Action;
 
 /***************************************************************
@@ -27,10 +28,8 @@ namespace DMK\Mkpostman\Action;
 \tx_rnbase::load('tx_rnbase_action_BaseIOC');
 
 /**
- * Abstract base action
+ * Abstract base action.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -40,11 +39,11 @@ abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
     use \Tx_Rnbase_Domain_Model_StorageTrait;
 
     /**
-     * Lets do the magic
+     * Lets do the magic.
      *
-     * @param tx_rnbase_IParameters $parameters
+     * @param tx_rnbase_IParameters    $parameters
      * @param tx_rnbase_configurations $configurations
-     * @param ArrayObject $viewdata
+     * @param ArrayObject              $viewdata
      *
      * @return string Errorstring or NULL
      */
@@ -56,11 +55,12 @@ abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
     }
 
     /**
-     * Wrapper method clean code
+     * Wrapper method clean code.
      *
      * @return string Errorstring or NULL
      */
     abstract protected function doRequest();
+
     /*
      * {
      * $parameters = $this->getParameters();
@@ -72,12 +72,10 @@ abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
      */
 
     /**
-     * Sets some data to the view
+     * Sets some data to the view.
      *
      * @param string $name
-     * @param mixed $data
-     *
-     * @return void
+     * @param mixed  $data
      */
     protected function setToView($name, $data)
     {

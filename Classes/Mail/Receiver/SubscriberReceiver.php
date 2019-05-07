@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Mail\Receiver;
 
 /***************************************************************
@@ -27,26 +28,23 @@ namespace DMK\Mkpostman\Mail\Receiver;
 \tx_rnbase::load('tx_mkmailer_receiver_BaseTemplate');
 
 /**
- * MK Postman subscriber mail receiver
+ * MK Postman subscriber mail receiver.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberReceiver
-    extends \tx_mkmailer_receiver_BaseTemplate
+class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
 {
     /**
-     * The current Subscriber
+     * The current Subscriber.
      *
      * @var \DMK\Mkpostman\Domain\Model\SubscriberModel
      */
     private $subscriber;
 
     /**
-     * The Constructor
+     * The Constructor.
      *
      * The subsciber model is optionaly.
      * You can set the subscriber by calling setValueString($uid) after initialisation.
@@ -60,7 +58,7 @@ class SubscriberReceiver
     }
 
     /**
-     * Returns the current subscriber
+     * Returns the current subscriber.
      *
      * @return \DMK\Mkpostman\Domain\Model\SubscriberModel
      */
@@ -68,10 +66,11 @@ class SubscriberReceiver
     {
         return $this->subscriber;
     }
+
     /**
      * The confid for this receiver.
      *
-     * @return  string
+     * @return string
      */
     protected function getConfId()
     {
@@ -79,11 +78,9 @@ class SubscriberReceiver
     }
 
     /**
-     * Initializes the receiver with the subscriber object
+     * Initializes the receiver with the subscriber object.
      *
      * @param string $value
-     *
-     * @return void
      */
     public function setValueString(
         $value
@@ -93,7 +90,7 @@ class SubscriberReceiver
     }
 
     /**
-     * Returns the Current Subscriber as string
+     * Returns the Current Subscriber as string.
      *
      * @return string
      */
@@ -103,7 +100,8 @@ class SubscriberReceiver
     }
 
     /**
-     * Returns the number of receivers
+     * Returns the number of receivers.
+     *
      * @return int
      */
     public function getAddressCount()
@@ -112,7 +110,7 @@ class SubscriberReceiver
     }
 
     /**
-     * Returns an Array with the  addresses
+     * Returns an Array with the  addresses.
      *
      * @return array
      */
@@ -128,7 +126,7 @@ class SubscriberReceiver
     }
 
     /**
-     * Returns a name for receiver or receiver group
+     * Returns a name for receiver or receiver group.
      *
      * @return string
      */
@@ -153,7 +151,7 @@ class SubscriberReceiver
     }
 
     /**
-     * The current mail address Ids
+     * The current mail address Ids.
      *
      * @param int $idx
      *
@@ -164,12 +162,13 @@ class SubscriberReceiver
         $ret = array();
         $ret['address'] = reset($this->getAddresses());
         $ret['addressName'] = $this->getName();
-        $ret['addressid'] = $ret['address'] . '_' . $ret['addressName'];
+        $ret['addressid'] = $ret['address'].'_'.$ret['addressName'];
 
         return $ret;
     }
+
     /**
-     * The marker to use for rendering
+     * The marker to use for rendering.
      *
      * @return \tx_rnbase_util_SimpleMarker
      */
@@ -178,18 +177,15 @@ class SubscriberReceiver
         return \tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
     }
 
-
     /**
-     * Parse the subscriber into the mail
+     * Parse the subscriber into the mail.
      *
-     * @param string $mailText
-     * @param string $mailHtml
-     * @param string $mailSubject
+     * @param string                     $mailText
+     * @param string                     $mailHtml
+     * @param string                     $mailSubject
      * @param \tx_rnbase_util_FormatUtil $formatter
-     * @param string $confId
-     * @param int $idx Index des Empfängers von 0 bis (getAddressCount() - 1)
-     *
-     * @return void
+     * @param string                     $confId
+     * @param int                        $idx         Index des Empfängers von 0 bis (getAddressCount() - 1)
      */
     // @codingStandardsIgnoreStart (interface/abstract mistake)
     protected function addAdditionalData(
@@ -209,21 +205,21 @@ class SubscriberReceiver
             $mailText,
             $subscriber,
             $formatter,
-            $confId . 'subscriberText.',
+            $confId.'subscriberText.',
             'SUBSCRIBER'
         );
         $mailHtml = $marker->parseTemplate(
             $mailHtml,
             $subscriber,
             $formatter,
-            $confId . 'subscriberHtml.',
+            $confId.'subscriberHtml.',
             'SUBSCRIBER'
         );
         $mailSubject = $marker->parseTemplate(
             $mailSubject,
             $subscriber,
             $formatter,
-            $confId . 'subscriberSubject.',
+            $confId.'subscriberSubject.',
             'SUBSCRIBER'
         );
     }
@@ -231,13 +227,13 @@ class SubscriberReceiver
     /**
      * Calls modul subparts, module markers and substitutes the marker arrays.
      *
-     * @param string $template
-     * @param array $markerArray
-     * @param array $subpartArray
-     * @param array $wrappedSubpartArray
-     * @param array $params
+     * @param string                     $template
+     * @param array                      $markerArray
+     * @param array                      $subpartArray
+     * @param array                      $wrappedSubpartArray
+     * @param array                      $params
      * @param \tx_rnbase_util_FormatUtil $formatter
-     * @param string $confId
+     * @param string                     $confId
      *
      * @return string
      */
@@ -273,16 +269,14 @@ class SubscriberReceiver
     /**
      * Ads some special links to the template.
      *
-     * @param string $template
-     * @param array $markerArray
-     * @param array $subpartArray
-     * @param array $wrappedSubpartArray
+     * @param string                     $template
+     * @param array                      $markerArray
+     * @param array                      $subpartArray
+     * @param array                      $wrappedSubpartArray
      * @param \tx_rnbase_util_FormatUtil $formatter
-     * @param string $confId
+     * @param string                     $confId
      *
      * @TODO: create a marker class and move this
-     *
-     * @return void
      */
     protected function prepareLinks(
         $template,

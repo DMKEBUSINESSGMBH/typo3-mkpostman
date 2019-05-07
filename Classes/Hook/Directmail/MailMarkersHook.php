@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Hook\Directmail;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Hook\Directmail;
  ***************************************************************/
 
 /**
- * MK Postman hook to add markers to direct_mail
+ * MK Postman hook to add markers to direct_mail.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -36,7 +35,7 @@ namespace DMK\Mkpostman\Hook\Directmail;
 class MailMarkersHook
 {
     /**
-     * Main method to extend the marker array
+     * Main method to extend the marker array.
      *
      * @param array $args
      */
@@ -46,7 +45,7 @@ class MailMarkersHook
         $subscriber = \DMK\Mkpostman\Factory::getSubscriberRepository()->createNewModel($args['row']);
         $doubleOptInUtil = $this->getDoubleOptInUtility($subscriber);
         $unsubscribeKey = $doubleOptInUtil->buildUnsubscribeKey(true);
-        $markerArray['###MKPOSTMAN_UNSUBSCRIBE_PARAMS###'] = '&mkpostman[unsubscribe]=' . $unsubscribeKey;
+        $markerArray['###MKPOSTMAN_UNSUBSCRIBE_PARAMS###'] = '&mkpostman[unsubscribe]='.$unsubscribeKey;
     }
 
     /***

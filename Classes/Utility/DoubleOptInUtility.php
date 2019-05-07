@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Utility;
 
 /***************************************************************
@@ -24,13 +25,11 @@ namespace DMK\Mkpostman\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use \DMK\Mkpostman\Domain\Model\SubscriberModel;
+use DMK\Mkpostman\Domain\Model\SubscriberModel;
 
 /**
- * MK Postman Double-Opt-In and Opt-Out utility
+ * MK Postman Double-Opt-In and Opt-Out utility.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -38,14 +37,14 @@ use \DMK\Mkpostman\Domain\Model\SubscriberModel;
 class DoubleOptInUtility
 {
     /**
-     * The subscriber
+     * The subscriber.
      *
      * @var \DMK\Mkpostman\Domain\Model\SubscriberModel
      */
     private $subscriber = null;
 
     /**
-     * The Constructor
+     * The Constructor.
      *
      * @param string|SubscriberModel $subscriberOrActivationKey
      *
@@ -72,11 +71,11 @@ class DoubleOptInUtility
     }
 
     /**
-     * Finds a subscriber by key
+     * Finds a subscriber by key.
      *
      * @param \Tx_Rnbase_Domain_Model_Data $keyData
      *
-     * @return null|SubscriberModel
+     * @return SubscriberModel|null
      */
     protected function findSubscriberByKey(
         \Tx_Rnbase_Domain_Model_Data $keyData
@@ -89,7 +88,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * The current subscriber
+     * The current subscriber.
      *
      * @return SubscriberModel
      */
@@ -99,7 +98,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Returns the subscriber repository
+     * Returns the subscriber repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
@@ -109,7 +108,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Returns the log manager
+     * Returns the log manager.
      *
      * @return \DMK\Mkpostman\Domain\Manager\LogManager
      */
@@ -120,9 +119,7 @@ class DoubleOptInUtility
 
     /**
      * Updates subscriber model with a new confirmstring
-     * and persist the changes
-     *
-     * @return void
+     * and persist the changes.
      */
     protected function updateConfirmString()
     {
@@ -133,7 +130,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Creates a new confirmstring for the subscriber
+     * Creates a new confirmstring for the subscriber.
      *
      * @return string
      */
@@ -143,7 +140,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Check if the activation key is valid for the current user
+     * Check if the activation key is valid for the current user.
      *
      * @param string $activationKey
      *
@@ -156,15 +153,15 @@ class DoubleOptInUtility
 
         $keyData = $this->decodeActivationKey($activationKey);
 
-        return (
+        return
             $subscriber->getUid() == $keyData->getUid() &&
             $subscriber->getConfirmstring() === $keyData->getConfirmstring() &&
             md5($subscriber->getEmail()) === $keyData->getMailHash()
-        );
+        ;
     }
 
     /**
-     * Decodes the activatoin key and extracts the informations
+     * Decodes the activatoin key and extracts the informations.
      *
      * @param string $activationKey
      *
@@ -174,25 +171,25 @@ class DoubleOptInUtility
         $activationKey
     ) {
         // the key loks like base64 and urlencoded
-        if (\substr_count($activationKey, ':') !== 2) {
+        if (2 !== \substr_count($activationKey, ':')) {
             $crypt = \DMK\Mkpostman\Factory::getCryptUtility();
             $activationKey = $crypt->urlDencode($activationKey);
         }
 
-        list ($uid, $confirmstring, $md5) = explode(':', $activationKey);
+        list($uid, $confirmstring, $md5) = explode(':', $activationKey);
 
         return \Tx_Rnbase_Domain_Model_Data::getInstance(
             array(
                 'uid' => $uid,
                 'confirmstring' => $confirmstring,
-                'mail_hash' => $md5
+                'mail_hash' => $md5,
             )
         );
     }
 
     /**
      * Creates a activation key for the subscriber
-     * uid:confirmstring:mailmd5
+     * uid:confirmstring:mailmd5.
      *
      * @param bool $urlencode
      *
@@ -223,7 +220,7 @@ class DoubleOptInUtility
             array(
                 $subscriber->getUid(),
                 $subscriber->getConfirmstring(),
-                md5($subscriber->getEmail())
+                md5($subscriber->getEmail()),
             )
         );
 
@@ -238,7 +235,7 @@ class DoubleOptInUtility
 
     /**
      * Creates a activation key for the subscriber
-     * uid:confirmstring:mailmd5
+     * uid:confirmstring:mailmd5.
      *
      * @param bool $urlencode
      *
@@ -269,7 +266,7 @@ class DoubleOptInUtility
             array(
                 $subscriber->getUid(),
                 $subscriber->getConfirmstring(),
-                md5($subscriber->getEmail())
+                md5($subscriber->getEmail()),
             )
         );
 
@@ -283,7 +280,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Validates the activation key and activates the subscriber
+     * Validates the activation key and activates the subscriber.
      *
      * @param string $activationKey
      *
@@ -302,7 +299,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Validates the activation key and activates the subscriber
+     * Validates the activation key and activates the subscriber.
      *
      * @param string $activationKey
      *
@@ -321,7 +318,7 @@ class DoubleOptInUtility
     }
 
     /**
-     * Validates the activation key and activates the subscriber
+     * Validates the activation key and activates the subscriber.
      *
      * @param string $activationKey
      *

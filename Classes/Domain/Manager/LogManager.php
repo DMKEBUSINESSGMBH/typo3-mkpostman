@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Manager;
 
 /***************************************************************
@@ -29,23 +30,18 @@ use DMK\Mkpostman\Domain\Model\SubscriberModel;
 use DMK\Mkpostman\Factory;
 
 /**
- * Log repo
+ * Log repo.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class LogManager
 {
-
     /**
-     * Creates an subscibed log for the subscriber
+     * Creates an subscibed log for the subscriber.
      *
      * @param SubscriberModel $subscriber
-     *
-     * @return void
      */
     public function createSubscribedBySubscriber(
         SubscriberModel $subscriber
@@ -54,11 +50,9 @@ class LogManager
     }
 
     /**
-     * Creates an activated log for the subscriber
+     * Creates an activated log for the subscriber.
      *
      * @param SubscriberModel $subscriber
-     *
-     * @return void
      */
     public function createActivatedBySubscriber(
         SubscriberModel $subscriber
@@ -67,11 +61,9 @@ class LogManager
     }
 
     /**
-     * Creates an unsubscribed log for the subscriber
+     * Creates an unsubscribed log for the subscriber.
      *
      * @param SubscriberModel $subscriber
-     *
-     * @return void
      */
     public function createUnsubscribedBySubscriber(
         SubscriberModel $subscriber
@@ -80,12 +72,10 @@ class LogManager
     }
 
     /**
-     * Creates an Log for the Subscriber
+     * Creates an Log for the Subscriber.
      *
      * @param SubscriberModel $subscriber
-     * @param int $state LogModel::STATE_*
-     *
-     * @return void
+     * @param int             $state      LogModel::STATE_*
      */
     protected function createLogBySubscriber(
         SubscriberModel $subscriber,
@@ -109,7 +99,7 @@ class LogManager
     }
 
     /**
-     * Creates the log description
+     * Creates the log description.
      *
      * @param LogModel $logEntry
      *
@@ -123,7 +113,7 @@ class LogManager
 
         $who = 'Subscriber';
         if ($logEntry->getCruserId() > 0) {
-            $who = 'BE-User (' . $this->getBeUserName($logEntry->getCruserId()) . ')';
+            $who = 'BE-User ('.$this->getBeUserName($logEntry->getCruserId()).')';
         }
         $what = $this->getStateLabel($logEntry->getState());
         $whom = $logEntry->getSubscriber()->getEmail();
@@ -132,7 +122,7 @@ class LogManager
     }
 
     /**
-     * Returns the Name of the User ID
+     * Returns the Name of the User ID.
      *
      * @param int $uid
      *
@@ -150,7 +140,7 @@ class LogManager
         $beuser = \Tx_Rnbase_Database_Connection::getInstance()->doSelect(
             'username',
             'be_users',
-            ['where' => 'uid = ' . (int) $uid]
+            ['where' => 'uid = '.(int) $uid]
         );
 
         if (!empty($beuser)) {
@@ -161,8 +151,10 @@ class LogManager
     }
 
     /**
-     * Converts the state id to a human readable label
+     * Converts the state id to a human readable label.
+     *
      * @param int $state
+     *
      * @return string
      */
     protected function getStateLabel(
@@ -181,7 +173,7 @@ class LogManager
     }
 
     /**
-     * Returns the log repo
+     * Returns the log repo.
      *
      * @return \DMK\Mkpostman\Domain\Repository\LogRepository
      */

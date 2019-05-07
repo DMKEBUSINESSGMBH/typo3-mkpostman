@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Form\Handler;
  ***************************************************************/
 
 /**
- * MK Postman abstract form handler
+ * MK Postman abstract form handler.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -47,7 +46,7 @@ abstract class AbstractFormHandler
     }
 
     /**
-     * Returns configurations object
+     * Returns configurations object.
      *
      * @return \Tx_Rnbase_Configuration_ProcessorInterface
      */
@@ -57,7 +56,7 @@ abstract class AbstractFormHandler
     }
 
     /**
-     * Returns configurations object
+     * Returns configurations object.
      *
      * @return string
      */
@@ -67,7 +66,7 @@ abstract class AbstractFormHandler
     }
 
     /**
-     * Returns request parameters
+     * Returns request parameters.
      *
      * @return \tx_rnbase_IParameters
      */
@@ -77,12 +76,10 @@ abstract class AbstractFormHandler
     }
 
     /**
-     * Sets some data to the view
+     * Sets some data to the view.
      *
      * @param string $name
-     * @param mixed $data
-     *
-     * @return void
+     * @param mixed  $data
      */
     protected function setToView($name, $data)
     {

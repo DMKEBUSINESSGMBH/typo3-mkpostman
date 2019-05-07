@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Form\Handler;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action with mkforms
+ * MK Postman subscribe action with mkforms.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -41,7 +40,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
     private $form;
 
     /**
-     * Renders the subscribtion form
+     * Renders the subscribtion form.
      *
      * @return self
      */
@@ -56,7 +55,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * Creates the Form
+     * Creates the Form.
      *
      * @return \tx_mkforms_forms_Base
      */
@@ -69,10 +68,10 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
 
         $this->form->init(
             $this,
-            $configurations->get($confId . 'xml'),
+            $configurations->get($confId.'xml'),
             false,
             $configurations,
-            $confId . 'formconfig.'
+            $confId.'formconfig.'
         );
 
         return $this->form;
@@ -93,7 +92,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
      */
     public function isFinished()
     {
-        return $this->getSubscriber() !== null && $this->getForm()->isFullySubmitted();
+        return null !== $this->getSubscriber() && $this->getForm()->isFullySubmitted();
     }
 
     /**
@@ -117,7 +116,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * Only a Wrapper for tx_mkforms_util_FormBase::multipleTableStructure2FlatArray
+     * Only a Wrapper for tx_mkforms_util_FormBase::multipleTableStructure2FlatArray.
      *
      * @param array $data
      *
@@ -155,7 +154,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * The TemplatePath for the mkforms xml subscribe form
+     * The TemplatePath for the mkforms xml subscribe form.
      *
      * @return string
      */

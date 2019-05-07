@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Utility;
 
 /***************************************************************
@@ -40,19 +41,16 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * CryptUtility test
+ * CryptUtility test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CryptUtilityTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class CryptUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the urlEncode method
+     * Test the urlEncode method.
      *
      * @return string
      *
@@ -76,10 +74,9 @@ class CryptUtilityTest
     }
 
     /**
-     * Test the urlDencode method
+     * Test the urlDencode method.
      *
      * @param string $encoded
-     * @return void
      *
      * @depends testCreateConfirmString
      * @group unit
@@ -88,7 +85,6 @@ class CryptUtilityTest
     public function testUrlDencode(
         $encoded
     ) {
-
         /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
         $util = \tx_rnbase::makeInstance(
             'DMK\\Mkpostman\\Utility\\CryptUtility'
@@ -101,7 +97,7 @@ class CryptUtilityTest
     }
 
     /**
-     * The Value To test :)
+     * The Value To test :).
      *
      * @return string
      */

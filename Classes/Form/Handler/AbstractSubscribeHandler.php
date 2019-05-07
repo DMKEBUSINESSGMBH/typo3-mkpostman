@@ -1,7 +1,6 @@
 <?php
-namespace DMK\Mkpostman\Form\Handler;
 
-use DMK\Mkpostman\Factory;
+namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
  * Copyright notice
@@ -27,10 +26,8 @@ use DMK\Mkpostman\Factory;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action
+ * MK Postman subscribe action.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -44,6 +41,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
 
     /**
      * @param $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel
+     *
      * @return self
      */
     public function setSubscriber(\DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber)
@@ -62,11 +60,9 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
     }
 
     /**
-     * Process the subscriber data after valid form submit
+     * Process the subscriber data after valid form submit.
      *
      * @param array $data Form data splitted by tables
-     *
-     * @return void
      */
     protected function processSubscriberData(
         array $data
@@ -112,7 +108,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
             // set the storage pid for the new subscriber
             $subscriber->setPid(
                 $this->getConfigurations()->getInt(
-                    $this->getConfId() . 'subscriber.storage'
+                    $this->getConfId().'subscriber.storage'
                 )
             );
         }
@@ -131,7 +127,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
     }
 
     /**
-     * Returns the subscriber repository
+     * Returns the subscriber repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
@@ -141,7 +137,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
     }
 
     /**
-     * Returns the log manager
+     * Returns the log manager.
      *
      * @return \DMK\Mkpostman\Domain\Manager\LogManager
      */

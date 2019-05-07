@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Lister;
 
 /***************************************************************
@@ -32,12 +33,9 @@ namespace DMK\Mkpostman\Backend\Lister;
  *
  * This lister requires mklib!
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberExportLister
-    extends SubscriberLister implements \tx_mklib_mod1_export_ISearcher
+class SubscriberExportLister extends SubscriberLister implements \tx_mklib_mod1_export_ISearcher
 {
     /**
      * Liefert den List-Provider,
@@ -55,7 +53,7 @@ class SubscriberExportLister
         $provider->initBySearch(
             array(
                 $this->getRepository(),
-                'search'
+                'search',
             ),
             $fields,
             $options

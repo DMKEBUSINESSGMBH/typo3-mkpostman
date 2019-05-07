@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Hook;
 
 /***************************************************************
@@ -25,36 +26,33 @@ namespace DMK\Mkpostman\Hook;
  ***************************************************************/
 
 /**
- * MK Postman hook to add markers to direct_mail
+ * MK Postman hook to add markers to direct_mail.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class LogWriterHook
 {
-
     /**
      * @var array Of uids which are already proceddes/logged
      */
     protected $subscribersProcessed = [];
 
     /**
-     * Hook to check if log relevant fields have changed
+     * Hook to check if log relevant fields have changed.
      *
-     * @param string $status
-     * @param string $table
-     * @param int $uid
-     * @param array $fieldArray
+     * @param string                                   $status
+     * @param string                                   $table
+     * @param int                                      $uid
+     * @param array                                    $fieldArray
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
      */
     public function processDatamap_postProcessFieldArray(
         $status, $table, $uid, $fieldArray, $dataHandler
     ) {
         // does nothing if no subscriber table was changed
-        if ($table != 'tx_mkpostman_subscribers') {
+        if ('tx_mkpostman_subscribers' != $table) {
             return;
         }
 
@@ -62,6 +60,7 @@ class LogWriterHook
         if (!isset($fieldArray['disabled']) && !isset($fieldArray['email'])) {
             // set the subscriber as already processed! so it will not be processed again in afterAllOperations!
             $this->subscribersProcessed[$uid] = true;
+
             return;
         }
     }
@@ -70,8 +69,6 @@ class LogWriterHook
      * Add subscriber log if a subscriber was edited.
      *
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
-     *
-     * @return void
      */
     public function processDatamap_afterAllOperations($dataHandler)
     {
@@ -93,14 +90,14 @@ class LogWriterHook
         // )
         foreach ($dataHandler->datamap as $table => $uids) {
             // check the history undo structure and rebuild to reneral structure
-            if (strpos($table, ':') !== false) {
-                list ($table, $uid) = explode(':', $table, 2);
+            if (false !== strpos($table, ':')) {
+                list($table, $uid) = explode(':', $table, 2);
                 if ($uid > 0) {
                     $uids = [$uid => []];
                 }
             }
 
-            if (!is_array($uids) || $table !== 'tx_mkpostman_subscribers') {
+            if (!is_array($uids) || 'tx_mkpostman_subscribers' !== $table) {
                 continue;
             }
 
@@ -130,17 +127,15 @@ class LogWriterHook
     }
 
     /**
-     * Creates a log entry for a subscriber
+     * Creates a log entry for a subscriber.
      *
      * @param $uid
      * @param bool $new
-     *
-     * @return void
      */
     protected function processSubscriberLog($uid, $new = false)
     {
         $subscriber = $this->findSubscriberByUid($uid);
-        if ($subscriber == null) {
+        if (null == $subscriber) {
             return;
         }
         $logManager = $this->getLogManager();
@@ -182,5 +177,4 @@ class LogWriterHook
     {
         return \DMK\Mkpostman\Factory::getLogManager();
     }
-
 }

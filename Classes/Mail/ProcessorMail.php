@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Mail;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Mail;
  ***************************************************************/
 
 /**
- * MK Postman mail processor
+ * MK Postman mail processor.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -36,14 +35,14 @@ namespace DMK\Mkpostman\Mail;
 class ProcessorMail
 {
     /**
-     * The config object to use for mails
+     * The config object to use for mails.
      *
      * @var \tx_rnbase_configurations
      */
     private $configurations = null;
 
     /**
-     * The Constructor
+     * The Constructor.
      *
      * @param \tx_rnbase_configurations $configurations
      */
@@ -54,7 +53,7 @@ class ProcessorMail
     }
 
     /**
-     * The configuration object
+     * The configuration object.
      *
      * @return \tx_rnbase_configurations
      */
@@ -62,8 +61,9 @@ class ProcessorMail
     {
         return $this->configurations;
     }
+
     /**
-     * The conf id
+     * The conf id.
      *
      * @return string
      */
@@ -73,11 +73,9 @@ class ProcessorMail
     }
 
     /**
-     * Is mkmailer loaded? otherwise throw exception
+     * Is mkmailer loaded? otherwise throw exception.
      *
      * @throws BadFunctionCallException
-     *
-     * @return void
      */
     protected function checkMkmailer()
     {
@@ -85,7 +83,7 @@ class ProcessorMail
     }
 
     /**
-     * Creates a mailjob based on the receiver and the template object
+     * Creates a mailjob based on the receiver and the template object.
      *
      * @param \tx_mkmailer_models_Template $template
      *
@@ -109,11 +107,9 @@ class ProcessorMail
     }
 
     /**
-     * Send an activation mail to the user
+     * Send an activation mail to the user.
      *
      * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
-     *
-     * @return void
      */
     public function sendSubscriberActivation(
         \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber

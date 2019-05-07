@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\View;
 
 /***************************************************************
@@ -27,23 +28,20 @@ namespace DMK\Mkpostman\View;
 \tx_rnbase::load('tx_rnbase_view_Base');
 
 /**
- * MK Postman abstract view
+ * MK Postman abstract view.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class AbstractView
-    extends \tx_rnbase_view_Base
+abstract class AbstractView extends \tx_rnbase_view_Base
 {
     /**
-     * Entry point for child classes
+     * Entry point for child classes.
      *
-     * @param string $template
-     * @param \ArrayObject $viewData
-     * @param \tx_rnbase_configurations $configurations
+     * @param string                     $template
+     * @param \ArrayObject               $viewData
+     * @param \tx_rnbase_configurations  $configurations
      * @param \tx_rnbase_util_FormatUtil $formatter
      *
      * @return string
@@ -72,13 +70,14 @@ abstract class AbstractView
     }
 
     /**
-     * Parses the current view template
+     * Parses the current view template.
      *
      * @param string $template
      *
      * @return string
      */
     abstract protected function parseTemplate($template);
+
     /*{
         $viewData = $this->getViewData();
         $configurations =$this->getConfigurations();
@@ -87,12 +86,12 @@ abstract class AbstractView
     }*/
 
     /**
-     * Fills the marker arrays for the template
+     * Fills the marker arrays for the template.
      *
      * @param string $template
-     * @param array $markArray
-     * @param array $subpartArray
-     * @param array $wrappedSubpartArray
+     * @param array  $markArray
+     * @param array  $subpartArray
+     * @param array  $wrappedSubpartArray
      *
      * @return string The template to render
      */
@@ -112,7 +111,7 @@ abstract class AbstractView
             // set value to data array
             $renderData[$viewDataName] = $value;
             // check value and remove or leave subpart
-            $subMarker = strtoupper($viewDataName) . '_VISIBLE';
+            $subMarker = strtoupper($viewDataName).'_VISIBLE';
 
             if (empty($renderData[$viewDataName])) {
                 // remove subpart, if viewdata is empty
@@ -136,7 +135,7 @@ abstract class AbstractView
     }
 
     /**
-     * Checks, if the marker exists at the template
+     * Checks, if the marker exists at the template.
      *
      * @param string $template
      * @param string $markerPrefix
@@ -149,12 +148,12 @@ abstract class AbstractView
 
         return \tx_rnbase_util_BaseMarker::containsMarker(
             $template,
-            $markerPrefix . '_'
+            $markerPrefix.'_'
         );
     }
 
     /**
-     * Returns configurations object
+     * Returns configurations object.
      *
      * @return tx_rnbase_configurations
      */
@@ -164,7 +163,7 @@ abstract class AbstractView
     }
 
     /**
-     * Returns confid for the view
+     * Returns confid for the view.
      *
      * @return string
      */
@@ -174,7 +173,7 @@ abstract class AbstractView
     }
 
     /**
-     * Returns view data
+     * Returns view data.
      *
      * @return ArrayObject
      */
@@ -184,7 +183,7 @@ abstract class AbstractView
     }
 
     /**
-     * Returns configurations object
+     * Returns configurations object.
      *
      * @return tx_rnbase_util_FormatUtil
      */
@@ -194,7 +193,7 @@ abstract class AbstractView
     }
 
     /**
-     * Get some data from the view
+     * Get some data from the view.
      *
      * @param string $name
      *

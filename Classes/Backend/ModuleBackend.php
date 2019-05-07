@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend;
 
 /***************************************************************
@@ -27,19 +28,14 @@ namespace DMK\Mkpostman\Backend;
 \tx_rnbase::load('tx_rnbase_mod_BaseModule');
 
 /**
- * MK Postman backend module
+ * MK Postman backend module.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class ModuleBackend
-    extends \tx_rnbase_mod_BaseModule
+class ModuleBackend extends \tx_rnbase_mod_BaseModule
 {
     /**
      * Initializes the backend module by setting internal variables, initializing the menu.
-     *
-     * @return void
      */
     public function init()
     {
@@ -48,7 +44,7 @@ class ModuleBackend
     }
 
     /**
-     * Method to get the extension key
+     * Method to get the extension key.
      *
      * @return string Extension key
      */
@@ -68,7 +64,7 @@ class ModuleBackend
     }
 
     /**
-     * Check for records on current pid and show list with pages with records
+     * Check for records on current pid and show list with pages with records.
      *
      * @return mixed null or string
      */
@@ -92,38 +88,40 @@ class ModuleBackend
                 array('id' => $pid),
                 ''
             );
-            $page  = '<a href="' . $modUrl . '">';
-            if ($pid === 0) {
+            $page = '<a href="'.$modUrl.'">';
+            if (0 === $pid) {
                 $page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon(
                     'apps-pagetree-root',
                     array('size' => 'small')
                 );
-                $page .= ' ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
+                $page .= ' '.$GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
             } else {
                 $page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIconForRecord(
                     'pages',
                     \Tx_Rnbase_Database_Connection::getInstance()->getRecord('pages', $pid),
                     'small'
                 );
-                $page .= ' ' . $pageinfo['title'];
+                $page .= ' '.$pageinfo['title'];
             }
-            $page .= ' ' . htmlspecialchars($pageinfo['_thePath']);
+            $page .= ' '.htmlspecialchars($pageinfo['_thePath']);
             $page .= '</a>';
 
             $pages[$pid] = $page;
         }
 
-        $out  = '<div class="tables graybox">';
+        $out = '<div class="tables graybox">';
         $out .= '<h2 class="bgColor2 t3-row-header">###LABEL_NO_PAGE_SELECTED###</h2>';
         if (!empty($pages)) {
-            $out .= '<ul><li>' . implode('</li><li>', $pages) . '</li></ul>';
+            $out .= '<ul><li>'.implode('</li><li>', $pages).'</li></ul>';
         }
         $out .= '</div>';
 
         return $out;
     }
+
     /**
      * Liefert Page Ids zu seiten mit mkpostman inhalten.
+     *
      * @return array
      */
     private static function getStorageFolders()

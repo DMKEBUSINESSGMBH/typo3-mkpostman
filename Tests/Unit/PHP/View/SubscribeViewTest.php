@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\View;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscribtion view test
+ * Subscribtion view test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeViewTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscribeViewTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the getMainSubpart method
+     * Test the getMainSubpart method.
      *
-     * @return void
      *
      * @group unit
      * @test
