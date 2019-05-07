@@ -54,7 +54,7 @@ script:
   - >
     echo;
     echo "Running unit tests";
-    .Build/bin/phpunit -c phpunit.xml
+    .Build/bin/phpunit -c phpunit.xml.dist
 
 # disabled, because there are direct tx_rnbase::load calls in the files!
 #  - >
