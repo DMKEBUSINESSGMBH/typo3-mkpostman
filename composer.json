@@ -24,6 +24,7 @@
     "require-dev": {
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.0",
+	"friendsofphp/php-cs-fixer": "2.14.*",
         "mikey179/vfsStream": "^1.4",
         "phpunit/phpunit": "^4.7"
     },
