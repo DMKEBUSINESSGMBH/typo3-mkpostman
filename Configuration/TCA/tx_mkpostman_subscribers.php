@@ -38,7 +38,7 @@ return call_user_func(
                 ),
                 'confirmstring' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.confirmstring',
+                    'label' => $lllTable.'confirmstring',
                     'config' => array(
                         'type' => 'input',
                         'readOnly' => true,
@@ -46,16 +46,16 @@ return call_user_func(
                 ),
                 'gender' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.gender',
+                    'label' => $lllTable.'gender',
                     'config' => array(
                         'type' => 'radio',
                         'items' => array(
                             array(
-                                $lllTable.'tx_mkpostman_subscribers.gender.0',
+                                $lllTable.'gender.0',
                                 '0',
                             ),
                             array(
-                                $lllTable.'tx_mkpostman_subscribers.gender.1',
+                                $lllTable.'gender.1',
                                 '1',
                             ),
                         ),
@@ -63,7 +63,7 @@ return call_user_func(
                 ),
                 'first_name' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.first_name',
+                    'label' => $lllTable.'first_name',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
@@ -73,7 +73,7 @@ return call_user_func(
                 ),
                 'last_name' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.last_name',
+                    'label' => $lllTable.'last_name',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
@@ -83,7 +83,7 @@ return call_user_func(
                 ),
                 'email' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.email',
+                    'label' => $lllTable.'email',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
@@ -93,7 +93,7 @@ return call_user_func(
                 ),
                 'logs' => array(
                     'exclude' => 1,
-                    'label' => $lllTable.'tx_mkpostman_subscribers.logs',
+                    'label' => $lllTable.'logs',
                     'config' => array(
                         'type' => 'user',
                         'size' => '20',
