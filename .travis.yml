@@ -44,6 +44,7 @@ before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
   - composer require -o digedag/rn-base="dev-master"
   - composer require -o dmk/mkforms="dev-master"
+  - composer require -o dmk/mklib="dev-master"
   # Restore composer.json
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web

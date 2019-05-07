@@ -30,6 +30,7 @@
     },
     "suggest": {
         "dmk/mkforms": "Use the powerful MK Forms extension to build the subscription form ('\"dmk/mkforms\": \">=3\"')."
+        "dmk/mklib": "install the mklib extension, when you need export functionality."
     },
     "support": {
         "email": "dev@dmk-ebusiness.de",
