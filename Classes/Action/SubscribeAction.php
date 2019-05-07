@@ -1,6 +1,8 @@
 <?php
 namespace DMK\Mkpostman\Action;
 
+use DMK\Mkpostman\Factory;
+
 /***************************************************************
  * Copyright notice
  *
@@ -214,8 +216,18 @@ class SubscribeAction
 
         $handler->handleForm();
 
+        $config = $this->getConfigurations()->getConfigArray();
+
+        $catRepo = Factory::getCategoryRepository();
+        $categories = [];
+        $categoryIds = explode(',', $config['categories']);
+        foreach ($categoryIds as $categoryId) {
+            $categories[] = $catRepo->findByUid($categoryId);
+        }
+
         $subscriber = $handler->getSubscriber();
         $this->setToView('subscriber', $subscriber);
+        $this->setToView('categories', $categories);
 
         if (!$handler->isFinished()) {
             return;

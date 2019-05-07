@@ -1,10 +1,6 @@
 <?php
 namespace DMK\Mkpostman\Domain\Repository;
 
-use Exception;
-use Tx_Rnbase_Domain_Model_Data;
-use Tx_Rnbase_Domain_Model_DomainInterface;
-
 /***************************************************************
  * Copyright notice
  *
@@ -31,15 +27,15 @@ use Tx_Rnbase_Domain_Model_DomainInterface;
 \tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
- * Subscriber repo
+ * Category repo
  *
  * @package TYPO3
  * @subpackage DMK\Mkpostman
- * @author Michael Wagner
+ * @author Markus Crasser
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberRepository
+class CategoryRepository
     extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
     /**
@@ -59,45 +55,11 @@ class SubscriberRepository
      */
     protected function getWrapperClass()
     {
-        return 'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel';
+        return 'DMK\\Mkpostman\\Domain\\Model\\CategoryModel';
     }
 
     /**
-     * Adds the subscriber to the sys_category mm
-     *
-     * @param Tx_Rnbase_Domain_Model_DomainInterface $model
-     * @param array|Tx_Rnbase_Domain_Model_Data $options
-     *
-     * @throws Exception
-     *
-     * @return void
-     */
-    public function addToCategories(
-        Tx_Rnbase_Domain_Model_DomainInterface $model,
-        $categories
-    ) {
-        if (is_iterable($categories) && count($categories) > 0) {
-            $connection = \Tx_Rnbase_Database_Connection::getInstance();
-            $connection->doDelete(
-                'sys_category_record_mm',
-                'uid_foreign = ' . $model->getUid()
-            );
-            foreach ($categories as $category) {
-                $connection->doInsert(
-                    'sys_category_record_mm',
-                    [
-                        'uid_local' => $category,
-                        'uid_foreign' => $model->getUid(),
-                        'tablenames' => 'tx_mkpostman_subscribers',
-                        'fieldname' => 'categories',
-                    ]
-                );
-            }
-        }
-    }
-
-    /**
-     * Finds a subscriber by email
+     * Finds a Category by uid
      *
      * @param int $uid
      *
@@ -108,7 +70,7 @@ class SubscriberRepository
     ) {
         return $this->searchSingle(
             array (
-                'SUBSCRIBER.uid' => array(
+                'CATEGORY.uid' => array(
                     OP_EQ_INT => $uid
                 )
             ),
@@ -119,19 +81,22 @@ class SubscriberRepository
     }
 
     /**
-     * Finds a subscriber by email
+     * Finds Categories by subscriber
      *
-     * @param string $mail
+     * @param int $subscriberId
      *
-     * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+     * @return null|DMK\Mkpostman\Domain\Model\CategoryModel
      */
-    public function findByEmail(
-        $mail
+    public function findBySubscriberId(
+        $subscriberId
     ) {
-        return $this->searchSingle(
+        return $this->search(
             array (
-                'SUBSCRIBER.email' => array(
-                    OP_EQ => $mail
+                'CATEGORYMM.uid_foreign' => array(
+                    OP_EQ_INT => $subscriberId,
+                ),
+                'CATEGORYMM.tablenames' => array(
+                    OP_EQ => 'tx_mkpostman_subscribers',
                 )
             ),
             array(
@@ -178,11 +143,15 @@ class SubscriberRepository
             array(
                 'usealias' => 1,
                 'basetable' => $model->getTableName(),
-                'basetablealias' => 'SUBSCRIBER',
+                'basetablealias' => 'CATEGORY',
                 'wrapperclass' => get_class($model),
                 'alias' => array(
-                    'SUBSCRIBER' => array(
+                    'CATEGORY' => array(
                         'table' => $model->getTableName()
+                    ),
+                    'CATEGORYMM' => array(
+                        'table' => 'sys_category_record_mm',
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON CATEGORY.uid = CATEGORYMM.uid_local'
                     )
                 )
             ),

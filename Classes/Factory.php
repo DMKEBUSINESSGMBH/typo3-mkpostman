@@ -78,6 +78,18 @@ final class Factory
     }
 
     /**
+     * Returns the category repository
+     *
+     * @return \DMK\Mkpostman\Domain\Repository\CategoryRepository
+     */
+    public static function getCategoryRepository()
+    {
+        return \tx_rnbase::makeInstance(
+            'DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository'
+        );
+    }
+
+    /**
      * Returns the log repository
      *
      * @return \DMK\Mkpostman\Domain\Repository\LogRepository

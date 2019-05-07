@@ -40,6 +40,9 @@
             <trans-unit id="label_tableheader_actions" xml:space="preserve">
                 <source>Actions</source>
             </trans-unit>
+            <trans-unit id="label_tableheader_categories" xml:space="preserve">
+                <source>Categories</source>
+            </trans-unit>
 
             <trans-unit id="label_search_form" xml:space="preserve">
                 <source>Filter</source>

@@ -60,6 +60,7 @@ class SubscriberLister
             'SUBSCRIBER.first_name',
             'SUBSCRIBER.last_name',
             'SUBSCRIBER.email',
+            'SUBSCRIBER.categories',
         );
     }
 
@@ -133,6 +134,7 @@ class SubscriberLister
         ($this
             ->addDecoratorColumnEmail($columns)
             ->addDecoratorColumnName($columns)
+            ->addDecoratorColumnCategories($columns)
             ->addDecoratorColumnActions($columns)
         );
 
@@ -169,6 +171,24 @@ class SubscriberLister
     ) {
         $columns['name'] = array(
             'title' => 'label_tableheader_name',
+            'decorator' =>  $this->getDecorator(),
+        );
+
+        return $this;
+    }
+
+    /**
+     * Adds the column 'categories' to the be list.
+     *
+     * @param array $columns
+     *
+     * @return SubscriberLister
+     */
+    protected function addDecoratorColumnCategories(
+        array &$columns
+    ) {
+        $columns['categories'] = array(
+            'title' => 'label_tableheader_categories',
             'decorator' =>  $this->getDecorator(),
         );
 
