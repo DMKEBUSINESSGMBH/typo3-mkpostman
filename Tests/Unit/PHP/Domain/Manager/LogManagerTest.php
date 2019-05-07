@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Manager;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Log manager test
+ * Log manager test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogManagerTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the createSubscribedBySubscriber method
+     * Test the createSubscribedBySubscriber method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -75,9 +72,8 @@ class LogManagerTest
     }
 
     /**
-     * Test the createActivatedBySubscriber method
+     * Test the createActivatedBySubscriber method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -98,9 +94,8 @@ class LogManagerTest
     }
 
     /**
-     * Test the createUnsubscribedBySubscriber method
+     * Test the createUnsubscribedBySubscriber method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -121,9 +116,8 @@ class LogManagerTest
     }
 
     /**
-     * Test the createUnsubscribedBySubscriber method
+     * Test the createUnsubscribedBySubscriber method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -160,9 +154,8 @@ class LogManagerTest
     }
 
     /**
-     * Test the createDescription method
+     * Test the createDescription method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -200,7 +193,7 @@ class LogManagerTest
     }
 
     /**
-     * Returns the data for the createDescription test
+     * Returns the data for the createDescription test.
      *
      * @return array
      */
@@ -228,9 +221,8 @@ class LogManagerTest
     }
 
     /**
-     * Test the getStateLabel method
+     * Test the getStateLabel method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -248,7 +240,7 @@ class LogManagerTest
     }
 
     /**
-     * Returns the data for the getStateLabel test
+     * Returns the data for the getStateLabel test.
      *
      * @return array
      */
@@ -279,15 +271,15 @@ class LogManagerTest
     }
 
     /**
-     * Returns a mock of
+     * Returns a mock of.
      *
      * @param array $record
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|LogManager
      */
     protected function getManager(
         array $methods = []
     ) {
-    
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $manager = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager',

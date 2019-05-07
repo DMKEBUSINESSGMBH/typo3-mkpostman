@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Form\Handler;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action
+ * MK Postman subscribe action.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -41,7 +40,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     private $validationErrors = [];
 
     /**
-     * Renders the subscribtion form
+     * Renders the subscribtion form.
      *
      * @return self
      */
@@ -60,11 +59,9 @@ class SubscribeHandler extends AbstractSubscribeHandler
         // now check if there are a submit
         if ($this->getParameters()->get('subscribe')) {
             $data = $this->getParameters()->get('subscriber');
-            if ($this->validateSubscriberData($data))
-            {
+            if ($this->validateSubscriberData($data)) {
                 $this->processSubscriberData($data);
-            }
-            else {
+            } else {
                 // prefill with current fe user data
                 $this->getSubscriber()->setProperty($data);
             }
@@ -89,16 +86,16 @@ class SubscribeHandler extends AbstractSubscribeHandler
      */
     public function isFinished()
     {
-        return (
+        return
             empty($this->validationErrors) &&
             $this->getSubscriber() &&
-            $this->getSubscriber()->getUid()> 0 &&
+            $this->getSubscriber()->getUid() > 0 &&
             $this->getParameters()->get('subscribe')
-        );
+        ;
     }
 
     /**
-     * Process the subscriber data after valid form submit
+     * Process the subscriber data after valid form submit.
      *
      * @param array $data Form data splitted by tables
      *
@@ -109,6 +106,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     ) {
         if (empty($data['email']) || !\Tx_Rnbase_Utility_T3General::validEmail($data['email'])) {
             $this->validationErrors['email'] = true;
+
             return false;
         }
 
@@ -116,17 +114,18 @@ class SubscribeHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * Returns the options for the select fields in the template
+     * Returns the options for the select fields in the template.
      *
      * @return array
      */
-    protected function getFormSelectOptions() {
+    protected function getFormSelectOptions()
+    {
         return [
             'gender' => [
                 '' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_general_choose'),
                 '0' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_0'),
                 '1' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_1'),
-            ]
+            ],
         ];
     }
 }

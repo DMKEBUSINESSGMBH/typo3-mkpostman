@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Decorator;
 
 use DMK\Mkpostman\Factory;
@@ -29,23 +30,20 @@ use DMK\Mkpostman\Factory;
 \tx_rnbase::load('Tx_Rnbase_Backend_Decorator_BaseDecorator');
 
 /**
- * Subscriber lister
+ * Subscriber lister.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberDecorator
-    extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
+class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
 {
     /**
      * Wraps the Value.
      * A childclass can extend this and wrap each value in a spac.
      * For example a strikethrough for disabled entries.
      *
-     * @param string $formatedValue
+     * @param string                                $formatedValue
      * @param \Tx_Rnbase_Domain_Model_DataInterface $entry
-     * @param string $columnName
+     * @param string                                $columnName
      *
      * @return string
      */
@@ -63,7 +61,7 @@ class SubscriberDecorator
     }
 
     /**
-     * Renders the useractions
+     * Renders the useractions.
      *
      * @param \Tx_Rnbase_Domain_Model_DataInterface $item
      *
@@ -92,7 +90,6 @@ class SubscriberDecorator
             $item->getDisabled()
         );
 
-
         $return .= $this->getLogAction($item);
 
         $return .= $this->getFormTool()->createDeleteLink(
@@ -100,8 +97,7 @@ class SubscriberDecorator
             $uid,
             '',
             array(
-                'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###'
-
+                'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###',
             )
         );
 
@@ -118,7 +114,6 @@ class SubscriberDecorator
     protected function formatEmailColumn(
         \Tx_Rnbase_Domain_Model_DataInterface $item
     ) {
-
         $lastModifyDateTime = $item->getLastModifyDateTime();
         $creationDateTime = $item->getCreationDateTime();
 
@@ -131,6 +126,7 @@ class SubscriberDecorator
             $lastModifyDateTime ? $lastModifyDateTime->format(\DateTime::ATOM) : '-'
         );
     }
+
     /**
      * Renders the label column.
      *
@@ -144,15 +140,13 @@ class SubscriberDecorator
         $title = array_filter(
             array(
                 \tx_rnbase_util_Lang::sL(
-                    'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:' .
-                        'tx_mkpostman_subscribers.gender.' . (int) $item->getGender()
+                    'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:'.
+                        'tx_mkpostman_subscribers.gender.'.(int) $item->getGender()
                 ),
                 $item->getFirstName(),
-                $item->getLastName()
+                $item->getLastName(),
             )
         );
-
-
 
         if (count($title) > 1) {
             $title = implode(' ', $title);
@@ -185,7 +179,7 @@ class SubscriberDecorator
     }
 
     /**
-     * Add a rudimentary log icon with only a tooltip
+     * Add a rudimentary log icon with only a tooltip.
      *
      * @param \Tx_Rnbase_Domain_Model_DataInterface $item
      *
@@ -193,14 +187,12 @@ class SubscriberDecorator
      */
     protected function getLogAction(
         \Tx_Rnbase_Domain_Model_DataInterface $item
-    )
-    {
+    ) {
         $logs = $this->getLogs($item);
         $logToolTip = [];
         /* @var $log \DMK\Mkpostman\Domain\Model\LogModel */
-        foreach ($logs as $log)
-        {
-            $logToolTip[] = $log->getCreationDateTime()->format('Y-m-d H:i:s') . ': ' . $log->getDescription();
+        foreach ($logs as $log) {
+            $logToolTip[] = $log->getCreationDateTime()->format('Y-m-d H:i:s').': '.$log->getDescription();
         }
 
         if (count($logToolTip) > 15) {
@@ -214,7 +206,7 @@ class SubscriberDecorator
         return sprintf(
             '<a href="#" class="btn btn-default btn-sm" title="%2$s">%1$s</a>',
             \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon('tcarecords-tx_mkpostman_logs-default'),
-            count($logs) . ' Log(s): ' . CRLF . implode(CRLF, $logToolTip)
+            count($logs).' Log(s): '.CRLF.implode(CRLF, $logToolTip)
         );
     }
 
@@ -223,12 +215,11 @@ class SubscriberDecorator
      *
      * @param \Tx_Rnbase_Domain_Model_DataInterface $item
      *
-     * @return null|\Tx_Rnbase_Domain_Model_DomainInterface
+     * @return \Tx_Rnbase_Domain_Model_DomainInterface|null
      */
     protected function getLogs(
         \Tx_Rnbase_Domain_Model_DataInterface $item
-    )
-    {
+    ) {
         return \DMK\Mkpostman\Factory::getLogRepository()->findBySubscriber($item);
     }
 }

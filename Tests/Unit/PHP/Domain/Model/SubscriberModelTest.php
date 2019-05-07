@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscriber model test
+ * Subscriber model test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberModelTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscriberModelTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the getTableName method
+     * Test the getTableName method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -68,17 +65,17 @@ class SubscriberModelTest
     }
 
     /**
-     * returns a mock of
+     * returns a mock of.
      *
-     * @param array $record
+     * @param array  $record
      * @param string $class
+     *
      * @return tx_rnbase_model_base|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getModelMock(
         $record = null,
         array $methods = array()
     ) {
-    
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
 
         return $this->getModel(

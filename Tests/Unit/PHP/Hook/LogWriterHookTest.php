@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Hook;
 
 /***************************************************************
@@ -40,19 +41,16 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * LogWriterHook test
+ * LogWriterHook test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogWriterHookTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class LogWriterHookTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the processDatamap_postProcessFieldArray method
+     * Test the processDatamap_postProcessFieldArray method.
      *
      * @return string
      *
@@ -67,7 +65,7 @@ class LogWriterHookTest
     }
 
     /**
-     * Test the processDatamap_afterAllOperations method
+     * Test the processDatamap_afterAllOperations method.
      *
      * @return string
      *
@@ -86,17 +84,18 @@ class LogWriterHookTest
                     function ($uid) use (&$lastUid) {
                         // only set the uid, the real check is performed in the 2nd callback
                         $lastUid = $uid;
+
                         return true;
                     }
                 ),
                 $this->callback(
                     function ($new) use (&$lastUid) {
-                        return (
-                            ($lastUid === 5 && $new === false) ||
-                            ($lastUid === 7 && $new === false) ||
-                            ($lastUid === 8 && $new === true) ||
-                            ($lastUid === 6 && $new === false)
-                        );
+                        return
+                            (5 === $lastUid && false === $new) ||
+                            (7 === $lastUid && false === $new) ||
+                            (8 === $lastUid && true === $new) ||
+                            (6 === $lastUid && false === $new)
+                        ;
                     }
                 )
             );
@@ -114,11 +113,10 @@ class LogWriterHookTest
         $this->setInaccessibleProperty($hook, 'subscribersProcessed', [9 => true]);
 
         $hook->processDatamap_afterAllOperations($dataHandler);
-
     }
 
     /**
-     * Test the processSubscriberLog method
+     * Test the processSubscriberLog method.
      *
      * @return string
      *
@@ -153,7 +151,7 @@ class LogWriterHookTest
     }
 
     /**
-     * Test the processSubscriberLog method
+     * Test the processSubscriberLog method.
      *
      * @return string
      *
@@ -188,7 +186,7 @@ class LogWriterHookTest
     }
 
     /**
-     * Test the processSubscriberLog method
+     * Test the processSubscriberLog method.
      *
      * @return string
      *
@@ -223,7 +221,7 @@ class LogWriterHookTest
     }
 
     /**
-     * Test the processSubscriberLog method
+     * Test the processSubscriberLog method.
      *
      * @return string
      *
@@ -261,7 +259,7 @@ class LogWriterHookTest
      * Creates a mock of the hook to test.
      *
      * @param array $methods
-     * @param null $subscriber
+     * @param null  $subscriber
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
@@ -269,7 +267,7 @@ class LogWriterHookTest
         array $methods = [],
         $subscriber = null
     ) {
-        if ($subscriber === null) {
+        if (null === $subscriber) {
             $subscriber = $this->getSubscriberModel(['uid' => rand(100, 199)]);
         }
 

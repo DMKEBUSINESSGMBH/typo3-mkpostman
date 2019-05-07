@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\Mkpostman\Form\Handler;
  ***************************************************************/
 
 /**
- * MK Postman form handler interface
+ * MK Postman form handler interface.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -43,9 +42,7 @@ interface FormHandlerInterface
     public function isFinished();
 
     /**
-     * Renders the subscribtion form
-     *
-     * @return void
+     * Renders the subscribtion form.
      */
     public function handleForm();
 }

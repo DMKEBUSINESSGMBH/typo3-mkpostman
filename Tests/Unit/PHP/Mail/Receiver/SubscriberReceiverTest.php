@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Mail\Receiver;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscriber mail receiver test
+ * Subscriber mail receiver test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberReceiverTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscriberReceiverTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the prepareLinks method
+     * Test the prepareLinks method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -92,10 +89,10 @@ class SubscriberReceiverTest
                         'links.' => array(
                             'activation.' => array(
                                 'absurl' => 'https://www.dmk-ebusiness.de/',
-                            )
-                        )
-                    )
-                )
+                            ),
+                        ),
+                    ),
+                ),
             ),
             'mkpostman',
             'mkpostman',
@@ -111,7 +108,7 @@ class SubscriberReceiverTest
         $this->callInaccessibleMethod(
             array(
                 $this->getReceiver(),
-                'prepareLinks'
+                'prepareLinks',
             ),
             array(
                 $template,
@@ -119,7 +116,7 @@ class SubscriberReceiverTest
                 &$subpartArray,
                 &$wrappedSubpartArray,
                 $configurations->getFormatter(),
-                $confId
+                $confId,
             )
         );
 
@@ -129,7 +126,7 @@ class SubscriberReceiverTest
     }
 
     /**
-     * returns a mock of
+     * returns a mock of.
      *
      * @return PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Mail\Receiver\SubscriberReceiver
      */

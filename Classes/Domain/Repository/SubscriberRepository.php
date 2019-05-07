@@ -1,9 +1,6 @@
 <?php
-namespace DMK\Mkpostman\Domain\Repository;
 
-use Exception;
-use Tx_Rnbase_Domain_Model_Data;
-use Tx_Rnbase_Domain_Model_DomainInterface;
+namespace DMK\Mkpostman\Domain\Repository;
 
 /***************************************************************
  * Copyright notice
@@ -28,24 +25,25 @@ use Tx_Rnbase_Domain_Model_DomainInterface;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Exception;
+use Tx_Rnbase_Domain_Model_Data;
+use Tx_Rnbase_Domain_Model_DomainInterface;
+
 \tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
- * Subscriber repo
+ * Subscriber repo.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberRepository
-    extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
     /**
-     * Liefert den Namen der Suchklasse
+     * Liefert den Namen der Suchklasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getSearchClass()
     {
@@ -55,7 +53,7 @@ class SubscriberRepository
     /**
      * Liefert die Model Klasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getWrapperClass()
     {
@@ -97,7 +95,7 @@ class SubscriberRepository
     }
 
     /**
-     * Finds a subscriber by email
+     * Finds a subscriber by email.
      *
      * @param int $uid
      *
@@ -107,46 +105,44 @@ class SubscriberRepository
         $uid
     ) {
         return $this->searchSingle(
-            array (
+            array(
                 'SUBSCRIBER.uid' => array(
-                    OP_EQ_INT => $uid
-                )
+                    OP_EQ_INT => $uid,
+                ),
             ),
             array(
-                'enablefieldsbe' => true
+                'enablefieldsbe' => true,
             )
         );
     }
 
     /**
-     * Finds a subscriber by email
+     * Finds a subscriber by email.
      *
      * @param string $mail
      *
-     * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+     * @return DMK\Mkpostman\Domain\Model\SubscriberModel|null
      */
     public function findByEmail(
         $mail
     ) {
         return $this->searchSingle(
-            array (
+            array(
                 'SUBSCRIBER.email' => array(
-                    OP_EQ => $mail
-                )
+                    OP_EQ => $mail,
+                ),
             ),
             array(
-                'enablefieldsbe' => true
+                'enablefieldsbe' => true,
             )
         );
     }
 
     /**
-     * On default, return hidden and deleted fields in backend
+     * On default, return hidden and deleted fields in backend.
      *
      * @param array $fields
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareFieldsAndOptions(
         array &$fields,
@@ -157,11 +153,9 @@ class SubscriberRepository
     }
 
     /**
-     * Prepares the simple generic searcher
+     * Prepares the simple generic searcher.
      *
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareGenericSearcher(
         array &$options
@@ -182,9 +176,9 @@ class SubscriberRepository
                 'wrapperclass' => get_class($model),
                 'alias' => array(
                     'SUBSCRIBER' => array(
-                        'table' => $model->getTableName()
-                    )
-                )
+                        'table' => $model->getTableName(),
+                    ),
+                ),
             ),
             // searcher config overrides
             $options['searchdef']

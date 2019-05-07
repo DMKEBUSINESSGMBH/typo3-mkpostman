@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Utility;
 
 /***************************************************************
@@ -27,10 +28,8 @@ namespace DMK\Mkpostman\Utility;
 \tx_rnbase::load('Tx_Rnbase_Interface_Singleton');
 
 /**
- * MK Postman crypt utility
+ * MK Postman crypt utility.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -45,11 +44,10 @@ class TcaUtility
 
         $logDesc = [];
         /* @var $log \DMK\Mkpostman\Domain\Model\LogModel */
-        foreach ($logs as $log)
-        {
-            $logDesc[] = $log->getCreationDateTime()->format('Y-m-d H:i:s') . ': ' . $log->getDescription();
+        foreach ($logs as $log) {
+            $logDesc[] = $log->getCreationDateTime()->format('Y-m-d H:i:s').': '.$log->getDescription();
         }
 
-        return '<ol><li>' . implode('</li><li>', $logDesc). '</li></ol>';
+        return '<ol><li>'.implode('</li><li>', $logDesc).'</li></ol>';
     }
 }

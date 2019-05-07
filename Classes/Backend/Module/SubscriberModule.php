@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Module;
 
 /***************************************************************
@@ -27,19 +28,16 @@ namespace DMK\Mkpostman\Backend\Module;
 \tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
 
 /**
- * MK Postman subscriber module
+ * MK Postman subscriber module.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberModule
-    extends \tx_rnbase_mod_ExtendedModFunc
+class SubscriberModule extends \tx_rnbase_mod_ExtendedModFunc
 {
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
-     * @return  string
+     * @return string
      */
     protected function getFuncId()
     {
@@ -47,7 +45,7 @@ class SubscriberModule
     }
 
     /**
-     * Returns all sub handlers
+     * Returns all sub handlers.
      *
      * @return array
      */

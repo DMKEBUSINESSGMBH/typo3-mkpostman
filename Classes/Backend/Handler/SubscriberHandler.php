@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Handler;
 
 /***************************************************************
@@ -27,16 +28,12 @@ namespace DMK\Mkpostman\Backend\Handler;
 \tx_rnbase::load('Tx_Rnbase_Backend_Handler_SearchHandler');
 
 /**
- * Subscriber handler
+ * Subscriber handler.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberHandler
-    extends \Tx_Rnbase_Backend_Handler_SearchHandler
+class SubscriberHandler extends \Tx_Rnbase_Backend_Handler_SearchHandler
 {
-
     /**
      * Returns a unique ID for this handler.
      * This is used to created the subpart in template.
@@ -59,7 +56,7 @@ class SubscriberHandler
     }
 
     /**
-     * The class for the searcher
+     * The class for the searcher.
      *
      * @return string
      */
@@ -69,9 +66,7 @@ class SubscriberHandler
     }
 
     /**
-     * Prepares the handler
-     *
-     * @return void
+     * Prepares the handler.
      */
     protected function prepare()
     {

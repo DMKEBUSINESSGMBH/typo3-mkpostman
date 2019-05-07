@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Action;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Abstract action test
+ * Abstract action test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class AbstractActionTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the getStorage method
+     * Test the getStorage method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -68,9 +65,8 @@ class AbstractActionTest
     }
 
     /**
-     * Test the handleRequest method
+     * Test the handleRequest method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -103,9 +99,8 @@ class AbstractActionTest
     }
 
     /**
-     * Test the getTableName method
+     * Test the getTableName method.
      *
-     * @return void
      *
      * @group unit
      * @test

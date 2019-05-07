@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Action;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscribtion action test
+ * Subscribtion action test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeHandlerTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
-     * Test the fillData method
+     * Test the fillData method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -89,9 +86,8 @@ class SubscribeHandlerTest
     }
 
     /**
-     * Test the fillData method
+     * Test the fillData method.
      *
-     * @return void
      *
      * @group unit
      * @test

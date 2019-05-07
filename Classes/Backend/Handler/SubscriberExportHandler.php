@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Handler;
 
 /***************************************************************
@@ -28,17 +29,14 @@ namespace DMK\Mkpostman\Backend\Handler;
 \tx_rnbase::load('tx_mklib_mod1_export_IModFunc');
 
 /**
- * Subscriber handler
+ * Subscriber handler.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberExportHandler
-    extends SubscriberHandler implements \tx_mklib_mod1_export_IModFunc
+class SubscriberExportHandler extends SubscriberHandler implements \tx_mklib_mod1_export_IModFunc
 {
     /**
-     * The class for the searcher
+     * The class for the searcher.
      *
      * @return string
      */
@@ -48,7 +46,7 @@ class SubscriberExportHandler
     }
 
     /**
-     * The confid for the modfunc
+     * The confid for the modfunc.
      *
      * Only an alias for the optional mklib based export
      *
@@ -56,11 +54,11 @@ class SubscriberExportHandler
      */
     public function getConfId()
     {
-        return $this->getSubID() . '.';
+        return $this->getSubID().'.';
     }
 
     /**
-     * Only an alias for the optional mklib based export
+     * Only an alias for the optional mklib based export.
      *
      * @return \DMK\Mkpostman\Backend\Lister\SubscriberExportLister
      */
@@ -70,12 +68,12 @@ class SubscriberExportHandler
     }
 
     /**
-     * Base listing
+     * Base listing.
      *
      * @param string $template
-     * @param array $markerArray
-     * @param array $subpartArray
-     * @param array $wrappedSubpartArray
+     * @param array  $markerArray
+     * @param array  $subpartArray
+     * @param array  $wrappedSubpartArray
      *
      * @return string
      */

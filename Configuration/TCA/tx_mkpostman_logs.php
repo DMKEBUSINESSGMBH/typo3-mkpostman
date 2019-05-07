@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') or die('Access denied.');
 
 return array(
@@ -10,12 +11,12 @@ return array(
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'searchFields' => 'description',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman') .
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman').
             'Resources/Public/Media/Icons/tx_mkpostman_logs.gif',
-        'dividers2tabs' => true
+        'dividers2tabs' => true,
     ),
     'interface' => array(
-        'showRecordFieldList' => 'description'
+        'showRecordFieldList' => 'description',
     ),
     'columns' => array(
         'crdate' => array(
@@ -25,7 +26,7 @@ return array(
                 'type' => 'input',
                 'format' => 'datetime',
                 'readOnly' => true,
-            )
+            ),
         ),
         'cruser_id' => array(
             'exclude' => 1,
@@ -34,7 +35,7 @@ return array(
                 'type' => 'select',
                 'foreign_table' => 'be_users',
                 'readOnly' => true,
-            )
+            ),
         ),
         'subscriber_id' => array(
             'exclude' => 1,
@@ -43,7 +44,7 @@ return array(
                 'type' => 'select',
                 'foreign_table' => 'tx_mkpostman_subscribers',
                 'readOnly' => true,
-            )
+            ),
         ),
         'state' => array(
             'exclude' => 1,
@@ -53,23 +54,23 @@ return array(
                 'items' => array(
                     array(
                         '0',
-                        '0'
+                        '0',
                     ),
                     array(
                         'Subscribed',
-                        '1'
+                        '1',
                     ),
                     array(
                         'Activated',
-                        '2'
+                        '2',
                     ),
                     array(
                         'Unsubscribed',
-                        '3'
+                        '3',
                     ),
                 ),
                 'readOnly' => true,
-            )
+            ),
         ),
         'description' => array(
             'exclude' => 1,
@@ -80,12 +81,12 @@ return array(
                 'max' => '255',
                 'eval' => 'trim',
                 'readOnly' => true,
-            )
-        )
+            ),
+        ),
     ),
     'types' => array(
         '0' => array(
-            'showitem' => 'crdate, cruser_id, subscriber_id, state, description'
-        )
-    )
+            'showitem' => 'crdate, cruser_id, subscriber_id, state, description',
+        ),
+    ),
 );

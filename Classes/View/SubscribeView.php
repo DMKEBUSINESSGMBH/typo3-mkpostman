@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\View;
 
 /***************************************************************
@@ -27,19 +28,16 @@ namespace DMK\Mkpostman\View;
 \tx_rnbase::load('tx_mkforms_view_Form');
 
 /**
- * MK Postman subscribe view
+ * MK Postman subscribe view.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeView
-    extends \tx_mkforms_view_Form
+class SubscribeView extends \tx_mkforms_view_Form
 {
     /**
-     * The current viewkey. default is formwrap
+     * The current viewkey. default is formwrap.
      *
      * @return string
      */
@@ -56,7 +54,7 @@ class SubscribeView
     }
 
     /**
-     * The subpart for this view
+     * The subpart for this view.
      *
      * @param ArrayObject $viewData
      *
@@ -66,6 +64,6 @@ class SubscribeView
     public function getMainSubpart(&$viewData)
     {
         // @codingStandardsIgnoreEnd
-        return '###SUBSCRIBE_' . \strtoupper($this->getViewKey()) . '###';
+        return '###SUBSCRIBE_'.\strtoupper($this->getViewKey()).'###';
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Repository;
 
 /***************************************************************
@@ -40,21 +41,17 @@ if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
 }
 
 /**
- * Subscriber model test
+ * Subscriber model test.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogRepositoryTest
-    extends \DMK\Mkpostman\Tests\BaseTestCase
+class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 {
     /**
      * Test the getSearchClass method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -73,7 +70,6 @@ class LogRepositoryTest
     /**
      * Test the getEmptyModel method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -97,7 +93,6 @@ class LogRepositoryTest
     /**
      * Test the findByUid method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -148,7 +143,6 @@ class LogRepositoryTest
     /**
      * Test the findBySubscriber method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -195,7 +189,6 @@ class LogRepositoryTest
     /**
      * Test the prepareGenericSearcher method.
      *
-     * @return void
      *
      * @group unit
      * @test
@@ -252,7 +245,6 @@ class LogRepositoryTest
     /**
      * Test the prepareGenericSearcher method.
      *
-     * @return void
      *
      * @group unit
      * @test

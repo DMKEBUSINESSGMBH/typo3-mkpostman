@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Utility;
 
 /***************************************************************
@@ -27,19 +28,16 @@ namespace DMK\Mkpostman\Utility;
 \tx_rnbase::load('tx_rnbase_util_Wizicon');
 
 /**
- * MK Postman wizard icon
+ * MK Postman wizard icon.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class WizIconUtility
-    extends \tx_rnbase_util_Wizicon
+class WizIconUtility extends \tx_rnbase_util_Wizicon
 {
     /**
-     * Returns the plugin data
+     * Returns the plugin data.
      *
      * @return array
      */
@@ -47,22 +45,22 @@ class WizIconUtility
     {
         return array(
             'tx_mkpostman' => array(
-                'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman') . 'ext_icon.gif',
+                'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman').'ext_icon.gif',
                 'title' => 'plugin.mkpostman.label',
-                'description' => 'plugin.mkpostman.description'
-            )
+                'description' => 'plugin.mkpostman.description',
+            ),
         );
     }
 
     /**
-     * Returns the LL file
+     * Returns the LL file.
      *
      * @return string
      */
     // @codingStandardsIgnoreStart (interface/abstract mistake)
     protected function getLLFile()
     {
-    // @codingStandardsIgnoreEnd
+        // @codingStandardsIgnoreEnd
         return \tx_rnbase_util_Extensions::extPath(
             'mkpostman',
             'Resources/Private/Language/Flexform.xlf'

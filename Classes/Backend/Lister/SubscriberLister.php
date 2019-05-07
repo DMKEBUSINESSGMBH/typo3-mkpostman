@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Backend\Lister;
 
 /***************************************************************
@@ -24,22 +25,17 @@ namespace DMK\Mkpostman\Backend\Lister;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use \DMK\Mkpostman\Backend\Decorator\SubscriberDecorator;
-
 \tx_rnbase::load('Tx_Rnbase_Backend_Lister_AbstractLister');
 
 /**
- * Subscriber lister
+ * Subscriber lister.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  */
-class SubscriberLister
-    extends \Tx_Rnbase_Backend_Lister_AbstractLister
+class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
 {
     /**
-     * The Subscriber repository
+     * The Subscriber repository.
      *
      * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
      */
@@ -49,7 +45,7 @@ class SubscriberLister
     }
 
     /**
-     * Liefert die Spalten, in denen gesucht werden soll
+     * Liefert die Spalten, in denen gesucht werden soll.
      *
      * @return array
      */
@@ -65,13 +61,12 @@ class SubscriberLister
     }
 
     /**
-     * Returns the complete search form
+     * Returns the complete search form.
      *
-     * @return  string
+     * @return string
      */
     public function getSearchFormData()
     {
-
         $data = parent::getSearchFormData();
         $filter = $this->getFilter();
 
@@ -79,7 +74,7 @@ class SubscriberLister
         $data['disabled'] = array(
             'field' => \Tx_Rnbase_Backend_Utility::getFuncMenu(
                 $this->getOptions()->getPid(),
-                'SET[' . $this->getListerId() . 'Disabled]',
+                'SET['.$this->getListerId().'Disabled]',
                 $filter->getProperty('disabled'),
                 array(
                     0 => '###LABEL_FILTER_STATE_0###',
@@ -93,12 +88,10 @@ class SubscriberLister
     }
 
     /**
-     * Initializes the fields and options for the repository search
+     * Initializes the fields and options for the repository search.
      *
      * @param array $fields
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareFieldsAndOptions(
         array &$fields,
@@ -112,7 +105,7 @@ class SubscriberLister
     }
 
     /**
-     * The decorator to render the rows
+     * The decorator to render the rows.
      *
      * @return string
      */
@@ -171,7 +164,7 @@ class SubscriberLister
     ) {
         $columns['name'] = array(
             'title' => 'label_tableheader_name',
-            'decorator' =>  $this->getDecorator(),
+            'decorator' => $this->getDecorator(),
         );
 
         return $this;
@@ -208,7 +201,7 @@ class SubscriberLister
     ) {
         $columns['actions'] = array(
             'title' => 'label_tableheader_actions',
-            'decorator' =>  $this->getDecorator(),
+            'decorator' => $this->getDecorator(),
         );
 
         return $this;

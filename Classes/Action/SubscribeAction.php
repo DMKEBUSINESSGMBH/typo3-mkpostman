@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Action;
 
 use DMK\Mkpostman\Factory;
@@ -27,33 +28,30 @@ use DMK\Mkpostman\Factory;
  ***************************************************************/
 
 /**
- * MK Postman subscribe action
+ * MK Postman subscribe action.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscribeAction
-    extends AbstractAction
+class SubscribeAction extends AbstractAction
 {
     /**
-     * Referrer key after subscribtion success
+     * Referrer key after subscribtion success.
      *
      * @var string
      */
     const SUCCESS_REFERRER_SUBSCRIBE = 'subscribe';
 
     /**
-     * Referrer key after subscribtion success
+     * Referrer key after subscribtion success.
      *
      * @var string
      */
     const SUCCESS_REFERRER_UNSUBSCRIBE = 'unsubscribe';
 
     /**
-     * Referrer key after activation success
+     * Referrer key after activation success.
      *
      * @var string
      */
@@ -62,11 +60,11 @@ class SubscribeAction
     /**
      * Start the dance...
      *
-     * @param \tx_rnbase_parameters $parameters
+     * @param \tx_rnbase_parameters     $parameters
      * @param \tx_rnbase_configurations $configurations
-     * @param \ArrayObject $viewData
+     * @param \ArrayObject              $viewData
      *
-     * @return null|string
+     * @return string|null
      */
     public function doRequest()
     {
@@ -95,7 +93,7 @@ class SubscribeAction
     }
 
     /**
-     * Activates a subscriber by key
+     * Activates a subscriber by key.
      *
      * @param string $activationKey
      *
@@ -109,7 +107,7 @@ class SubscribeAction
                 $activationKey
             );
         } catch (\BadMethodCallException $e) {
-            if ($e->getCode() != 1464951846) {
+            if (1464951846 != $e->getCode()) {
                 throw $e;
             }
 
@@ -126,7 +124,7 @@ class SubscribeAction
     }
 
     /**
-     * Disables a subscriber by key
+     * Disables a subscriber by key.
      *
      * @param string $activationKey
      *
@@ -140,7 +138,7 @@ class SubscribeAction
                 $activationKey
             );
         } catch (\BadMethodCallException $e) {
-            if ($e->getCode() != 1464951846) {
+            if (1464951846 != $e->getCode()) {
                 throw $e;
             }
 
@@ -157,7 +155,7 @@ class SubscribeAction
     }
 
     /**
-     * Activates a subscriber by key
+     * Activates a subscriber by key.
      *
      * @param string $success
      *
@@ -185,7 +183,7 @@ class SubscribeAction
 
         $this->setToView(
             'main_view_key',
-            'success_' . $referrer
+            'success_'.$referrer
         );
 
         $this->setToView(
@@ -197,13 +195,11 @@ class SubscribeAction
     }
 
     /**
-     * Renders the subscribtion form
-     *
-     * @return void
+     * Renders the subscribtion form.
      */
     protected function handleForm()
     {
-        $handlerClass = $this->getConfigurations()->get($this->getTemplateName() . 'FormHandler');
+        $handlerClass = $this->getConfigurations()->get($this->getTemplateName().'FormHandler');
 
         /* @var $handler \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface */
         $handler = \tx_rnbase::makeInstance($handlerClass, $this);
@@ -252,11 +248,9 @@ class SubscribeAction
     }
 
     /**
-     * Sends the double opt in mail
+     * Sends the double opt in mail.
      *
      * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
-     *
-     * @return void
      */
     protected function performDoubleOptIn(
         \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
@@ -268,12 +262,10 @@ class SubscribeAction
     }
 
     /**
-     * Performs a sucess redirect
+     * Performs a sucess redirect.
      *
-     * @param string $referrer
+     * @param string                                      $referrer
      * @param \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
-     *
-     * @return void
      */
     protected function performSuccessRedirect(
         $referrer,
@@ -282,11 +274,11 @@ class SubscribeAction
         $link = $this->getConfigurations()->createLink();
         $link->initByTS(
             $this->getConfigurations(),
-            $this->getConfId() . 'redirect.' . $referrer . '.',
+            $this->getConfId().'redirect.'.$referrer.'.',
             array(
                 'success' => \DMK\Mkpostman\Factory::getCryptUtility()->urlEncode(
-                    $referrer . ':' . $subscriber->getUid()
-                )
+                    $referrer.':'.$subscriber->getUid()
+                ),
             )
         );
 
@@ -295,15 +287,16 @@ class SubscribeAction
 
     /**
      * Should we use the lagacy marker template?
+     *
      * @return bool
      */
     protected function isLegacyTemplate()
     {
-        return $this->getConfigurations()->getBool($this->getConfId() . 'legacyTemplate');
+        return $this->getConfigurations()->getBool($this->getConfId().'legacyTemplate');
     }
 
     /**
-     * Viewclassname
+     * Viewclassname.
      *
      * @return string
      */
@@ -317,7 +310,7 @@ class SubscribeAction
     }
 
     /**
-     * Liefert den Pfad zum Template
+     * Liefert den Pfad zum Template.
      *
      * @return string
      */
@@ -326,18 +319,18 @@ class SubscribeAction
         // use the old template from `subscribeTemplate`
         if ($this->isLegacyTemplate()) {
             return $this->getConfigurations()->get(
-                $this->getTemplateName() . 'Template', true
+                $this->getTemplateName().'Template', true
             );
         }
 
         // use the new template from `subscribe.template.file`
         return $this->getConfigurations()->get(
-            $this->getConfId() . 'template.file', true
+            $this->getConfId().'template.file', true
         );
     }
 
     /**
-     * Returns the subscriber repository
+     * Returns the subscriber repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\SubscriberRepository
      */
@@ -347,7 +340,7 @@ class SubscribeAction
     }
 
     /**
-     * Confid
+     * Confid.
      *
      * @return string
      */
@@ -357,7 +350,7 @@ class SubscribeAction
     }
 
     /**
-     * Templatename and confid
+     * Templatename and confid.
      *
      * @return string
      */

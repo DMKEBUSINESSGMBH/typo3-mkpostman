@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
@@ -29,31 +30,24 @@ use DMK\Mkpostman\Factory;
 \tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 
 /**
- * Log Model
+ * Log Model.
  *
- * @method int getState()
+ * @method int                         getState()
  * @method Tx_Rnbase_Domain_Model_Data setState() setState(int $state)
- *
- * @method int getDescription()
+ * @method int                         getDescription()
  * @method Tx_Rnbase_Domain_Model_Data setDescription() setDescription(string $uid)
- *
- * @method int getCruserId()
+ * @method int                         getCruserId()
  * @method Tx_Rnbase_Domain_Model_Data setCruserId() setCruserId(int $uid)
- *
- * @method int getSubscriberId()
+ * @method int                         getSubscriberId()
  * @method Tx_Rnbase_Domain_Model_Data setSubscriberId() setSubscriberId(int $uid)
- *
- * @method int getDeleted()
+ * @method int                         getDeleted()
  * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogModel
-    extends \Tx_Rnbase_Domain_Model_Base
+class LogModel extends \Tx_Rnbase_Domain_Model_Base
 {
     use \Tx_Rnbase_Domain_Model_StorageTrait;
 
@@ -62,7 +56,7 @@ class LogModel
     const STATE_UNSUBSCRIBED = 3;
 
     /**
-     * Retruns the tablename of the log
+     * Retruns the tablename of the log.
      *
      * @return string Tabellenname als String
      */
@@ -72,7 +66,7 @@ class LogModel
     }
 
     /**
-     * Returns the subscriber for the log
+     * Returns the subscriber for the log.
      *
      * @return SubscriberModel|null
      */
@@ -88,16 +82,17 @@ class LogModel
     }
 
     /**
-     * Sets a subscriber for a log
+     * Sets a subscriber for a log.
      *
      * @param SubscriberModel $subscriber
+     *
      * @return $this
+     *
      * @throws \Exception
      */
     public function setSubscriber(
         SubscriberModel $subscriber
-    )
-    {
+    ) {
         if (!$subscriber->isPersisted()) {
             throw new \Exception(
                 'The subscriber has to ber persisted to append a log'
