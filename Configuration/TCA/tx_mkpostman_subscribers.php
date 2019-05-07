@@ -1,14 +1,15 @@
 <?php
+
 defined('TYPO3_MODE') or die('Access denied.');
 
 return call_user_func(
     function () {
         $lllFile = 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:';
-        $lllTable = $lllFile . 'tx_mkpostman_subscribers.';
+        $lllTable = $lllFile.'tx_mkpostman_subscribers.';
 
         $tca = array(
             'ctrl' => array(
-                'title' => $lllFile . 'tx_mkpostman_subscribers',
+                'title' => $lllFile.'tx_mkpostman_subscribers',
                 'label' => 'email',
                 'tstamp' => 'tstamp',
                 'crdate' => 'crdate',
@@ -16,15 +17,15 @@ return call_user_func(
                 'delete' => 'deleted',
                 'default_sortby' => 'ORDER BY email',
                 'enablecolumns' => array(
-                    'disabled' => 'disabled'
+                    'disabled' => 'disabled',
                 ),
                 'searchFields' => 'name,',
-                'iconfile' => \tx_rnbase_util_Extensions::extRelPath('mkpostman') .
+                'iconfile' => \tx_rnbase_util_Extensions::extRelPath('mkpostman').
                     'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
                 'dividers2tabs' => true,
             ),
             'interface' => array(
-                'showRecordFieldList' => 'email'
+                'showRecordFieldList' => 'email',
             ),
             'columns' => array(
                 'disabled' => array(
@@ -32,68 +33,68 @@ return call_user_func(
                     'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.disable',
                     'config' => array(
                         'type' => 'check',
-                        'default' => '0'
-                    )
+                        'default' => '0',
+                    ),
                 ),
                 'confirmstring' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'confirmstring',
+                    'label' => $lllTable.'confirmstring',
                     'config' => array(
                         'type' => 'input',
-                        'readOnly' => true
-                    )
+                        'readOnly' => true,
+                    ),
                 ),
                 'gender' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'gender',
+                    'label' => $lllTable.'gender',
                     'config' => array(
                         'type' => 'radio',
                         'items' => array(
                             array(
-                                $lllTable . 'gender.0',
-                                '0'
+                                $lllTable.'gender.0',
+                                '0',
                             ),
                             array(
-                                $lllTable . 'gender.1',
-                                '1'
-                            )
-                        )
-                    )
+                                $lllTable.'gender.1',
+                                '1',
+                            ),
+                        ),
+                    ),
                 ),
                 'first_name' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'first_name',
+                    'label' => $lllTable.'first_name',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
                         'max' => '60',
-                        'eval' => 'trim'
-                    )
+                        'eval' => 'trim',
+                    ),
                 ),
                 'last_name' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'last_name',
+                    'label' => $lllTable.'last_name',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
                         'max' => '60',
-                        'eval' => 'trim'
-                    )
+                        'eval' => 'trim',
+                    ),
                 ),
                 'email' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'email',
+                    'label' => $lllTable.'email',
                     'config' => array(
                         'type' => 'input',
                         'size' => '20',
                         'max' => '255',
-                        'eval' => 'trim,required,unique'
-                    )
+                        'eval' => 'trim,required,unique',
+                    ),
                 ),
                 'categories' => array(
                     'exclude' => true,
                     'l10n_mode' => 'mergeIfNotBlank',
-                    'label' => $lllTable . 'categories',
+                    'label' => $lllTable.'categories',
                     'config' => array(
                         'type' => 'select',
                         'renderType' => 'selectTree',
@@ -113,28 +114,28 @@ return call_user_func(
                         'size' => 10,
                         'minitems' => 0,
                         'maxitems' => 99,
-                    )
+                    ),
                 ),
                 'logs' => array(
                     'exclude' => 1,
-                    'label' => $lllTable . 'logs',
+                    'label' => $lllTable.'logs',
                     'config' => array(
                         'type' => 'user',
                         'size' => '20',
-                        'userFunc' => 'DMK\\Mkpostman\\Utility\\TcaUtility->getLogsForSubscriber'
-                    )
+                        'userFunc' => 'DMK\\Mkpostman\\Utility\\TcaUtility->getLogsForSubscriber',
+                    ),
                 ),
             ),
             'types' => array(
                 '0' => array(
                     'showitem' => '
-                        --div--;' . $lllFile . 'tx_mkpostman_subscribers.tab.general,
+                        --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.general,
                         disabled, email, gender, first_name, last_name, categories, confirmstring, 
-                        --div--;' . $lllFile . 'tx_mkpostman_subscribers.tab.log,
+                        --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.log,
                         logs,
-                    '
-                )
-            )
+                    ',
+                ),
+            ),
         );
 
         // add the direct mail columns, if direct mail is installed
@@ -143,12 +144,12 @@ return call_user_func(
             $tca['columns']['module_sys_dmail_category'] = array(
                 'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
-                'label' => $dmLllFile . 'module_sys_dmail_group.category',
+                'label' => $dmLllFile.'module_sys_dmail_group.category',
                 'config' => array(
                     'type' => 'select',
                     'foreign_table' => 'sys_dmail_category',
-                    'foreign_table_where' => 'AND sys_dmail_category.l18n_parent=0' .
-                        ' AND sys_dmail_category.pid IN (###PAGE_TSCONFIG_IDLIST###)' .
+                    'foreign_table_where' => 'AND sys_dmail_category.l18n_parent=0'.
+                        ' AND sys_dmail_category.pid IN (###PAGE_TSCONFIG_IDLIST###)'.
                         ' ORDER BY sys_dmail_category.sorting',
                     'itemsProcFunc' => 'DirectMailTeam\\DirectMail\\SelectCategories->get_localized_categories',
                     'itemsProcFunc_config' => array(
@@ -160,19 +161,19 @@ return call_user_func(
                     'maxitems' => 60,
                     'renderMode' => 'checkbox',
                     'MM' => 'tx_mkpostman_subscribers_dmail_category_mm',
-                )
+                ),
             );
             $tca['columns']['module_sys_dmail_html'] = array(
                 'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
-                'label' => $dmLllFile . 'module_sys_dmail_group.htmlemail',
+                'label' => $dmLllFile.'module_sys_dmail_group.htmlemail',
                 'config' => array(
-                    'type' => 'check'
-                )
+                    'type' => 'check',
+                ),
             );
 
             $tca['types']['0']['showitem'] .= '
-                --div--;' . $lllFile . 'tx_mkpostman_subscribers.tab.directmail,
+                --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.directmail,
                 module_sys_dmail_category, module_sys_dmail_html,
             ';
         }
