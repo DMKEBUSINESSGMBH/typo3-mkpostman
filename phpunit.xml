@@ -1,0 +1,34 @@
+<phpunit
+        backupGlobals="true"
+        backupStaticAttributes="false"
+        bootstrap=".Build/vendor/nimut/testing-framework/res/Configuration/UnitTestsBootstrap.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertWarningsToExceptions="true"
+        forceCoversAnnotation="false"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        verbose="false"
+>
+
+    <php>
+	    <env name="TYPO3_PATH_WEB" value=".Build/Web" />
+    </php>
+
+    <testsuites>
+        <testsuite name="MK Postman Unit Tests">
+            <directory>Tests/Unit/PHP/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">Classes</directory>
+        </whitelist>
+    </filter>
+</phpunit>
+
+
