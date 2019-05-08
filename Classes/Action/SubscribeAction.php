@@ -212,11 +212,10 @@ class SubscribeAction extends AbstractAction
 
         $handler->handleForm();
 
-        $config = $this->getConfigurations()->getConfigArray();
-        if ($config['categories']) {
+        $categoryIds = $this->getConfigurations()->getExploded('categories');
+        if (!empty($categoryIds)) {
             $catRepo = Factory::getCategoryRepository();
             $categories = [];
-            $categoryIds = explode(',', $config['categories']);
             foreach ($categoryIds as $categoryId) {
                 $categories[] = $catRepo->findByUid($categoryId);
             }
