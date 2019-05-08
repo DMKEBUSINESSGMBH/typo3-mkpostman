@@ -80,7 +80,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $subscriber = $handler->getSubscriber();
 
         $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $subscriber);
-        $this->assertCount(1, $subscriber->getProperties());
+        $this->assertCount(2, $subscriber->getProperties());
         $this->assertArrayHasKey('uid', $subscriber->getProperties());
         $this->assertSame($subscriber->getUid(), 0);
     }
@@ -123,12 +123,12 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $subscriber = $handler->getSubscriber();
 
         $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $subscriber);
-        $this->assertCount(5, $subscriber->getProperties());
+        $this->assertCount(6, $subscriber->getProperties());
         $this->assertArrayHasKey('uid', $subscriber->getProperties());
         $this->assertArrayHasKey('gender', $subscriber->getProperties());
         $this->assertArrayHasKey('first_name', $subscriber->getProperties());
         $this->assertArrayHasKey('last_name', $subscriber->getProperties());
         $this->assertArrayHasKey('email', $subscriber->getProperties());
-        $this->assertSame($subscriber->getProperties(), array_merge(['uid' => 0], $userdata));
+        $this->assertSame($subscriber->getProperties(), array_merge(['uid' => 0, 'categories' => []], $userdata));
     }
 }

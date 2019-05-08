@@ -80,9 +80,11 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
             $subscriber->setCategories(count($categories));
         }
 
+        $subscriberRepo = $this->getSubscriberRepository();
+
         // before a double opt in mail was send, we has to persist the model, we need the uid!
-        $this->getSubscriberRepository()->persist($subscriber);
-        $this->getSubscriberRepository()->addToCategories($subscriber,$categories);
+        $subscriberRepo->persist($subscriber);
+        $subscriberRepo->addToCategories($subscriber,$categories);
 
         $this->getLogManager()->createSubscribedBySubscriber($subscriber);
 
