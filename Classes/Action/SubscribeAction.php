@@ -213,17 +213,17 @@ class SubscribeAction extends AbstractAction
         $handler->handleForm();
 
         $config = $this->getConfigurations()->getConfigArray();
-
-        $catRepo = Factory::getCategoryRepository();
-        $categories = [];
-        $categoryIds = explode(',', $config['categories']);
-        foreach ($categoryIds as $categoryId) {
-            $categories[] = $catRepo->findByUid($categoryId);
+        if ($config['categories']) {
+            $catRepo = Factory::getCategoryRepository();
+            $categories = [];
+            $categoryIds = explode(',', $config['categories']);
+            foreach ($categoryIds as $categoryId) {
+                $categories[] = $catRepo->findByUid($categoryId);
+            }
+            $this->setToView('categories', $categories);
         }
-
         $subscriber = $handler->getSubscriber();
         $this->setToView('subscriber', $subscriber);
-        $this->setToView('categories', $categories);
 
         if (!$handler->isFinished()) {
             return;
