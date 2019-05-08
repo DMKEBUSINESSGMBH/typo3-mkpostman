@@ -1,6 +1,6 @@
 <?php
 
-namespace DMK\Mkpostman\Action;
+namespace DMK\Mkpostman\Form\Handler;
 
 /***************************************************************
  * Copyright notice
