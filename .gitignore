@@ -1,6 +1,8 @@
 ### travis builds
 /.Build
 composer.lock
+.php_cs.cache
+coverage.clover
 
 ### eclipse files
 /.buildpath
