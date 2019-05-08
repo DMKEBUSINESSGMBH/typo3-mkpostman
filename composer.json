@@ -18,13 +18,15 @@
     ],
     "require": {
         "typo3/cms": "~6.2.14 || ~7.6 || ~8.7",
-        "digedag/rn-base": ">=1.4",
-        "dmk/mkmailer": ">=3"
+        "digedag/rn-base": "~1.9",
+        "dmk/mkmailer": "~3.0"
     },
     "require-dev": {
+        "dmk/mkforms": "~3.0",
+        "dmk/mklib": "~3.0",
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.0",
-	"friendsofphp/php-cs-fixer": "2.14.*",
+        "friendsofphp/php-cs-fixer": "2.14.*",
         "mikey179/vfsStream": "^1.4",
         "phpunit/phpunit": "^4.7"
     },
