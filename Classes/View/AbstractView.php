@@ -46,12 +46,10 @@ abstract class AbstractView extends \tx_rnbase_view_Base
      *
      * @return string
      */
-    public function createOutput(
-        $template,
-        \ArrayObject $viewData,
-        \tx_rnbase_configurations $configurations,
-        \tx_rnbase_util_FormatUtil $formatter
-    ) {
+	// @codingStandardsIgnoreStart (interface/abstract mistake)
+    public function createOutput($template, &$viewData, &$configurations, &$formatter)
+    {
+        // @codingStandardsIgnoreEnd
         $markArray = $subpartArray = $wrappedSubpartArray = array();
 
         return \tx_rnbase_util_Templates::substituteMarkerArrayCached(
