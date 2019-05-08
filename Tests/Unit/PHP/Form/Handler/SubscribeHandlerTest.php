@@ -128,6 +128,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $this->assertArrayHasKey('gender', $subscriber->getProperties());
         $this->assertArrayHasKey('first_name', $subscriber->getProperties());
         $this->assertArrayHasKey('last_name', $subscriber->getProperties());
+        $this->assertArrayHasKey('categories', $subscriber->getProperties());
         $this->assertArrayHasKey('email', $subscriber->getProperties());
         $this->assertSame($subscriber->getProperties(), array_merge(['uid' => 0, 'categories' => []], $userdata));
     }
