@@ -206,6 +206,7 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testProcessSubscriberData()
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
+        $categories = array(11, 10);
         $subscriber = $this->getModel(
             array(
                 'uid' => 5,
@@ -214,6 +215,7 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'gender' => 1,
                 'first_name' => 'Michael',
                 'last_name' => 'Wagner',
+                'categories' => $categories,
                 'email' => 'mwagner@localhost.net',
             ),
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
@@ -227,6 +229,10 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->expects(self::once())
             ->method('persist')
             ->with($this->equalTo($subscriber));
+        $repo
+            ->expects(self::once())
+            ->method('addToCategories')
+            ->with($this->equalTo($subscriber), $this->equalTo($categories));
 
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $logManager = $this->getMock(
