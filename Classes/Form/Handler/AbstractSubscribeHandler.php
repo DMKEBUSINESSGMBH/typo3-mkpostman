@@ -76,7 +76,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
         }
 
         $categories = $subscriber->getCategories();
-        if (is_iterable($categories)) {
+        if (is_array($categories)) {
             $subscriber->setCategories(count($categories));
         }
 

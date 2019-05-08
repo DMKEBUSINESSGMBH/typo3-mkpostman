@@ -74,7 +74,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
         Tx_Rnbase_Domain_Model_DomainInterface $model,
         $categories
     ) {
-        if (is_iterable($categories) && count($categories) > 0) {
+        if (is_array($categories) && count($categories) > 0) {
             $connection = \Tx_Rnbase_Database_Connection::getInstance();
             $connection->doDelete(
                 'sys_category_record_mm',
