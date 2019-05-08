@@ -46,7 +46,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
      *
      * @return string
      */
-	// @codingStandardsIgnoreStart (interface/abstract mistake)
+    // @codingStandardsIgnoreStart (interface/abstract mistake)
     public function createOutput($template, &$viewData, &$configurations, &$formatter)
     {
         // @codingStandardsIgnoreEnd
