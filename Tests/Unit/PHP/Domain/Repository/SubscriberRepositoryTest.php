@@ -146,6 +146,88 @@ class SubscriberRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     }
 
     /**
+     * Test the findByEmail method.
+     *
+     *
+     * @group unit
+     * @test
+     */
+    public function testaddToCategories()
+    {
+        $that = $this; // php 3.5 compatibility!
+        $categories = [10, 11];
+        $subscriber = $this->getModel(
+            array(
+                'uid' => 5,
+            ),
+            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
+        );
+        $repo = $this->getSubscriberRepository();
+
+        $connection = $this->getMock(
+            'Tx_Rnbase_Database_Connection',
+            array('doDelete', 'doInsert')
+        );
+
+        $connection
+            ->expects(self::once())
+            ->method('doDelete')
+            ->with(
+                $this->callback(
+                    function ($tablename) use ($that) {
+                        $that->assertSame('sys_category_record_mm', $tablename);
+
+                        return true;
+                    }
+                ),
+                $this->callback(
+                    function ($where) use ($that, $subscriber) {
+                        $that->assertSame('uid_foreign = '.$subscriber->getUid(), $where);
+
+                        return true;
+                    }
+                )
+            );
+
+        $connection
+            ->expects(self::exactly(2))
+            ->method('doInsert')
+            ->with(
+                $this->callback(
+                    function ($tablename) use ($that) {
+                        $that->assertSame('sys_category_record_mm', $tablename);
+
+                        return true;
+                    }
+                ),
+                $this->callback(
+                    function ($values) use ($that, $categories, $subscriber) {
+                        $that->assertTrue(is_array($values));
+
+                        $that->assertCount(4, $values);
+                        $that->assertArrayHasKey('uid_local', $values);
+                        $that->assertTrue(in_array($values['uid_local'], $categories));
+                        $that->assertArrayHasKey('uid_foreign', $values);
+                        $that->assertSame($subscriber->getUid(), $values['uid_foreign']);
+                        $that->assertArrayHasKey('tablenames', $values);
+                        $that->assertSame('tx_mkpostman_subscribers', $values['tablenames']);
+                        $that->assertArrayHasKey('fieldname', $values);
+                        $that->assertSame('categories', $values['fieldname']);
+
+                        return true;
+                    }
+                )
+            );
+
+        $repo
+            ->expects(self::once())
+            ->method('getDbConnection')
+            ->will(self::returnValue($connection));
+
+        $repo->addToCategories($subscriber, $categories);
+    }
+
+    /**
      * Test the findByUid method.
      *
      *

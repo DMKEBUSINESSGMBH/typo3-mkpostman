@@ -61,24 +61,22 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
     }
 
     /**
-     * Adds the subscriber to the sys_category mm
+     * Adds the subscriber to the sys_category mm.
      *
      * @param Tx_Rnbase_Domain_Model_DomainInterface $model
-     * @param array|Tx_Rnbase_Domain_Model_Data $options
+     * @param array|Tx_Rnbase_Domain_Model_Data      $options
      *
      * @throws Exception
-     *
-     * @return void
      */
     public function addToCategories(
         Tx_Rnbase_Domain_Model_DomainInterface $model,
         $categories
     ) {
-        if (is_array($categories) && count($categories) > 0) {
-            $connection = \Tx_Rnbase_Database_Connection::getInstance();
+        if (is_array($categories) && !empty($categories)) {
+            $connection = $this->getDbConnection();
             $connection->doDelete(
                 'sys_category_record_mm',
-                'uid_foreign = ' . $model->getUid()
+                'uid_foreign = '.$model->getUid()
             );
             foreach ($categories as $category) {
                 $connection->doInsert(
@@ -183,5 +181,15 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
             // searcher config overrides
             $options['searchdef']
         );
+    }
+
+    /**
+     * Provide the Database Connection.
+     *
+     * @return \Tx_Rnbase_Database_Connection
+     */
+    protected function getDbConnection()
+    {
+        return \Tx_Rnbase_Database_Connection::getInstance();
     }
 }

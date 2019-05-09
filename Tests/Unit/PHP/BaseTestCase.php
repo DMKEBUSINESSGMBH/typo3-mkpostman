@@ -99,7 +99,7 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
-            array('getSearcher', 'persist')
+            array('getSearcher', 'persist', 'getDbConnection')
         );
 
         $repo
