@@ -25,6 +25,7 @@ namespace DMK\Mkpostman\Domain\Repository;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use DMK\Mkpostman\Domain\Model\CategoryModel;
 use Exception;
 use Tx_Rnbase_Domain_Model_Data;
 use Tx_Rnbase_Domain_Model_DomainInterface;
@@ -137,6 +138,31 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
     }
 
     /**
+     * Finds subscribers by category
+     *
+     * @param CategoryModel $category
+     *
+     * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+     */
+    public function findByCategory(
+        CategoryModel $category
+    ) {
+        return $this->search(
+            array (
+                'CATEGORYMM.uid_local' => array(
+                    OP_EQ_INT => $category->getUid(),
+                ),
+                'CATEGORYMM.tablenames' => array(
+                    OP_EQ => 'tx_mkpostman_subscribers',
+                )
+            ),
+            array(
+                'enablefieldsbe' => true
+            )
+        );
+    }
+
+    /**
      * On default, return hidden and deleted fields in backend.
      *
      * @param array $fields
@@ -176,6 +202,10 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
                     'SUBSCRIBER' => array(
                         'table' => $model->getTableName(),
                     ),
+                    'CATEGORYMM' => array(
+                        'table' => 'sys_category_record_mm',
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign'
+                    )
                 ),
             ),
             // searcher config overrides
