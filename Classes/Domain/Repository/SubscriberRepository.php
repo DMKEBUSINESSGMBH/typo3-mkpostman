@@ -197,7 +197,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
                 'usealias' => 1,
                 'basetable' => $model->getTableName(),
                 'basetablealias' => 'SUBSCRIBER',
-                'wrapperclass' => get_class($model),
+                'wrapperclass' => $this->getWrapperClass(),
                 'alias' => array(
                     'SUBSCRIBER' => array(
                         'table' => $model->getTableName(),
