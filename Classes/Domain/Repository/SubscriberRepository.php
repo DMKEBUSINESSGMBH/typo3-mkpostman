@@ -138,26 +138,26 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
     }
 
     /**
-     * Finds subscribers by category
+     * Finds subscribers by category.
      *
      * @param CategoryModel $category
      *
-     * @return null|DMK\Mkpostman\Domain\Model\SubscriberModel
+     * @return DMK\Mkpostman\Domain\Model\SubscriberModel|null
      */
     public function findByCategory(
         CategoryModel $category
     ) {
         return $this->search(
-            array (
+            array(
                 'CATEGORYMM.uid_local' => array(
                     OP_EQ_INT => $category->getUid(),
                 ),
                 'CATEGORYMM.tablenames' => array(
                     OP_EQ => 'tx_mkpostman_subscribers',
-                )
+                ),
             ),
             array(
-                'enablefieldsbe' => true
+                'enablefieldsbe' => true,
             )
         );
     }
@@ -204,8 +204,8 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
                     ),
                     'CATEGORYMM' => array(
                         'table' => 'sys_category_record_mm',
-                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign'
-                    )
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
+                    ),
                 ),
             ),
             // searcher config overrides

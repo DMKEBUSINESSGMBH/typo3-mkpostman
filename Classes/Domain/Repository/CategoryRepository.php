@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Repository;
 
 /***************************************************************
@@ -27,21 +28,18 @@ namespace DMK\Mkpostman\Domain\Repository;
 \tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
- * Category repo
+ * Category repo.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Markus Crasser
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CategoryRepository
-    extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
 {
     /**
-     * Liefert den Namen der Suchklasse
+     * Liefert den Namen der Suchklasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getSearchClass()
     {
@@ -51,7 +49,7 @@ class CategoryRepository
     /**
      * Liefert die Model Klasse.
      *
-     * @return  string
+     * @return string
      */
     protected function getWrapperClass()
     {
@@ -59,7 +57,7 @@ class CategoryRepository
     }
 
     /**
-     * Finds a Category by uid
+     * Finds a Category by uid.
      *
      * @param int $uid
      *
@@ -69,49 +67,47 @@ class CategoryRepository
         $uid
     ) {
         return $this->searchSingle(
-            array (
+            array(
                 'CATEGORY.uid' => array(
-                    OP_EQ_INT => $uid
-                )
+                    OP_EQ_INT => $uid,
+                ),
             ),
             array(
-                'enablefieldsbe' => true
+                'enablefieldsbe' => true,
             )
         );
     }
 
     /**
-     * Finds Categories by subscriber
+     * Finds Categories by subscriber.
      *
      * @param int $subscriberId
      *
-     * @return null|DMK\Mkpostman\Domain\Model\CategoryModel
+     * @return DMK\Mkpostman\Domain\Model\CategoryModel|null
      */
     public function findBySubscriberId(
         $subscriberId
     ) {
         return $this->search(
-            array (
+            array(
                 'CATEGORYMM.uid_foreign' => array(
                     OP_EQ_INT => $subscriberId,
                 ),
                 'CATEGORYMM.tablenames' => array(
                     OP_EQ => 'tx_mkpostman_subscribers',
-                )
+                ),
             ),
             array(
-                'enablefieldsbe' => true
+                'enablefieldsbe' => true,
             )
         );
     }
 
     /**
-     * On default, return hidden and deleted fields in backend
+     * On default, return hidden and deleted fields in backend.
      *
      * @param array $fields
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareFieldsAndOptions(
         array &$fields,
@@ -122,11 +118,9 @@ class CategoryRepository
     }
 
     /**
-     * Prepares the simple generic searcher
+     * Prepares the simple generic searcher.
      *
      * @param array $options
-     *
-     * @return void
      */
     protected function prepareGenericSearcher(
         array &$options
@@ -147,13 +141,13 @@ class CategoryRepository
                 'wrapperclass' => get_class($model),
                 'alias' => array(
                     'CATEGORY' => array(
-                        'table' => $model->getTableName()
+                        'table' => $model->getTableName(),
                     ),
                     'CATEGORYMM' => array(
                         'table' => 'sys_category_record_mm',
-                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON CATEGORY.uid = CATEGORYMM.uid_local'
-                    )
-                )
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON CATEGORY.uid = CATEGORYMM.uid_local',
+                    ),
+                ),
             ),
             // searcher config overrides
             $options['searchdef']
