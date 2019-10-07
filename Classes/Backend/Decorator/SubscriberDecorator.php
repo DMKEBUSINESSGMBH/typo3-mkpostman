@@ -168,7 +168,7 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
         \Tx_Rnbase_Domain_Model_DataInterface $item
     ) {
         $titles = [];
-        if ((int)$item->getCategories() > 0) {
+        if ((int) $item->getCategories() > 0) {
             $catRepo = Factory::getCategoryRepository();
             foreach ($catRepo->findBySubscriberId($item->getUid()) as $category) {
                 $titles[] = $category->getTitle();

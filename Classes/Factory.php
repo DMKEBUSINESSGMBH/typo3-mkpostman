@@ -77,7 +77,7 @@ final class Factory
     }
 
     /**
-     * Returns the category repository
+     * Returns the category repository.
      *
      * @return \DMK\Mkpostman\Domain\Repository\CategoryRepository
      */

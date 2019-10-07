@@ -182,7 +182,7 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     ) {
         $columns['categories'] = array(
             'title' => 'label_tableheader_categories',
-            'decorator' =>  $this->getDecorator(),
+            'decorator' => $this->getDecorator(),
         );
 
         return $this;

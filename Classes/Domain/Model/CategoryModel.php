@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\Mkpostman\Domain\Model;
 
 /***************************************************************
@@ -27,19 +28,16 @@ namespace DMK\Mkpostman\Domain\Model;
 \tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 
 /**
- * Category Model
+ * Category Model.
  *
- * @package TYPO3
- * @subpackage DMK\Mkpostman
  * @author Markus Crasser
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CategoryModel
-    extends \Tx_Rnbase_Domain_Model_Base
+class CategoryModel extends \Tx_Rnbase_Domain_Model_Base
 {
     /**
-     * Liefert den aktuellen Tabellenname
+     * Liefert den aktuellen Tabellenname.
      *
      * @return Tabellenname als String
      */
