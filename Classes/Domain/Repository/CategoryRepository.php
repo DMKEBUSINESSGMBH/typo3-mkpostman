@@ -61,7 +61,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
      *
      * @param int $uid
      *
-     * @return Tx_Rnbase_Domain_Model_DomainInterface|null
+     * @return \DMK\Mkpostman\Domain\Model\CategoryModel|null
      */
     public function findByUid(
         $uid
@@ -83,7 +83,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
      *
      * @param int $subscriberId
      *
-     * @return DMK\Mkpostman\Domain\Model\CategoryModel|null
+     * @return \Tx_Rnbase_Domain_Collection_Base
      */
     public function findBySubscriberId(
         $subscriberId
@@ -97,9 +97,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
                     OP_EQ => 'tx_mkpostman_subscribers',
                 ),
             ),
-            array(
-                'enablefieldsbe' => true,
-            )
+            array()
         );
     }
 

@@ -2,8 +2,6 @@
 
 namespace DMK\Mkpostman\Action;
 
-use DMK\Mkpostman\Factory;
-
 /***************************************************************
  * Copyright notice
  *
@@ -26,6 +24,8 @@ use DMK\Mkpostman\Factory;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use DMK\Mkpostman\Factory;
 
 /**
  * MK Postman subscribe action.
@@ -212,15 +212,9 @@ class SubscribeAction extends AbstractAction
 
         $handler->handleForm();
 
-        $categoryIds = $this->getConfigurations()->getExploded('categories');
-        if (!empty($categoryIds)) {
-            $catRepo = Factory::getCategoryRepository();
-            $categories = [];
-            foreach ($categoryIds as $categoryId) {
-                $categories[] = $catRepo->findByUid($categoryId);
-            }
-            $this->setToView('categories', $categories);
-        }
+        $categories = $this->getCategories();
+        $this->setToView('categories', $categories);
+
         $subscriber = $handler->getSubscriber();
         $this->setToView('subscriber', $subscriber);
 
@@ -244,6 +238,25 @@ class SubscribeAction extends AbstractAction
             ),
             $subscriber
         );
+    }
+
+    /**
+     * Gets the categories.
+     *
+     * @return array
+     */
+    protected function getCategories()
+    {
+        $categoryIds = $this->getConfigurations()->getExploded('categories');
+        if (!empty($categoryIds)) {
+            $catRepo = Factory::getCategoryRepository();
+            $categories = [];
+            foreach ($categoryIds as $categoryId) {
+                $categories[] = $catRepo->findByUid($categoryId);
+            }
+        }
+
+        return $categories;
     }
 
     /**
