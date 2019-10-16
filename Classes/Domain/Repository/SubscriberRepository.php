@@ -142,7 +142,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      *
      * @param CategoryModel $category
      *
-     * @return DMK\Mkpostman\Domain\Model\SubscriberModel|null
+     * @return \Tx_Rnbase_Domain_Collection_Base
      */
     public function findByCategory(
         CategoryModel $category
@@ -156,9 +156,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
                     OP_EQ => 'tx_mkpostman_subscribers',
                 ),
             ),
-            array(
-                'enablefieldsbe' => true,
-            )
+            array()
         );
     }
 

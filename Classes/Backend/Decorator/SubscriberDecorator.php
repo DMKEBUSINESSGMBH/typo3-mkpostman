@@ -2,8 +2,6 @@
 
 namespace DMK\Mkpostman\Backend\Decorator;
 
-use DMK\Mkpostman\Factory;
-
 /***************************************************************
  * Copyright notice
  *
@@ -26,6 +24,8 @@ use DMK\Mkpostman\Factory;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use DMK\Mkpostman\Factory;
 
 \tx_rnbase::load('Tx_Rnbase_Backend_Decorator_BaseDecorator');
 
@@ -168,7 +168,7 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
         \Tx_Rnbase_Domain_Model_DataInterface $item
     ) {
         $titles = [];
-        if ((int) $item->getCategories() > 0) {
+        if ($item->hasCategories()) {
             $catRepo = Factory::getCategoryRepository();
             foreach ($catRepo->findBySubscriberId($item->getUid()) as $category) {
                 $titles[] = $category->getTitle();
