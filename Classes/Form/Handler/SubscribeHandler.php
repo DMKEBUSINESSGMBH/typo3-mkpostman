@@ -52,6 +52,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
         $this->setSubscriber($this->getSubscriberRepository()->getEmptyModel());
         // force uid to be 0, so it can not be overridden by setProperty!
         $this->getSubscriber()->setUid(0);
+        $this->getSubscriber()->setProperty('categories', []);
         // prefill with current fe user data
         $this->getSubscriber()->setProperty($this->getFeUserData());
 

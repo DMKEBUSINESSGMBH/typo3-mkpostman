@@ -31,10 +31,20 @@
             </label>
         </fieldset>
 
+        <f:if condition="{categories}">
+            <fieldset>
+                <f:for each="{categories}" as="category">
+                    <label>
+                        {category.title}
+                        <f:form.checkbox property="categories" value="{category.uid}" />
+                    </label>
+                </f:for>
+            </fieldset>
+        </f:if>
+
         <fieldset>
             <f:form.submit name="mkpostman[subscribe]" value="Absenden" />
         </fieldset>
 
     </f:form>
-
 </html>

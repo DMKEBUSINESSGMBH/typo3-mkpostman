@@ -91,6 +91,31 @@ return call_user_func(
                         'eval' => 'trim,required,unique',
                     ),
                 ),
+                'categories' => array(
+                    'exclude' => true,
+                    'l10n_mode' => 'mergeIfNotBlank',
+                    'label' => $lllTable.'categories',
+                    'config' => array(
+                        'type' => 'select',
+                        'renderType' => 'selectTree',
+                        'treeConfig' => array(
+                            'parentField' => 'parent',
+                            'appearance' => array(
+                                'expandAll' => true,
+                            ),
+                        ),
+                        'MM' => 'sys_category_record_mm',
+                        'MM_match_fields' => array(
+                            'fieldname' => 'categories',
+                            'tablenames' => 'tx_mkpostman_subscribers',
+                        ),
+                        'MM_opposite_field' => 'items',
+                        'foreign_table' => 'sys_category',
+                        'size' => 10,
+                        'minitems' => 0,
+                        'maxitems' => 99,
+                    ),
+                ),
                 'logs' => array(
                     'exclude' => 1,
                     'label' => $lllTable.'logs',
@@ -105,7 +130,7 @@ return call_user_func(
                 '0' => array(
                     'showitem' => '
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.general,
-                        disabled, email, gender, first_name, last_name, confirmstring, 
+                        disabled, email, gender, first_name, last_name, categories, confirmstring, 
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.log,
                         logs,
                     ',

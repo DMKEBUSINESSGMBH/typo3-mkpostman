@@ -99,6 +99,33 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
+            array('getSearcher', 'persist', 'getDbConnection')
+        );
+
+        $repo
+            ->expects(self::any())
+            ->method('getSearcher')
+            ->will(self::returnValue($searcher));
+
+        return $repo;
+    }
+
+    /**
+     * Creates the repo mock.
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getCategoryRepository()
+    {
+        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
+        $searcher = $this->getMock(
+            'tx_rnbase_util_SearchGeneric',
+            array('search')
+        );
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository');
+        $repo = $this->getMock(
+            'DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository',
             array('getSearcher', 'persist')
         );
 

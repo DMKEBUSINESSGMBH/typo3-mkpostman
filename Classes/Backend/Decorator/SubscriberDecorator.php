@@ -25,6 +25,8 @@ namespace DMK\Mkpostman\Backend\Decorator;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use DMK\Mkpostman\Factory;
+
 \tx_rnbase::load('Tx_Rnbase_Backend_Decorator_BaseDecorator');
 
 /**
@@ -153,6 +155,27 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
         }
 
         return $title;
+    }
+
+    /**
+     * Renders the label column.
+     *
+     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     *
+     * @return string
+     */
+    protected function formatCategoriesColumn(
+        \Tx_Rnbase_Domain_Model_DataInterface $item
+    ) {
+        $titles = [];
+        if ($item->hasCategories()) {
+            $catRepo = Factory::getCategoryRepository();
+            foreach ($catRepo->findBySubscriberId($item->getUid()) as $category) {
+                $titles[] = $category->getTitle();
+            }
+        }
+
+        return implode(',', $titles);
     }
 
     /**

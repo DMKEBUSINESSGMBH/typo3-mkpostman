@@ -56,6 +56,7 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
             'SUBSCRIBER.first_name',
             'SUBSCRIBER.last_name',
             'SUBSCRIBER.email',
+            'SUBSCRIBER.categories',
         );
     }
 
@@ -126,6 +127,7 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
         ($this
             ->addDecoratorColumnEmail($columns)
             ->addDecoratorColumnName($columns)
+            ->addDecoratorColumnCategories($columns)
             ->addDecoratorColumnActions($columns)
         );
 
@@ -162,6 +164,24 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     ) {
         $columns['name'] = array(
             'title' => 'label_tableheader_name',
+            'decorator' => $this->getDecorator(),
+        );
+
+        return $this;
+    }
+
+    /**
+     * Adds the column 'categories' to the be list.
+     *
+     * @param array $columns
+     *
+     * @return SubscriberLister
+     */
+    protected function addDecoratorColumnCategories(
+        array &$columns
+    ) {
+        $columns['categories'] = array(
+            'title' => 'label_tableheader_categories',
             'decorator' => $this->getDecorator(),
         );
 

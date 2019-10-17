@@ -61,6 +61,11 @@ namespace DMK\Mkpostman\Domain\Model;
  */
 class SubscriberModel extends \Tx_Rnbase_Domain_Model_Base
 {
+    public function hasCategories()
+    {
+        return (int) $this->getCategories() > 0;
+    }
+
     /**
      * Liefert den aktuellen Tabellenname.
      *
