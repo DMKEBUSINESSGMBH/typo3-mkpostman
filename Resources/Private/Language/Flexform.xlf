@@ -18,6 +18,9 @@
             <trans-unit id="plugin.mkpostman.flexform.action.subscribe" xml:space="preserve">
                 <source>Subscribe Form</source>
             </trans-unit>
+            <trans-unit id="plugin.mkpostman.flexform.categories" xml:space="preserve">
+                <source>Categories</source>
+            </trans-unit>
             <trans-unit id="plugin.mkpostman.tssetup" xml:space="preserve">
                 <source>TypoScript Setup (plugin.tx_mkpostman.)</source>
             </trans-unit>
