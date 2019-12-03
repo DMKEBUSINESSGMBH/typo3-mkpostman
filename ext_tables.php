@@ -19,7 +19,6 @@ tx_rnbase_util_Extensions::addPlugin(
     ),
     'list_type',
     'mkpostman'
-
 );
 tx_rnbase_util_Extensions::addStaticFile(
     'mkpostman',
