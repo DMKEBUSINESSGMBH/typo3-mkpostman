@@ -22,8 +22,8 @@
         "dmk/mkmailer": "~3.0 || >=9@dev"
     },
     "require-dev": {
-        "dmk/mkforms": ">=9.5",
-        "dmk/mklib": ">=9.5",
+        "dmk/mkforms": "~3.0 || >=9.5",
+        "dmk/mklib": "~3.0 || >=9.5",
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.1 || ^2.0 || ^4.0",
         "friendsofphp/php-cs-fixer": "2.14.*",
