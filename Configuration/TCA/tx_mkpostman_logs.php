@@ -11,8 +11,7 @@ return array(
         'cruser_id' => 'cruser_id',
         'delete' => 'deleted',
         'searchFields' => 'description',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mkpostman').
-            'Resources/Public/Media/Icons/tx_mkpostman_logs.gif',
+        'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_logs.gif',
         'dividers2tabs' => true,
     ),
     'interface' => array(

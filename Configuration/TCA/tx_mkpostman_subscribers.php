@@ -20,8 +20,7 @@ return call_user_func(
                     'disabled' => 'disabled',
                 ),
                 'searchFields' => 'name,',
-                'iconfile' => \tx_rnbase_util_Extensions::extRelPath('mkpostman').
-                    'Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
+                'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
                 'dividers2tabs' => true,
             ),
             'interface' => array(
