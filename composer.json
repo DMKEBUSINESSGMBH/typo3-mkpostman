@@ -25,10 +25,10 @@
         "dmk/mkforms": ">=9",
         "dmk/mklib": ">=9",
         "namelesscoder/typo3-repository-client": "^1.2",
-        "nimut/testing-framework": "^1.0",
+        "nimut/testing-framework": "^1.1 || ^2.0 || ^4.0",
         "friendsofphp/php-cs-fixer": "2.14.*",
-        "mikey179/vfsStream": "^1.4",
-        "phpunit/phpunit": "^4.7"
+        "mikey179/vfsstream": "^1.4",
+        "phpunit/phpunit": "^4.7 || ^7.0"
     },
     "suggest": {
         "dmk/mkforms": "Use the powerful MK Forms extension to build the subscription form ('\"dmk/mkforms\": \">=9\"').",
