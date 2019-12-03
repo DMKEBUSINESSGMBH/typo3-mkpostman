@@ -16,7 +16,10 @@ tx_rnbase_util_Extensions::addPlugin(
         'LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.label',
         'tx_mkpostman',
         'EXT:mkpostman/ext_icon.gif',
-    )
+    ),
+    'list_type',
+    'mkpostman'
+
 );
 tx_rnbase_util_Extensions::addStaticFile(
     'mkpostman',
