@@ -113,15 +113,12 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
      *
      *
      * @group unit
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionCode 1464951846
      * @test
      */
     public function testConstructorWithInvalidData()
     {
-        $this->setExpectedException(
-            'BadMethodCallException',
-            '',
-            1464951846
-        );
         $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
             array(),
