@@ -17,13 +17,13 @@
         }
     ],
     "require": {
-        "typo3/cms-core": "~6.2.14 || ^7.6 || ^8.7",
-        "digedag/rn-base": "~1.9",
-        "dmk/mkmailer": "~3.0"
+        "typo3/cms-core": "~6.2.14 || ^7.6 || ^8.7 || ^9.5",
+        "digedag/rn-base": ">=1.10",
+        "dmk/mkmailer": ">=9@dev"
     },
     "require-dev": {
-        "dmk/mkforms": "~3.0",
-        "dmk/mklib": "~3.0",
+        "dmk/mkforms": ">=9",
+        "dmk/mklib": ">=9",
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.0",
         "friendsofphp/php-cs-fixer": "2.14.*",
@@ -31,7 +31,7 @@
         "phpunit/phpunit": "^4.7"
     },
     "suggest": {
-        "dmk/mkforms": "Use the powerful MK Forms extension to build the subscription form ('\"dmk/mkforms\": \">=3\"').",
+        "dmk/mkforms": "Use the powerful MK Forms extension to build the subscription form ('\"dmk/mkforms\": \">=9\"').",
         "dmk/mklib": "install the mklib extension, when you need export functionality."
     },
     "support": {
@@ -69,7 +69,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2.x-dev"
+            "dev-compatibility/typo3v9": "9.0.x-dev"
         },
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
