@@ -26,15 +26,14 @@ $EM_CONF[$_EXTKEY] = array(
     'lockType' => '',
     'constraints' => array(
         'depends' => array(
-            'rn_base' => '1.4.0-',
-            'typo3' => '6.2.14-8.7.99',
-            'mkmailer' => '3.0.0-',
-            'rn_base' => '1.2.5-',
+            'rn_base' => '1.10.0-',
+            'typo3' => '7.6.0-9.5.99',
+            'mkmailer' => '9.0.0-',
         ),
         'conflicts' => array(),
         'suggests' => array(
-            'mkforms' => '3.0.0-',
-            'mklib' => '3.0.0-',
+            'mkforms' => '9.5.0-',
+            'mklib' => '9.5.0-',
         ),
     ),
     'autoload' => array(
