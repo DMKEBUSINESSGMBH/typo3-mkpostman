@@ -10,8 +10,9 @@ notifications:
 matrix:
     fast_finish: true
     include:
-        -   php: 7.4
-            env: TYPO3_CORE="typo3/minimal=^9.5.0"
+### enable when nimut testing-framework supports php 7.4
+#        -   php: 7.4
+#            env: TYPO3_CORE="typo3/minimal=^9.5.0"
         -   php: 7.3
             env:
                 - TYPO3_CORE="typo3/minimal=^9.5.0"
