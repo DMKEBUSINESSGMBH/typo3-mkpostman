@@ -1,10 +1,9 @@
 <?php
 
-namespace DMK\Mkpostman\Tests\Domain\Repository;
+namespace DMK\Mkpostman\Domain\Repository;
 
 use DMK\Mkpostman\Domain\Model\CategoryModel;
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
-use DMK\Mkpostman\Domain\Repository\SubscriberRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Tx_Rnbase_Database_Connection as ConnectionInterfae;
@@ -13,34 +12,30 @@ use tx_rnbase_util_SearchGeneric as Searcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @property SubscriberRepository repository
- * @property \Prophecy\Prophecy\ObjectProphecy emptyModel
+ * Testcase for SubscriberRepository.
+ *
+ * @property \Prophecy\Prophecy\ObjectProphecy $connection
+ * @property \Prophecy\Prophecy\ObjectProphecy $searcher
+ * @property SubscriberRepository $repository
  */
-class SubscriberRepositoryProphecyTest extends TestCase
+class SubscriberRepositoryTest extends TestCase
 {
-    const TABLE_NAME = 'sys_category_record_mm';
-
-    private static $connection;
-    /**
-     * @var \Prophecy\Prophecy\ObjectProphecy
-     */
-    private $searcher;
-
     protected function setUp()
     {
-        self::$connection = $this->prophesize(ConnectionInterfae::class);
-
-        GeneralUtility::setSingletonInstance(ConnectionInterfae::class, self::$connection->reveal());
-
+        // instanciate repository to test
         $this->repository = new SubscriberRepository();
 
-        $this->emptyModel = $this->prophesize(SubscriberModel::class);
-        $this->emptyModel->getTableName()->willReturn('foo');
+        GeneralUtility::purgeInstances();
+        // mock connection
+        $this->connection = $this->prophesize(ConnectionInterfae::class);
+        GeneralUtility::setSingletonInstance(ConnectionInterfae::class, $this->connection->reveal());
 
-        $this->emptyModel = $this->emptyModel->reveal();
+        // mock model instances
+        $emptyModel = $this->prophesize(SubscriberModel::class);
+        $emptyModel->getTableName()->willReturn('subscriber_table');
 
-        GeneralUtility::addInstance(SubscriberModel::class, $this->emptyModel);
-        GeneralUtility::addInstance(SubscriberModel::class, $this->emptyModel);
+        GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
+        GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
 
         $this->searcher = $this->prophesize(Searcher::class);
         GeneralUtility::addInstance(Searcher::class, $this->searcher->reveal());
@@ -48,37 +43,45 @@ class SubscriberRepositoryProphecyTest extends TestCase
 
     protected function tearDown()
     {
-        unset($this->searcher);
+        // reset all instances from the testcase
         GeneralUtility::purgeInstances();
     }
 
-    public function testAddToCategories()
+    /**
+     * Test the addToCategories method.
+     *
+     * @group unit
+     * @test
+     */
+    public function addToCategories()
     {
-        self::$connection->doDelete('sys_category_record_mm', 'uid_foreign = 1')
+        $connection = $this->connection;
+
+        $connection->doDelete('sys_category_record_mm', 'uid_foreign = 1')
             ->shouldBeCalled();
 
-        self::$connection->doInsert(self::TABLE_NAME, [
+        $connection->doInsert('sys_category_record_mm', [
             'uid_local' => 1,
             'uid_foreign' => 1,
             'tablenames' => 'tx_mkpostman_subscribers',
             'fieldname' => 'categories',
         ])->shouldBeCalled();
 
-        self::$connection->doInsert(self::TABLE_NAME, [
+        $connection->doInsert('sys_category_record_mm', [
             'uid_local' => 3,
             'uid_foreign' => 1,
             'tablenames' => 'tx_mkpostman_subscribers',
             'fieldname' => 'categories',
         ])->shouldBeCalled();
 
-        self::$connection->doInsert(self::TABLE_NAME, [
+        $connection->doInsert('sys_category_record_mm', [
             'uid_local' => 2,
             'uid_foreign' => 1,
             'tablenames' => 'tx_mkpostman_subscribers',
             'fieldname' => 'categories',
         ])->shouldBeCalled();
 
-        self::$connection->doInsert(self::TABLE_NAME, [
+        $connection->doInsert('sys_category_record_mm', [
             'uid_local' => 'foo',
             'uid_foreign' => 1,
             'tablenames' => 'tx_mkpostman_subscribers',
@@ -92,9 +95,16 @@ class SubscriberRepositoryProphecyTest extends TestCase
         $this->repository->addToCategories($model->reveal(), $categories);
     }
 
-    public function testFindByUid()
+    /**
+     * Test the findByUid method.
+     *
+     * @group unit
+     * @test
+     */
+    public function findByUid()
     {
         $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+
         $this->searcher->search([
             'SUBSCRIBER.uid' => [
                 OP_EQ_INT => 1,
@@ -105,12 +115,12 @@ class SubscriberRepositoryProphecyTest extends TestCase
             'collection' => 'Tx_Rnbase_Domain_Collection_Base',
             'searchdef' => [
                 'usealias' => 1,
-                'basetable' => 'foo',
+                'basetable' => 'subscriber_table',
                 'basetablealias' => 'SUBSCRIBER',
                 'wrapperclass' => SubscriberModel::class,
                 'alias' => array(
                     'SUBSCRIBER' => array(
-                        'table' => 'foo',
+                        'table' => 'subscriber_table',
                     ),
                     'CATEGORYMM' => array(
                         'table' => 'sys_category_record_mm',
@@ -123,9 +133,16 @@ class SubscriberRepositoryProphecyTest extends TestCase
         self::assertSame($model->reveal(), $this->repository->findByUid(1));
     }
 
-    public function testFindByEmail()
+    /**
+     * Test the findByEmail method.
+     *
+     * @group unit
+     * @test
+     */
+    public function findByEmail()
     {
         $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+
         $this->searcher->search([
             'SUBSCRIBER.email' => [
                 OP_EQ => 'foo@bar.tld',
@@ -136,12 +153,12 @@ class SubscriberRepositoryProphecyTest extends TestCase
             'collection' => 'Tx_Rnbase_Domain_Collection_Base',
             'searchdef' => [
                 'usealias' => 1,
-                'basetable' => 'foo',
+                'basetable' => 'subscriber_table',
                 'basetablealias' => 'SUBSCRIBER',
                 'wrapperclass' => SubscriberModel::class,
                 'alias' => array(
                     'SUBSCRIBER' => array(
-                        'table' => 'foo',
+                        'table' => 'subscriber_table',
                     ),
                     'CATEGORYMM' => array(
                         'table' => 'sys_category_record_mm',
@@ -154,7 +171,13 @@ class SubscriberRepositoryProphecyTest extends TestCase
         self::assertSame($model->reveal(), $this->repository->findByEmail('foo@bar.tld'));
     }
 
-    public function testFindByCategory()
+    /**
+     * Test the findByCategory method.
+     *
+     * @group unit
+     * @test
+     */
+    public function findByCategory()
     {
         $category = $this->prophesize(CategoryModel::class);
         $category->getUid()->willReturn(1);

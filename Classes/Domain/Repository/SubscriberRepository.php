@@ -52,6 +52,18 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
     }
 
     /**
+     * Liefert den Searcher.
+     *
+     * Wir nutzen absichtlich nicht den parent, da dieser einen statichen cache aufbaut!
+     *
+     * @return  tx_rnbase_util_SearchBase
+     */
+    protected function getSearcher()
+    {
+        return \tx_rnbase::makeInstance($this->getSearchClass());
+    }
+
+    /**
      * Liefert die Model Klasse.
      *
      * @return string
