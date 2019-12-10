@@ -2,379 +2,203 @@
 
 namespace DMK\Mkpostman\Domain\Repository;
 
-/***************************************************************
- * Copyright notice
- *
- * (c) 2016 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
- * All rights reserved
- *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
+use DMK\Mkpostman\Domain\Model\CategoryModel;
+use DMK\Mkpostman\Domain\Model\SubscriberModel;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Tx_Rnbase_Database_Connection as ConnectionInterfae;
+use Tx_Rnbase_Domain_Model_DomainInterface;
+use tx_rnbase_util_SearchGeneric as Searcher;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Subscriber model test.
+ * Testcase for SubscriberRepository.
  *
- * @author Michael Wagner
- * @license http://www.gnu.org/licenses/lgpl.html
- *          GNU Lesser General Public License, version 3 or later
+ * @property \Prophecy\Prophecy\ObjectProphecy $connection
+ * @property \Prophecy\Prophecy\ObjectProphecy $searcher
+ * @property SubscriberRepository $repository
  */
-class SubscriberRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
+class SubscriberRepositoryTest extends TestCase
 {
-    /**
-     * Test the getSearchClass method.
-     *
-     *
-     * @group unit
-     * @test
-     */
-    public function testGetSearchClassShouldBeGeneric()
+    protected function setUp()
     {
-        $this->assertEquals(
-            'tx_rnbase_util_SearchGeneric',
-            $this->callInaccessibleMethod(
-                $this->getSubscriberRepository(),
-                'getSearchClass'
-            )
-        );
+        // instanciate repository to test
+        $this->repository = new SubscriberRepository();
+
+        GeneralUtility::purgeInstances();
+        // mock connection
+        $this->connection = $this->prophesize(ConnectionInterfae::class);
+        GeneralUtility::setSingletonInstance(ConnectionInterfae::class, $this->connection->reveal());
+
+        // mock model instances
+        $emptyModel = $this->prophesize(SubscriberModel::class);
+        $emptyModel->getTableName()->willReturn('subscriber_table');
+
+        GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
+        GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
+
+        $this->searcher = $this->prophesize(Searcher::class);
+        GeneralUtility::addInstance(Searcher::class, $this->searcher->reveal());
+    }
+
+    protected function tearDown()
+    {
+        // reset all instances from the testcase
+        GeneralUtility::purgeInstances();
     }
 
     /**
-     * Test the getEmptyModel method.
-     *
-     *
-     * @group unit
-     * @test
-     */
-    public function testGetEmptyModelShouldBeBaseModelWithPageTable()
-    {
-        $model = $this->callInaccessibleMethod(
-            $this->getSubscriberRepository(),
-            'getEmptyModel'
-        );
-        $this->assertInstanceOf(
-            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel',
-            $model
-        );
-        $this->assertSame(
-            'tx_mkpostman_subscribers',
-            $model->getTablename()
-        );
-    }
-
-    /**
-     * Test the findByEmail method.
-     *
+     * Test the addToCategories method.
      *
      * @group unit
      * @test
      */
-    public function testFindByEmailCallsSearchCorrectly()
+    public function addToCategories()
     {
-        $that = $this; // php 3.5 compatibility!
-        $mail = 'mwagner@localhost.net';
-        $repo = $this->getSubscriberRepository();
-        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+        $connection = $this->connection;
 
-        $searcher
-            ->expects(self::once())
-            ->method('search')
-            ->with(
-                $this->callback(
-                    function ($fields) use ($that, $mail) {
-                        $that->assertTrue(is_array($fields));
+        $connection->doDelete('sys_category_record_mm', 'uid_foreign = 1')
+            ->shouldBeCalled();
 
-                        // only the mail should be filtered
-                        $that->assertCount(1, $fields);
-                        $that->assertArrayHasKey('SUBSCRIBER.email', $fields);
-                        $that->assertTrue(is_array($fields['SUBSCRIBER.email']));
+        $connection->doInsert('sys_category_record_mm', [
+            'uid_local' => 1,
+            'uid_foreign' => 1,
+            'tablenames' => 'tx_mkpostman_subscribers',
+            'fieldname' => 'categories',
+        ])->shouldBeCalled();
 
-                        // only the eq str should be performed
-                        $that->assertCount(1, $fields['SUBSCRIBER.email']);
-                        $that->assertArrayHasKey(OP_EQ, $fields['SUBSCRIBER.email']);
-                        $that->assertSame($mail, $fields['SUBSCRIBER.email'][OP_EQ]);
+        $connection->doInsert('sys_category_record_mm', [
+            'uid_local' => 3,
+            'uid_foreign' => 1,
+            'tablenames' => 'tx_mkpostman_subscribers',
+            'fieldname' => 'categories',
+        ])->shouldBeCalled();
 
-                        return true;
-                    }
-                ),
-                $this->callback(
-                    function ($options) use ($that) {
-                        $that->assertTrue(is_array($options));
+        $connection->doInsert('sys_category_record_mm', [
+            'uid_local' => 2,
+            'uid_foreign' => 1,
+            'tablenames' => 'tx_mkpostman_subscribers',
+            'fieldname' => 'categories',
+        ])->shouldBeCalled();
 
-                        // the limit should be set, the mail in uniq!
-                        $that->assertArrayHasKey('limit', $options);
-                        $that->assertSame(1, $options['limit']);
+        $connection->doInsert('sys_category_record_mm', [
+            'uid_local' => 'foo',
+            'uid_foreign' => 1,
+            'tablenames' => 'tx_mkpostman_subscribers',
+            'fieldname' => 'categories',
+        ])->shouldBeCalled();
 
-                        // enablefields be are set, we want disabled/inactive subscribers!
-                        $that->assertArrayHasKey('enablefieldsbe', $options);
-                        $that->assertTrue($options['enablefieldsbe']);
+        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+        $model->getUid()->willReturn(1);
+        $categories = ['foo', 1, 2, 3];
 
-                        return true;
-                    }
-                )
-            );
-
-        $repo->findByEmail($mail);
-    }
-
-    /**
-     * Test the findByEmail method.
-     *
-     *
-     * @group unit
-     * @test
-     */
-    public function testaddToCategories()
-    {
-        $that = $this; // php 3.5 compatibility!
-        $categories = [10, 11];
-        $subscriber = $this->getModel(
-            array(
-                'uid' => 5,
-            ),
-            'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
-        );
-        $repo = $this->getSubscriberRepository();
-
-        $connection = $this->getMock(
-            'Tx_Rnbase_Database_Connection',
-            array('doDelete', 'doInsert')
-        );
-
-        $connection
-            ->expects(self::once())
-            ->method('doDelete')
-            ->with(
-                $this->callback(
-                    function ($tablename) use ($that) {
-                        $that->assertSame('sys_category_record_mm', $tablename);
-
-                        return true;
-                    }
-                ),
-                $this->callback(
-                    function ($where) use ($that, $subscriber) {
-                        $that->assertSame('uid_foreign = '.$subscriber->getUid(), $where);
-
-                        return true;
-                    }
-                )
-            );
-
-        $connection
-            ->expects(self::exactly(2))
-            ->method('doInsert')
-            ->with(
-                $this->callback(
-                    function ($tablename) use ($that) {
-                        $that->assertSame('sys_category_record_mm', $tablename);
-
-                        return true;
-                    }
-                ),
-                $this->callback(
-                    function ($values) use ($that, $categories, $subscriber) {
-                        $that->assertTrue(is_array($values));
-
-                        $that->assertCount(4, $values);
-                        $that->assertArrayHasKey('uid_local', $values);
-                        $that->assertTrue(in_array($values['uid_local'], $categories));
-                        $that->assertArrayHasKey('uid_foreign', $values);
-                        $that->assertSame($subscriber->getUid(), $values['uid_foreign']);
-                        $that->assertArrayHasKey('tablenames', $values);
-                        $that->assertSame('tx_mkpostman_subscribers', $values['tablenames']);
-                        $that->assertArrayHasKey('fieldname', $values);
-                        $that->assertSame('categories', $values['fieldname']);
-
-                        return true;
-                    }
-                )
-            );
-
-        $repo
-            ->expects(self::once())
-            ->method('getDbConnection')
-            ->will(self::returnValue($connection));
-
-        $repo->addToCategories($subscriber, $categories);
+        $this->repository->addToCategories($model->reveal(), $categories);
     }
 
     /**
      * Test the findByUid method.
      *
-     *
      * @group unit
      * @test
      */
-    public function testFindByUidCallsSearchCorrectly()
+    public function findByUid()
     {
-        $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
-        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
 
-        $searcher
-            ->expects(self::once())
-            ->method('search')
-            ->with(
-                $this->callback(
-                    function ($fields) use ($that) {
-                        $that->assertTrue(is_array($fields));
-
-                        // only the mail should be filtered
-                        $that->assertCount(1, $fields);
-                        $that->assertArrayHasKey('SUBSCRIBER.uid', $fields);
-                        $that->assertTrue(is_array($fields['SUBSCRIBER.uid']));
-
-                        // only the eq str should be performed
-                        $that->assertCount(1, $fields['SUBSCRIBER.uid']);
-                        $that->assertArrayHasKey(OP_EQ_INT, $fields['SUBSCRIBER.uid']);
-                        $that->assertSame(7, $fields['SUBSCRIBER.uid'][OP_EQ_INT]);
-
-                        return true;
-                    }
+        $this->searcher->search([
+            'SUBSCRIBER.uid' => [
+                OP_EQ_INT => 1,
+            ],
+        ], [
+            'enablefieldsbe' => true,
+            'limit' => 1,
+            'collection' => 'Tx_Rnbase_Domain_Collection_Base',
+            'searchdef' => [
+                'usealias' => 1,
+                'basetable' => 'subscriber_table',
+                'basetablealias' => 'SUBSCRIBER',
+                'wrapperclass' => SubscriberModel::class,
+                'alias' => array(
+                    'SUBSCRIBER' => array(
+                        'table' => 'subscriber_table',
+                    ),
+                    'CATEGORYMM' => array(
+                        'table' => 'sys_category_record_mm',
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
+                    ),
                 ),
-                $this->callback(
-                    function ($options) use ($that) {
-                        $that->assertTrue(is_array($options));
+            ],
+        ])->willReturn([$model->reveal()]);
 
-                        // the limit should be set, the mail in uniq!
-                        $that->assertArrayHasKey('limit', $options);
-                        $that->assertSame(1, $options['limit']);
-
-                        // enablefields be are set, we want disabled/inactive subscribers!
-                        $that->assertArrayHasKey('enablefieldsbe', $options);
-                        $that->assertTrue($options['enablefieldsbe']);
-
-                        return true;
-                    }
-                )
-            );
-
-        $repo->findByUid(7);
+        self::assertSame($model->reveal(), $this->repository->findByUid(1));
     }
 
     /**
-     * Test the prepareGenericSearcher method.
-     *
+     * Test the findByEmail method.
      *
      * @group unit
      * @test
      */
-    public function testPrepareGenericSearcherShouldBeTheRightSearchdefConfig()
+    public function findByEmail()
     {
-        $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
-        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
 
-        $searcher
-            ->expects(self::once())
-            ->method('search')
-            ->with(
-                $this->callback(
-                    function ($fields) {
-                        return is_array($fields) && empty($fields);
-                    }
+        $this->searcher->search([
+            'SUBSCRIBER.email' => [
+                OP_EQ => 'foo@bar.tld',
+            ],
+        ], [
+            'enablefieldsbe' => true,
+            'limit' => 1,
+            'collection' => 'Tx_Rnbase_Domain_Collection_Base',
+            'searchdef' => [
+                'usealias' => 1,
+                'basetable' => 'subscriber_table',
+                'basetablealias' => 'SUBSCRIBER',
+                'wrapperclass' => SubscriberModel::class,
+                'alias' => array(
+                    'SUBSCRIBER' => array(
+                        'table' => 'subscriber_table',
+                    ),
+                    'CATEGORYMM' => array(
+                        'table' => 'sys_category_record_mm',
+                        'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
+                    ),
                 ),
-                $this->callback(
-                    function ($options) use ($that, $repo) {
-                        $tablename = $repo->getEmptyModel()->getTableName();
-                        $that->assertTrue(is_array($options));
+            ],
+        ])->willReturn([$model->reveal()]);
 
-                        $that->assertArrayHasKey('searchdef', $options);
-                        $that->assertTrue(is_array($options['searchdef']));
-
-                        $sd = $options['searchdef'];
-                        $that->assertArrayHasKey('usealias', $sd);
-                        $that->assertSame($sd['usealias'], 1);
-                        $that->assertArrayHasKey('basetable', $sd);
-                        $that->assertSame($sd['basetable'], $tablename);
-                        $that->assertArrayHasKey('basetablealias', $sd);
-                        $that->assertSame($sd['basetablealias'], 'SUBSCRIBER');
-                        $that->assertArrayHasKey('wrapperclass', $sd);
-                        $that->assertSame($sd['wrapperclass'], get_class($repo->getEmptyModel()));
-
-                        $that->assertArrayHasKey('alias', $sd);
-                        $that->assertTrue(is_array($sd['alias']));
-                        $that->assertArrayHasKey('SUBSCRIBER', $sd['alias']);
-                        $that->assertTrue(is_array($sd['alias']['SUBSCRIBER']));
-                        $that->assertArrayHasKey('table', $sd['alias']['SUBSCRIBER']);
-                        $that->assertSame($sd['alias']['SUBSCRIBER']['table'], $tablename);
-
-                        return true;
-                    }
-                )
-            )
-            ->will(self::returnValue(new \ArrayObject()));
-
-        $this->assertInstanceOf('ArrayObject', $repo->findAll());
+        self::assertSame($model->reveal(), $this->repository->findByEmail('foo@bar.tld'));
     }
 
     /**
-     * Test the prepareGenericSearcher method.
-     *
+     * Test the findByCategory method.
      *
      * @group unit
      * @test
      */
-    public function testPrepareGenericSearcherShouldUseCollection()
+    public function findByCategory()
     {
-        $that = $this; // php 3.5 compatibility!
-        $repo = $this->getSubscriberRepository();
-        $searcher = $this->callInaccessibleMethod($repo, 'getSearcher');
+        $category = $this->prophesize(CategoryModel::class);
+        $category->getUid()->willReturn(1);
 
-        $searcher
-            ->expects(self::once())
-            ->method('search')
-            ->with(
-                $this->callback(
-                    function ($fields) {
-                        return is_array($fields);
-                    }
-                ),
-                $this->callback(
-                    function ($options) use ($that) {
-                        $that->assertTrue(is_array($options));
+        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+        $collection = new \Tx_Rnbase_Domain_Collection_Base([$model->reveal()]);
 
-                        $that->assertArrayHasKey('collection', $options);
-                        $that->assertEquals(
-                            'Tx_Rnbase_Domain_Collection_Base',
-                            $options['collection']
-                        );
+        $this->searcher->search([
+            'CATEGORYMM.uid_local' => array(
+                OP_EQ_INT => 1,
+            ),
+            'CATEGORYMM.tablenames' => array(
+                OP_EQ => 'tx_mkpostman_subscribers',
+            ),
+        ], Argument::that(function ($arg) {
+            return true === $arg['enablefieldsbe'];
+        }))->willReturn($collection);
 
-                        return true;
-                    }
-                )
-            )
-            ->will(self::returnValue(new \ArrayObject()));
-
-        $this->assertInstanceOf('ArrayObject', $repo->findAll());
+        self::assertSame(
+            $collection,
+            $this->repository->findByCategory($category->reveal())
+        );
     }
 }
