@@ -61,19 +61,7 @@
                             </config>
                         </TCEforms>
                     </subscribe.legacyTemplate>
-                    <flexformTS>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tssetup</label>
-                            <config>
-                                <type>text</type>
-                                <cols>80</cols>
-                                <rows>10</rows>
-                                <default></default>
-                            </config>
-                        </TCEforms>
-                    </flexformTS>
-                    <categories>
+                    <subscribe.categories>
                         <TCEforms>
                             <exclude>1</exclude>
                             <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.flexform.categories</label>
@@ -92,7 +80,19 @@
                                 <maxitems>99</maxitems>
                             </config>
                         </TCEforms>
-                    </categories>
+                    </subscribe.categories>
+                    <flexformTS>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.tssetup</label>
+                            <config>
+                                <type>text</type>
+                                <cols>80</cols>
+                                <rows>10</rows>
+                                <default></default>
+                            </config>
+                        </TCEforms>
+                    </flexformTS>
                 </el>
             </ROOT>
         </sDEF>

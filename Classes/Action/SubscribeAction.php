@@ -247,7 +247,7 @@ class SubscribeAction extends AbstractAction
      */
     protected function getCategories()
     {
-        $categoryIds = $this->getConfigurations()->getExploded('categories');
+        $categoryIds = $this->getConfigurations()->getExploded($this->getConfId().'categories');
         if (!empty($categoryIds)) {
             $catRepo = Factory::getCategoryRepository();
             $categories = [];
