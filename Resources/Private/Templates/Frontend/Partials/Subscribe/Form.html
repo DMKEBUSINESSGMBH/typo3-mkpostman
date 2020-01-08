@@ -22,7 +22,7 @@
         <fieldset>
             <f:if condition="{form.errors.email}">
                 <f:then>
-                    <f:translate key="LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_form_subscriber_email_email" />
+                    {form.errors.email}
                 </f:then>
             </f:if>
             <label>
@@ -33,6 +33,11 @@
 
         <f:if condition="{categories}">
             <fieldset>
+                <f:if condition="{form.errors.categories}">
+                    <f:then>
+                        {form.errors.categories}
+                    </f:then>
+                </f:if>
                 <f:for each="{categories}" as="category">
                     <label>
                         {category.title}

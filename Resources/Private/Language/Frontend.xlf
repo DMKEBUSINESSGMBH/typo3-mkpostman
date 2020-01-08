@@ -37,6 +37,9 @@
             <trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
                 <source>The e-mail is required for subscibtion!</source>
             </trans-unit>
+            <trans-unit id="label_form_subscriber_categories_required" xml:space="preserve">
+                <source>Please select at least %requiredmin% categories for subscibtion!</source>
+            </trans-unit>
             <trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
                 <source>Please enter a valid e-mail!</source>
             </trans-unit>

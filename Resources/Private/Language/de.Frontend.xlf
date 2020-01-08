@@ -38,6 +38,9 @@
             <trans-unit id="label_form_subscriber_email_required" xml:space="preserve">
                 <target>Bitte geben Sie Ihre E-Mail-Adresse an!</target>
             </trans-unit>
+            <trans-unit id="label_form_subscriber_categories_required" xml:space="preserve">
+                <target>Bitte geben Sie mindestens %requiredmin% Kategorien an!</target>
+            </trans-unit>
             <trans-unit id="label_form_subscriber_email_email" xml:space="preserve">
                 <target>Bitte geben Sie eine valide E-mail-Adresse an!</target>
             </trans-unit>

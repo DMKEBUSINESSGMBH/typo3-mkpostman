@@ -37,7 +37,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     /**
      * @var array
      */
-    private $validationErrors = [];
+    protected $validationErrors = [];
 
     /**
      * Renders the subscribtion form.
@@ -105,12 +105,31 @@ class SubscribeHandler extends AbstractSubscribeHandler
         array $data
     ) {
         if (empty($data['email']) || !\Tx_Rnbase_Utility_T3General::validEmail($data['email'])) {
-            $this->validationErrors['email'] = true;
-
-            return false;
+            $this->setFieldInvalid('email');
         }
 
-        return true;
+        if (($minCats = $this->getConfigurations()->getInt($this->getConfId().'requiredcategoriesmin')) > 0) {
+            if (empty($data['categories']) || !is_array($data['categories']) || count($data['categories']) < $minCats) {
+                $this->setFieldInvalid('categories', null, ['%requiredmin%' => $minCats]);
+            }
+        }
+
+        return empty($this->validationErrors);
+    }
+
+    /**
+     * Marks a field as invalid and adds translated error message.
+     *
+     * @param $field
+     * @param array $args
+     */
+    protected function setFieldInvalid($field, $label = null, array $args = [])
+    {
+        $label = $label ?: 'label_form_subscriber_'.$field.'_required';
+        $this->validationErrors[$field] = strtr(
+            $this->getConfigurations()->getCfgOrLL($label),
+            $args
+        );
     }
 
     /**

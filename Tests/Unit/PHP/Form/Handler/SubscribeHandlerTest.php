@@ -132,4 +132,95 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $this->assertArrayHasKey('email', $subscriber->getProperties());
         $this->assertSame($subscriber->getProperties(), array_merge(['uid' => 0, 'categories' => []], $userdata));
     }
+
+    /**
+     * Test the validateSubscriberData method.
+     *
+     * @group unit
+     * @test
+     */
+    public function validateSubscriberDataisValid()
+    {
+        $postData = [
+            'email' => 'foo@bar.baz',
+            'categories' => [2, 4, 6],
+        ];
+
+        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
+        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        $configurations->expects($this->once())->method('getInt')->willReturn(1);
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
+        $handler = $this->getMock(
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            ['getConfigurations', 'getConfId'],
+            [],
+            '',
+            false
+        );
+
+        $handler
+            ->expects($this->once())
+            ->method('getConfId')
+            ->will($this->returnValue('cid'));
+        $handler
+            ->expects($this->exactly(1))
+            ->method('getConfigurations')
+            ->will($this->returnValue($configurations));
+
+        $this->assertTrue(
+            $this->callInaccessibleMethod([$handler, 'validateSubscriberData'], [$postData])
+        );
+    }
+
+    /**
+     * Test the validateSubscriberData method.
+     *
+     * @group unit
+     * @test
+     */
+    public function validateSubscriberDataReportsErrors()
+    {
+        $postData = [
+            'email' => 'invalid mail',
+            'categories' => [2, 4, 6],
+        ];
+
+        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
+        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        $configurations->expects($this->once())->method('getInt')->willReturn(5);
+        $configurations->expects($this->exactly(2))->method('getCfgOrLL')->willReturn('tranlsated message');
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
+        $handler = $this->getMock(
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            ['getConfigurations', 'getConfId'],
+            [],
+            '',
+            false
+        );
+
+        $handler
+            ->expects($this->once())
+            ->method('getConfId')
+            ->will($this->returnValue('cid'));
+        $handler
+            ->expects($this->exactly(3)) // 1x config lesen, 2x label übersetzen
+            ->method('getConfigurations')
+            ->will($this->returnValue($configurations));
+
+        $this->assertFalse(
+            $this->callInaccessibleMethod([$handler, 'validateSubscriberData'], [$postData])
+        );
+
+        $errors = $this->getInaccessibleProperty($handler, 'validationErrors');
+
+        $this->assertEquals(
+            $errors,
+            [
+                'email' => 'tranlsated message',
+                'categories' => 'tranlsated message',
+            ]
+        );
+    }
 }
