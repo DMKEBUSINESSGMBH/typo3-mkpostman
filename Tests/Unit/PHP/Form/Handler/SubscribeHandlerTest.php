@@ -56,13 +56,13 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      * @group unit
      * @test
      */
-    public function testFillDataWithoutUser()
+    public function fillDataWithoutUser()
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            array('getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'),
-            array(),
+            ['getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'],
+            [],
             '',
             false
         );
@@ -73,7 +73,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
-            ->will(self::returnValue(array()));
+            ->will(self::returnValue([]));
 
         $handler->handleForm();
         /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
@@ -86,13 +86,13 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     }
 
     /**
-     * Test the fillData method.
+     * Test the fillDataWithUser method.
      *
      *
      * @group unit
      * @test
      */
-    public function testFillDataWithUser()
+    public function fillDataWithUser()
     {
         $userdata = [
             'gender' => 1,
@@ -104,8 +104,8 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            array('getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'),
-            array(),
+            ['getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'],
+            [],
             '',
             false
         );
@@ -222,5 +222,51 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'categories' => 'tranlsated message',
             ]
         );
+    }
+
+    /**
+     * Test the validateSubscriberData method.
+     *
+     *
+     * @group unit
+     * @test
+     */
+    public function validateSubscriberDataCallsSetFieldInvalidCorrectly()
+    {
+        $postData = [
+            'email' => 'invalid mail',
+            'categories' => [2, 4, 6],
+        ];
+
+        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
+        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        $configurations->expects($this->once())->method('getInt')->willReturn(5);
+
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
+        $handler = $this->getMock(
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            ['getConfigurations', 'getConfId', 'setFieldInvalid'],
+            [],
+            '',
+            false
+        );
+
+        $handler
+            ->expects($this->once())
+            ->method('getConfId')
+            ->will($this->returnValue('cid'));
+        $handler
+            ->expects($this->once())
+            ->method('getConfigurations')
+            ->will($this->returnValue($configurations));
+        $handler
+            ->expects($this->exactly(2))
+            ->method('setFieldInvalid')
+            ->withConsecutive(
+                ['email'],
+                ['categories', null, ['%requiredmin%' => 5]]
+            );
+
+        $this->callInaccessibleMethod([$handler, 'validateSubscriberData'], [$postData]);
     }
 }

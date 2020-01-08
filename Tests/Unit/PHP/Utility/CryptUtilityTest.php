@@ -57,7 +57,7 @@ class CryptUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
      * @group unit
      * @test
      */
-    public function testUrlEncode()
+    public function urlEncode()
     {
         /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
         $util = \tx_rnbase::makeInstance(
@@ -78,11 +78,11 @@ class CryptUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
      *
      * @param string $encoded
      *
-     * @depends testCreateConfirmString
+     * @depends urlEncode
      * @group unit
      * @test
      */
-    public function testUrlDencode(
+    public function urlDencode(
         $encoded
     ) {
         /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
