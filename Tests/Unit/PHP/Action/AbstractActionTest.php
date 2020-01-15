@@ -110,7 +110,7 @@ class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\AbstractAction');
         $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\AbstractAction');
 
-        $configuration = \tx_rnbase::makeInstance('Tx_Rnbase_Configuration_Processor');
+        $configuration = \tx_rnbase::makeInstance('Sys25\\RnBase\\Configuration\\Processor');
         $action->setConfigurations($configuration);
 
         $this->callInaccessibleMethod($action, 'setToView', 'test', '57');

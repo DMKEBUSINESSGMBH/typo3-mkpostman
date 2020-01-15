@@ -146,8 +146,8 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'categories' => [2, 4, 6],
         ];
 
-        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
-        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
+        $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->once())->method('getInt')->willReturn(1);
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
@@ -186,8 +186,8 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'categories' => [2, 4, 6],
         ];
 
-        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
-        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
+        $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->once())->method('getInt')->willReturn(5);
         $configurations->expects($this->exactly(2))->method('getCfgOrLL')->willReturn('tranlsated message');
 
@@ -238,8 +238,8 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'categories' => [2, 4, 6],
         ];
 
-        \tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
-        $configurations = $this->getMock('Tx_Rnbase_Configuration_Processor');
+        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
+        $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->once())->method('getInt')->willReturn(5);
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');

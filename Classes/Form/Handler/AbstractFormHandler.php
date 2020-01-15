@@ -48,7 +48,7 @@ abstract class AbstractFormHandler
     /**
      * Returns configurations object.
      *
-     * @return \Tx_Rnbase_Configuration_ProcessorInterface
+     * @return \Sys25\RnBase\Configuration\ConfigurationInterface
      */
     public function getConfigurations()
     {
