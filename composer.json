@@ -19,7 +19,7 @@
     "require": {
         "typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
         "digedag/rn-base": ">=1.10",
-        "dmk/mkmailer": "~3.0 || >=9@dev"
+        "dmk/mkmailer": "~3.0 || >=9.5"
     },
     "require-dev": {
         "dmk/mkforms": "~3.0 || >=9.5",
