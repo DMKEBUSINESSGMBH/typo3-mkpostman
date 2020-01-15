@@ -96,6 +96,12 @@ class ProcessorMail
         $job = \tx_rnbase::makeInstance('tx_mkmailer_mail_MailJob');
         if ($template instanceof \tx_mkmailer_models_Template) {
             $job->setFrom($template->getFromAddress());
+            // set from mail adress from rn_base configuration as fallback
+            if (!$job->getFrom()->getAddress()) {
+                $job->getFrom()->setAddress(
+                    \Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('rn_base', 'fromEmail')
+                );
+            }
             $job->setCCs($template->getCcAddress());
             $job->setBCCs($template->getBccAddress());
             $job->setSubject($template->getSubject());
