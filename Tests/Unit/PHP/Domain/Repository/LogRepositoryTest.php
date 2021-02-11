@@ -52,7 +52,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getSearchClass method.
      *
-     *
      * @group unit
      * @test
      */
@@ -69,7 +68,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getEmptyModel method.
-     *
      *
      * @group unit
      * @test
@@ -92,7 +90,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the findByUid method.
-     *
      *
      * @group unit
      * @test
@@ -143,7 +140,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the findBySubscriber method.
      *
-     *
      * @group unit
      * @test
      */
@@ -188,7 +184,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the prepareGenericSearcher method.
-     *
      *
      * @group unit
      * @test
@@ -244,7 +239,6 @@ class LogRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the prepareGenericSearcher method.
-     *
      *
      * @group unit
      * @test

@@ -116,14 +116,14 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
         $uid
     ) {
         return $this->searchSingle(
-            array(
-                'SUBSCRIBER.uid' => array(
+            [
+                'SUBSCRIBER.uid' => [
                     OP_EQ_INT => $uid,
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'enablefieldsbe' => true,
-            )
+            ]
         );
     }
 
@@ -138,14 +138,14 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
         $mail
     ) {
         return $this->searchSingle(
-            array(
-                'SUBSCRIBER.email' => array(
+            [
+                'SUBSCRIBER.email' => [
                     OP_EQ => $mail,
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'enablefieldsbe' => true,
-            )
+            ]
         );
     }
 
@@ -160,15 +160,15 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
         CategoryModel $category
     ) {
         return $this->search(
-            array(
-                'CATEGORYMM.uid_local' => array(
+            [
+                'CATEGORYMM.uid_local' => [
                     OP_EQ_INT => $category->getUid(),
-                ),
-                'CATEGORYMM.tablenames' => array(
+                ],
+                'CATEGORYMM.tablenames' => [
                     OP_EQ => 'tx_mkpostman_subscribers',
-                ),
-            ),
-            array()
+                ],
+            ],
+            []
         );
     }
 
@@ -197,27 +197,27 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
         $model = $this->getEmptyModel();
 
         if (empty($options['searchdef']) || !is_array($options['searchdef'])) {
-            $options['searchdef'] = array();
+            $options['searchdef'] = [];
         }
 
         \tx_rnbase::load('tx_rnbase_util_Arrays');
         $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
             // default searcher config
-            array(
+            [
                 'usealias' => 1,
                 'basetable' => $model->getTableName(),
                 'basetablealias' => 'SUBSCRIBER',
                 'wrapperclass' => $this->getWrapperClass(),
-                'alias' => array(
-                    'SUBSCRIBER' => array(
+                'alias' => [
+                    'SUBSCRIBER' => [
                         'table' => $model->getTableName(),
-                    ),
-                    'CATEGORYMM' => array(
+                    ],
+                    'CATEGORYMM' => [
                         'table' => 'sys_category_record_mm',
                         'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             // searcher config overrides
             $options['searchdef']
         );

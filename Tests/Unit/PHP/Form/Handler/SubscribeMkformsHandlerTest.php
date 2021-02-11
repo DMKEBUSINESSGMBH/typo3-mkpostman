@@ -52,7 +52,6 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the fillData method.
      *
-     *
      * @group unit
      * @test
      */
@@ -64,8 +63,8 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
-            array('getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'),
-            array(),
+            ['getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'],
+            [],
             '',
             false
         );
@@ -76,7 +75,7 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
-            ->will(self::returnValue(array()));
+            ->will(self::returnValue([]));
         $handler
             ->expects(self::once())
             ->method('multipleTableStructure2FlatArray')
@@ -87,7 +86,6 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the fillData method.
-     *
      *
      * @group unit
      * @test
@@ -107,8 +105,8 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
-            array('getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'),
-            array(),
+            ['getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'],
+            [],
             '',
             false
         );

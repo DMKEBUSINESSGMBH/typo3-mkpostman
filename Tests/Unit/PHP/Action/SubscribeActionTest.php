@@ -52,7 +52,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleRequest method.
      *
-     *
      * @group unit
      * @test
      */
@@ -61,7 +60,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
+            ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
         $action
@@ -87,7 +86,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleRequest method.
      *
-     *
      * @group unit
      * @test
      */
@@ -96,7 +94,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
+            ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
         /* @var $parameters \tx_rnbase_parameters */
@@ -127,7 +125,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleRequest method.
      *
-     *
      * @group unit
      * @test
      */
@@ -136,7 +133,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
+            ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
         /* @var $parameters \tx_rnbase_parameters */
@@ -168,7 +165,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleRequest method.
      *
-     *
      * @group unit
      * @test
      */
@@ -177,7 +173,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
+            ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
         /* @var $parameters \tx_rnbase_parameters */
@@ -209,7 +205,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleRequest method.
      *
-     *
      * @group unit
      * @test
      */
@@ -218,7 +213,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getParameters', 'handleForm', 'handleActivation', 'handleSuccess')
+            ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
         /* @var $parameters \tx_rnbase_parameters */
@@ -250,7 +245,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleActivation method.
      *
-     *
      * @group unit
      * @test
      */
@@ -264,7 +258,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the handleSuccess method.
      *
-     *
      * @group unit
      * @test
      */
@@ -276,7 +269,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getConfId method.
      *
-     *
      * @group unit
      * @test
      */
@@ -287,7 +279,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getConfId method.
-     *
      *
      * @group unit
      * @test
@@ -301,7 +292,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getTemplateName method.
-     *
      *
      * @group unit
      * @test
@@ -320,7 +310,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getViewClassName method.
      *
-     *
      * @group unit
      * @test
      */
@@ -329,7 +318,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('isLegacyTemplate')
+            ['isLegacyTemplate']
         );
         $action
             ->expects($this->once())

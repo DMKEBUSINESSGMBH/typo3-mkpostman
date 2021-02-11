@@ -179,11 +179,11 @@ class DoubleOptInUtility
         list($uid, $confirmstring, $md5) = explode(':', $activationKey);
 
         return \Tx_Rnbase_Domain_Model_Data::getInstance(
-            array(
+            [
                 'uid' => $uid,
                 'confirmstring' => $confirmstring,
                 'mail_hash' => $md5,
-            )
+            ]
         );
     }
 
@@ -217,11 +217,11 @@ class DoubleOptInUtility
 
         $key = implode(
             ':',
-            array(
+            [
                 $subscriber->getUid(),
                 $subscriber->getConfirmstring(),
                 md5($subscriber->getEmail()),
-            )
+            ]
         );
 
         // make the key base64 and url encoded
@@ -263,11 +263,11 @@ class DoubleOptInUtility
 
         $key = implode(
             ':',
-            array(
+            [
                 $subscriber->getUid(),
                 $subscriber->getConfirmstring(),
                 md5($subscriber->getEmail()),
-            )
+            ]
         );
 
         // make the key base64 and url encoded

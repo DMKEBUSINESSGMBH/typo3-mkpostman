@@ -118,15 +118,15 @@ class SubscriberRepositoryTest extends TestCase
                 'basetable' => 'subscriber_table',
                 'basetablealias' => 'SUBSCRIBER',
                 'wrapperclass' => SubscriberModel::class,
-                'alias' => array(
-                    'SUBSCRIBER' => array(
+                'alias' => [
+                    'SUBSCRIBER' => [
                         'table' => 'subscriber_table',
-                    ),
-                    'CATEGORYMM' => array(
+                    ],
+                    'CATEGORYMM' => [
                         'table' => 'sys_category_record_mm',
                         'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
-                    ),
-                ),
+                    ],
+                ],
             ],
         ])->willReturn([$model->reveal()]);
 
@@ -156,15 +156,15 @@ class SubscriberRepositoryTest extends TestCase
                 'basetable' => 'subscriber_table',
                 'basetablealias' => 'SUBSCRIBER',
                 'wrapperclass' => SubscriberModel::class,
-                'alias' => array(
-                    'SUBSCRIBER' => array(
+                'alias' => [
+                    'SUBSCRIBER' => [
                         'table' => 'subscriber_table',
-                    ),
-                    'CATEGORYMM' => array(
+                    ],
+                    'CATEGORYMM' => [
                         'table' => 'sys_category_record_mm',
                         'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON SUBSCRIBER.uid = CATEGORYMM.uid_foreign',
-                    ),
-                ),
+                    ],
+                ],
             ],
         ])->willReturn([$model->reveal()]);
 
@@ -186,12 +186,12 @@ class SubscriberRepositoryTest extends TestCase
         $collection = new \Tx_Rnbase_Domain_Collection_Base([$model->reveal()]);
 
         $this->searcher->search([
-            'CATEGORYMM.uid_local' => array(
+            'CATEGORYMM.uid_local' => [
                 OP_EQ_INT => 1,
-            ),
-            'CATEGORYMM.tablenames' => array(
+            ],
+            'CATEGORYMM.tablenames' => [
                 OP_EQ => 'tx_mkpostman_subscribers',
-            ),
+            ],
         ], Argument::that(function ($arg) {
             return true === $arg['enablefieldsbe'];
         }))->willReturn($collection);

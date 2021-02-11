@@ -52,7 +52,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the createSubscribedBySubscriber method.
      *
-     *
      * @group unit
      * @test
      */
@@ -73,7 +72,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the createActivatedBySubscriber method.
-     *
      *
      * @group unit
      * @test
@@ -96,7 +94,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the createUnsubscribedBySubscriber method.
      *
-     *
      * @group unit
      * @test
      */
@@ -117,7 +114,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the createUnsubscribedBySubscriber method.
-     *
      *
      * @group unit
      * @test
@@ -155,7 +151,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the createDescription method.
-     *
      *
      * @group unit
      * @test
@@ -222,7 +217,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getStateLabel method.
-     *
      *
      * @group unit
      * @test

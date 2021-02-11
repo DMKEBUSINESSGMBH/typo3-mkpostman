@@ -4,7 +4,7 @@
 // ## Extension Manager/Repository config file for ext "hpsplaner".
 // ## #####################################################################
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'MK Postman',
     'description' => '',
     'category' => 'misc',
@@ -24,21 +24,21 @@ $EM_CONF[$_EXTKEY] = array(
     'modify_tables' => '',
     'clearCacheOnLoad' => 0,
     'lockType' => '',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'rn_base' => '1.10.0-',
             'typo3' => '7.6.0-9.5.99',
             'mkmailer' => '9.0.0-',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(
+        ],
+        'conflicts' => [],
+        'suggests' => [
             'mkforms' => '9.5.0-',
             'mklib' => '9.5.0-',
-        ),
-    ),
-    'autoload' => array(
-        'psr-4' => array(
+        ],
+    ],
+    'autoload' => [
+        'psr-4' => [
             'DMK\\Mkpostman\\' => 'Classes',
-        ),
-    ),
-);
+        ],
+    ],
+];

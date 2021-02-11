@@ -69,11 +69,11 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
         $uid
     ) {
         return $this->searchSingle(
-            array(
-                'LOG.uid' => array(
+            [
+                'LOG.uid' => [
                     OP_EQ_INT => $uid,
-                ),
-            )
+                ],
+            ]
         );
     }
 
@@ -88,12 +88,12 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
         SubscriberModel $subscriber
     ) {
         return $this->search(
-            array(
-                'LOG.subscriber_id' => array(
+            [
+                'LOG.subscriber_id' => [
                     OP_EQ_INT => $subscriber->getUid(),
-                ),
-            ),
-            array()
+                ],
+            ],
+            []
         );
     }
 
@@ -122,23 +122,23 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
         $model = $this->getEmptyModel();
 
         if (empty($options['searchdef']) || !is_array($options['searchdef'])) {
-            $options['searchdef'] = array();
+            $options['searchdef'] = [];
         }
 
         \tx_rnbase::load('tx_rnbase_util_Arrays');
         $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
             // default searcher config
-            array(
+            [
                 'usealias' => 1,
                 'basetable' => $model->getTableName(),
                 'basetablealias' => 'LOG',
                 'wrapperclass' => get_class($model),
-                'alias' => array(
-                    'LOG' => array(
+                'alias' => [
+                    'LOG' => [
                         'table' => $model->getTableName(),
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             // searcher config overrides
             $options['searchdef']
         );

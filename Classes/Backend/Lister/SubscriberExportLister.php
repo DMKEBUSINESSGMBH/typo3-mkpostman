@@ -51,10 +51,10 @@ class SubscriberExportLister extends SubscriberLister implements \tx_mklib_mod1_
         /* @var $provider \tx_rnbase_util_ListProvider */
         $provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');
         $provider->initBySearch(
-            array(
+            [
                 $this->getRepository(),
                 'search',
-            ),
+            ],
             $fields,
             $options
         );

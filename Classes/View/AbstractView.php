@@ -50,7 +50,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
     public function createOutput($template, &$viewData, &$configurations, &$formatter)
     {
         // @codingStandardsIgnoreEnd
-        $markArray = $subpartArray = $wrappedSubpartArray = array();
+        $markArray = $subpartArray = $wrappedSubpartArray = [];
 
         return \tx_rnbase_util_Templates::substituteMarkerArrayCached(
             $this->parseTemplate(
@@ -99,7 +99,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
         array &$subpartArray,
         array &$wrappedSubpartArray
     ) {
-        $renderData = array();
+        $renderData = [];
 
         // check viewdata for scalars to render
         foreach ($this->getViewData() as $viewDataName => $value) {
@@ -116,7 +116,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
                 $subpartArray[$subMarker] = '';
             } else {
                 // render subpart, if viewdata is filled
-                $wrappedSubpartArray[$subMarker] = array('', '');
+                $wrappedSubpartArray[$subMarker] = ['', ''];
             }
         }
 

@@ -52,7 +52,6 @@ class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getStorage method.
      *
-     *
      * @group unit
      * @test
      */
@@ -66,7 +65,6 @@ class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the handleRequest method.
-     *
      *
      * @group unit
      * @test
@@ -90,7 +88,7 @@ class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
         $ret = $reflectionMethod->invokeArgs(
             $action,
-            array(&$dummy, &$dummy, &$dummy)
+            [&$dummy, &$dummy, &$dummy]
         );
 
         // the handleRequest expects returns the first argument
@@ -100,7 +98,6 @@ class AbstractActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getTableName method.
-     *
      *
      * @group unit
      * @test

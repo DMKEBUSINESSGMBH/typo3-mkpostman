@@ -43,13 +43,13 @@ class WizIconUtility extends \tx_rnbase_util_Wizicon
      */
     protected function getPluginData()
     {
-        return array(
-            'tx_mkpostman' => array(
+        return [
+            'tx_mkpostman' => [
                 'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman').'ext_icon.gif',
                 'title' => 'plugin.mkpostman.label',
                 'description' => 'plugin.mkpostman.description',
-            ),
-        );
+            ],
+        ];
     }
 
     /**

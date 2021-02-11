@@ -56,9 +56,9 @@ class SubscriberModule extends \tx_rnbase_mod_ExtendedModFunc
             $class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberExportHandler';
         }
 
-        return array(
+        return [
             \tx_rnbase::makeInstance($class),
-        );
+        ];
     }
 
     /**

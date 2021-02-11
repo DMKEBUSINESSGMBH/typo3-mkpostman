@@ -116,7 +116,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
      */
     public function getAddresses()
     {
-        $addresses = array();
+        $addresses = [];
 
         if ($this->getSubscriber()) {
             $addresses[] = $this->getSubscriber()->getEmail();
@@ -132,7 +132,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
      */
     public function getName()
     {
-        $name = array();
+        $name = [];
 
         $subscriber = $this->getSubscriber();
 
@@ -159,7 +159,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
      */
     public function getSingleAddress($idx)
     {
-        $ret = array();
+        $ret = [];
         $ret['address'] = reset($this->getAddresses());
         $ret['addressName'] = $this->getName();
         $ret['addressid'] = $ret['address'].'_'.$ret['addressName'];
@@ -299,7 +299,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
             $confId,
             'activation',
             'SUBSCRIBER',
-            array('key' => $doubleOptInUtil->buildActivationKey(true)),
+            ['key' => $doubleOptInUtil->buildActivationKey(true)],
             $template
         );
     }

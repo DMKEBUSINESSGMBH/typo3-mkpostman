@@ -52,7 +52,6 @@ class SubscriberReceiverTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the prepareLinks method.
      *
-     *
      * @group unit
      * @test
      */
@@ -61,7 +60,7 @@ class SubscriberReceiverTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $that = $this; // php 5.3 compatibility
         $cObject = $this->getMock(
             \tx_rnbase_util_Typo3Classes::getContentObjectRendererClass(),
-            array('typolink')
+            ['typolink']
         );
 
         $cObject
@@ -83,41 +82,41 @@ class SubscriberReceiverTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will(self::returnValue('?mkpostman%5Bkey%5D=foo'));
 
         $configurations = $this->createConfigurations(
-            array(
-                'mails.' => array(
-                    'subscriber.' => array(
-                        'links.' => array(
-                            'activation.' => array(
+            [
+                'mails.' => [
+                    'subscriber.' => [
+                        'links.' => [
+                            'activation.' => [
                                 'absurl' => 'https://www.dmk-ebusiness.de/',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'mkpostman',
             'mkpostman',
             $cObject
         );
 
         $template = '###SUBSCRIBER_ACTIVATIONLINKURL###';
-        $markerArray = array();
-        $subpartArray = array();
-        $wrappedSubpartArray = array();
+        $markerArray = [];
+        $subpartArray = [];
+        $wrappedSubpartArray = [];
         $confId = 'mails.subscriber.';
 
         $this->callInaccessibleMethod(
-            array(
+            [
                 $this->getReceiver(),
                 'prepareLinks',
-            ),
-            array(
+            ],
+            [
                 $template,
                 &$markerArray,
                 &$subpartArray,
                 &$wrappedSubpartArray,
                 $configurations->getFormatter(),
                 $confId,
-            )
+            ]
         );
 
         $this->assertTrue(is_array($markerArray));
@@ -135,8 +134,8 @@ class SubscriberReceiverTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver');
         $receiver = $this->getMock(
             'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
-            array(),
-            array($this->getSubscriberModel(array('confirmstring' => 'PreventPersist')))
+            [],
+            [$this->getSubscriberModel(['confirmstring' => 'PreventPersist'])]
         );
 
         return $receiver;

@@ -52,7 +52,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the findOrCreateSubscriber method.
      *
-     *
      * @group unit
      * @test
      */
@@ -75,28 +74,28 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will(
                 self::returnValue(
                     $this->getModel(
-                        array(),
+                        [],
                         'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
                     )
                 )
             );
 
         $configuration = $this->createConfigurations(
-            array(
-                'subscribe.' => array(
-                    'subscriber.' => array(
+            [
+                'subscribe.' => [
+                    'subscriber.' => [
                         'storage' => 14,
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             'mkpostman'
         );
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
-            array('getSubscriberRepository', 'getConfigurations', 'getConfId'),
-            array(),
+            ['getSubscriberRepository', 'getConfigurations', 'getConfId'],
+            [],
             '',
             false
         );
@@ -117,9 +116,9 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $model = $this->callInaccessibleMethod(
             $handler,
             'findOrCreateSubscriber',
-            array(
+            [
                 'email' => 'mwagner@localhost.net',
-            )
+            ]
         );
 
         $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
@@ -133,7 +132,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the findOrCreateSubscriber method.
      *
-     *
      * @group unit
      * @test
      */
@@ -141,7 +139,7 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
         $subscriber = $this->getModel(
-            array(
+            [
                 'uid' => 5,
                 'pid' => 7,
                 'disabled' => 0,
@@ -149,7 +147,7 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'first_name' => 'Michael',
                 'last_name' => 'Wagner',
                 'email' => 'mwagner@localhost.net',
-            ),
+            ],
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
         );
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
@@ -169,8 +167,8 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
-            array('getSubscriberRepository', 'getConfigurations', 'getConfId'),
-            array(),
+            ['getSubscriberRepository', 'getConfigurations', 'getConfId'],
+            [],
             '',
             false
         );
@@ -186,9 +184,9 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $model = $this->callInaccessibleMethod(
             $handler,
             'findOrCreateSubscriber',
-            array(
+            [
                 'email' => 'mwagner@localhost.net',
-            )
+            ]
         );
 
         $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $model);
@@ -199,16 +197,15 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the findOrCreateSubscriber method.
      *
-     *
      * @group unit
      * @test
      */
     public function testProcessSubscriberData()
     {
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
-        $categories = array(11, 10);
+        $categories = [11, 10];
         $subscriber = $this->getModel(
-            array(
+            [
                 'uid' => 5,
                 'pid' => 7,
                 'disabled' => 0,
@@ -217,7 +214,7 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'last_name' => 'Wagner',
                 'categories' => $categories,
                 'email' => 'mwagner@localhost.net',
-            ),
+            ],
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
         );
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
@@ -246,8 +243,8 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
-            array('findOrCreateSubscriber', 'getSubscriberRepository', 'getLogManager', 'setSubscriber'),
-            array(),
+            ['findOrCreateSubscriber', 'getSubscriberRepository', 'getLogManager', 'setSubscriber'],
+            [],
             '',
             false
         );
@@ -273,9 +270,9 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $this->callInaccessibleMethod(
             $handler,
             'processSubscriberData',
-            array(
+            [
                 'email' => 'mwagner@localhost.net',
-            )
+            ]
         );
     }
 }

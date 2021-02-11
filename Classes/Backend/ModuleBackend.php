@@ -85,14 +85,14 @@ class ModuleBackend extends \tx_rnbase_mod_BaseModule
             );
             $modUrl = \Tx_Rnbase_Backend_Utility::getModuleUrl(
                 'web_MkpostmanBackend',
-                array('id' => $pid),
+                ['id' => $pid],
                 ''
             );
             $page = '<a href="'.$modUrl.'">';
             if (0 === $pid) {
                 $page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon(
                     'apps-pagetree-root',
-                    array('size' => 'small')
+                    ['size' => 'small']
                 );
                 $page .= ' '.$GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
             } else {
@@ -138,12 +138,12 @@ class ModuleBackend extends \tx_rnbase_mod_BaseModule
             \tx_rnbase_util_DB::doSelect(
                 'pid as pageid',
                 $repo->getEmptyModel()->getTableName(),
-                array('enablefieldsoff' => 1)
+                ['enablefieldsoff' => 1]
             )
         );
 
         if (empty($pages)) {
-            return array();
+            return [];
         }
 
         // merge the pages together
@@ -153,11 +153,11 @@ class ModuleBackend extends \tx_rnbase_mod_BaseModule
         );
 
         if (empty($pages['pageid'])) {
-            return array();
+            return [];
         }
         // Check for existing entry merges
         if (!is_array($pages['pageid'])) {
-            $pages['pageid'] = array($pages['pageid']);
+            $pages['pageid'] = [$pages['pageid']];
         }
 
         // convert the pids to keys

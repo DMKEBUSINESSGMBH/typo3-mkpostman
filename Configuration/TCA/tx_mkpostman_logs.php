@@ -2,8 +2,8 @@
 
 defined('TYPO3_MODE') or die('Access denied.');
 
-return array(
-    'ctrl' => array(
+return [
+    'ctrl' => [
         'title' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs',
         'label' => 'description',
         'tstamp' => 'tstamp',
@@ -13,79 +13,79 @@ return array(
         'searchFields' => 'description',
         'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_logs.gif',
         'dividers2tabs' => true,
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'description',
-    ),
-    'columns' => array(
-        'crdate' => array(
+    ],
+    'columns' => [
+        'crdate' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs.crdate',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'format' => 'datetime',
                 'readOnly' => true,
-            ),
-        ),
-        'cruser_id' => array(
+            ],
+        ],
+        'cruser_id' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs.cruser_id',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'foreign_table' => 'be_users',
                 'readOnly' => true,
-            ),
-        ),
-        'subscriber_id' => array(
+            ],
+        ],
+        'subscriber_id' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs.subscriber_id',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'foreign_table' => 'tx_mkpostman_subscribers',
                 'readOnly' => true,
-            ),
-        ),
-        'state' => array(
+            ],
+        ],
+        'state' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs.state',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
-                'items' => array(
-                    array(
+                'items' => [
+                    [
                         '0',
                         '0',
-                    ),
-                    array(
+                    ],
+                    [
                         'Subscribed',
                         '1',
-                    ),
-                    array(
+                    ],
+                    [
                         'Activated',
                         '2',
-                    ),
-                    array(
+                    ],
+                    [
                         'Unsubscribed',
                         '3',
-                    ),
-                ),
+                    ],
+                ],
                 'readOnly' => true,
-            ),
-        ),
-        'description' => array(
+            ],
+        ],
+        'description' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:tx_mkpostman_logs.description',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '20',
                 'max' => '255',
                 'eval' => 'trim',
                 'readOnly' => true,
-            ),
-        ),
-    ),
-    'types' => array(
-        '0' => array(
+            ],
+        ],
+    ],
+    'types' => [
+        '0' => [
             'showitem' => 'crdate, cruser_id, subscriber_id, state, description',
-        ),
-    ),
-);
+        ],
+    ],
+];

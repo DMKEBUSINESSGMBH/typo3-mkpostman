@@ -52,7 +52,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the fillData method.
      *
-     *
      * @group unit
      * @test
      */
@@ -87,7 +86,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the fillDataWithUser method.
-     *
      *
      * @group unit
      * @test
@@ -226,7 +224,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the validateSubscriberData method.
-     *
      *
      * @group unit
      * @test

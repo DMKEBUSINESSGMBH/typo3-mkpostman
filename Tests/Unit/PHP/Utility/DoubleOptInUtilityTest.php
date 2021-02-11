@@ -52,7 +52,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the constructor method.
      *
-     *
      * @group unit
      * @test
      */
@@ -60,14 +59,13 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     {
         $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-            array(),
-            array($this->getSubscriberModel())
+            [],
+            [$this->getSubscriberModel()]
         );
     }
 
     /**
      * Test the constructor method.
-     *
      *
      * @group unit
      * @test
@@ -77,8 +75,8 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $that = $this; // php 3.5 compatibility!
         $util = $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-            array('findSubscriberByKey'),
-            array(),
+            ['findSubscriberByKey'],
+            [],
             '',
             false
         );
@@ -111,7 +109,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the constructor method.
      *
-     *
      * @group unit
      * @expectedException \BadMethodCallException
      * @expectedExceptionCode 1464951846
@@ -121,14 +118,13 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     {
         $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
-            array(),
-            array('')
+            [],
+            ['']
         );
     }
 
     /**
      * Test the createConfirmString method.
-     *
      *
      * @group unit
      * @test
@@ -149,7 +145,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the updateConfirmString method.
      *
-     *
      * @depends testCreateConfirmString
      * @group unit
      * @test
@@ -157,7 +152,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testUpdateConfirmString(
         $confirmString
     ) {
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
         $repo = $this->callInaccessibleMethod($util, 'getRepository');
 
@@ -180,7 +175,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the buildActivationKey method.
      *
-     *
      * @depends testCreateConfirmString
      * @group unit
      * @test
@@ -188,7 +182,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testBuildActivationKey(
         $confirmString
     ) {
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
         $subscriber->setConfirmstring($confirmString);
@@ -204,12 +198,11 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $this->assertEquals($subscriber->getConfirmstring(), $parts[1]);
         $this->assertEquals(md5($subscriber->getEmail()), $parts[2]);
 
-        return array($confirmString, $key);
+        return [$confirmString, $key];
     }
 
     /**
      * Test the buildActivationKey method.
-     *
      *
      * @depends testCreateConfirmString
      * @group unit
@@ -218,7 +211,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testBuildActivationKeyEncoded(
         $confirmString
     ) {
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
         $subscriber->setConfirmstring($confirmString);
@@ -239,7 +232,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the decodeActivationKey method.
-     *
      *
      * @group unit
      * @test
@@ -262,17 +254,16 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the validateActivationKey method.
      *
-     *
      * @depends testBuildActivationKey
      * @group unit
      * @test
      */
     public function testValidateActivationKey(
-        array $params = array()
+        array $params = []
     ) {
         list($confirmString, $activationKey) = $params;
 
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
         $subscriber->setConfirmstring($confirmString);
@@ -285,17 +276,16 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the validateActivationKey method.
      *
-     *
      * @depends testBuildActivationKey
      * @group unit
      * @test
      */
     public function testValidateActivationKeyEncoded(
-        array $params = array()
+        array $params = []
     ) {
         list($confirmString, $activationKey) = $params;
 
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
 
         $subscriber->setConfirmstring($confirmString);
@@ -310,17 +300,16 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the activateByKey method.
      *
-     *
      * @depends testBuildActivationKey
      * @group unit
      * @test
      */
     public function testActivateByKeyWithValidKey(
-        array $params = array()
+        array $params = []
     ) {
         list($confirmString, $activationKey) = $params;
 
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
         $logManager = $this->callInaccessibleMethod($util, 'getLogManager');
         $repo = $this->callInaccessibleMethod($util, 'getRepository');
@@ -347,7 +336,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the activateByKey method.
      *
-     *
      * @depends testCreateConfirmString
      * @group unit
      * @test
@@ -355,7 +343,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testActivateByKeyWithInvalidKey(
         $confirmString
     ) {
-        $util = $this->getUtility(array('createConfirmString'));
+        $util = $this->getUtility(['createConfirmString']);
         $subscriber = $this->callInaccessibleMethod($util, 'getSubscriber');
         $logManager = $this->callInaccessibleMethod($util, 'getLogManager');
         $repo = $this->callInaccessibleMethod($util, 'getRepository');
@@ -384,17 +372,17 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
      * @return PHPUnit_Framework_MockObject_MockObject|DMK\Mkpostman\Utility\DoubleOptInUtility
      */
     protected function getUtility(
-        array $methods = array()
+        array $methods = []
     ) {
         $subscriberModel = $this->getSubscriberModel();
         \tx_rnbase::load('DMK\\Mkpostman\\Utility\\DoubleOptInUtility');
         $util = $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
             array_merge(
-                array('getRepository', 'getLogManager'),
+                ['getRepository', 'getLogManager'],
                 $methods
             ),
-            array($subscriberModel)
+            [$subscriberModel]
         );
 
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');

@@ -52,7 +52,6 @@ class CategoryModelTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getTableName method.
      *
-     *
      * @group unit
      * @test
      */
@@ -74,7 +73,7 @@ class CategoryModelTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     protected function getModelMock(
         $record = null,
-        array $methods = array()
+        array $methods = []
     ) {
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\CategoryModel');
 

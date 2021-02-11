@@ -287,11 +287,11 @@ class SubscribeAction extends AbstractAction
         $link->initByTS(
             $this->getConfigurations(),
             $this->getConfId().'redirect.'.$referrer.'.',
-            array(
+            [
                 'success' => \DMK\Mkpostman\Factory::getCryptUtility()->urlEncode(
                     $referrer.':'.$subscriber->getUid()
                 ),
-            )
+            ]
         );
 
         $link->redirect();

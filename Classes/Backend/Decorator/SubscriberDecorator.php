@@ -96,9 +96,9 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
             $tableName,
             $uid,
             '',
-            array(
+            [
                 'confirm' => '###LABEL_SUBSCRIBER_DELETE_CONFIRM###',
-            )
+            ]
         );
 
         return $return;
@@ -138,14 +138,14 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
         \Tx_Rnbase_Domain_Model_DataInterface $item
     ) {
         $title = array_filter(
-            array(
+            [
                 \tx_rnbase_util_Lang::sL(
                     'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:'.
                         'tx_mkpostman_subscribers.gender.'.(int) $item->getGender()
                 ),
                 $item->getFirstName(),
                 $item->getLastName(),
-            )
+            ]
         );
 
         if (count($title) > 1) {

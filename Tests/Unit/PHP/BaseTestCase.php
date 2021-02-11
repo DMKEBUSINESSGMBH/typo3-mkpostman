@@ -64,11 +64,11 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\DMK\Mkpostman\Domain\Model\SubscriberModel
      */
-    protected function getSubscriberModel(array $record = array())
+    protected function getSubscriberModel(array $record = [])
     {
         return $this->getModel(
             array_merge(
-                array(
+                [
                     'uid' => 5,
                     'pid' => 7,
                     'disabled' => 0,
@@ -76,7 +76,7 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
                     'first_name' => 'Michael',
                     'last_name' => 'Wagner',
                     'email' => 'mwagner@localhost.net',
-                ),
+                ],
                 $record
             ),
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
@@ -93,13 +93,13 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
         \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
             'tx_rnbase_util_SearchGeneric',
-            array('search')
+            ['search']
         );
 
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
-            array('getSearcher', 'persist', 'getDbConnection')
+            ['getSearcher', 'persist', 'getDbConnection']
         );
 
         $repo
@@ -120,13 +120,13 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
         \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
             'tx_rnbase_util_SearchGeneric',
-            array('search')
+            ['search']
         );
 
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository',
-            array('getSearcher', 'persist')
+            ['getSearcher', 'persist']
         );
 
         $repo
@@ -147,13 +147,13 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
         \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
             'tx_rnbase_util_SearchGeneric',
-            array('search')
+            ['search']
         );
 
         \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\LogRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\LogRepository',
-            array('getSearcher', 'persist')
+            ['getSearcher', 'persist']
         );
 
         $repo

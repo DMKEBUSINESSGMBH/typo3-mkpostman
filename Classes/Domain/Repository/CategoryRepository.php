@@ -67,14 +67,14 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
         $uid
     ) {
         return $this->searchSingle(
-            array(
-                'CATEGORY.uid' => array(
+            [
+                'CATEGORY.uid' => [
                     OP_EQ_INT => $uid,
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'enablefieldsbe' => true,
-            )
+            ]
         );
     }
 
@@ -89,15 +89,15 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
         $subscriberId
     ) {
         return $this->search(
-            array(
-                'CATEGORYMM.uid_foreign' => array(
+            [
+                'CATEGORYMM.uid_foreign' => [
                     OP_EQ_INT => $subscriberId,
-                ),
-                'CATEGORYMM.tablenames' => array(
+                ],
+                'CATEGORYMM.tablenames' => [
                     OP_EQ => 'tx_mkpostman_subscribers',
-                ),
-            ),
-            array()
+                ],
+            ],
+            []
         );
     }
 
@@ -126,27 +126,27 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
         $model = $this->getEmptyModel();
 
         if (empty($options['searchdef']) || !is_array($options['searchdef'])) {
-            $options['searchdef'] = array();
+            $options['searchdef'] = [];
         }
 
         \tx_rnbase::load('tx_rnbase_util_Arrays');
         $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
             // default searcher config
-            array(
+            [
                 'usealias' => 1,
                 'basetable' => $model->getTableName(),
                 'basetablealias' => 'CATEGORY',
                 'wrapperclass' => get_class($model),
-                'alias' => array(
-                    'CATEGORY' => array(
+                'alias' => [
+                    'CATEGORY' => [
                         'table' => $model->getTableName(),
-                    ),
-                    'CATEGORYMM' => array(
+                    ],
+                    'CATEGORYMM' => [
                         'table' => 'sys_category_record_mm',
                         'join' => 'JOIN sys_category_record_mm AS CATEGORYMM ON CATEGORY.uid = CATEGORYMM.uid_local',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             // searcher config overrides
             $options['searchdef']
         );

@@ -52,7 +52,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getSearchClass method.
      *
-     *
      * @group unit
      * @test
      */
@@ -69,7 +68,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the getEmptyModel method.
-     *
      *
      * @group unit
      * @test
@@ -92,7 +90,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the findByEmail method.
-     *
      *
      * @group unit
      * @test
@@ -148,7 +145,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the findByUid method.
      *
-     *
      * @group unit
      * @test
      */
@@ -199,7 +195,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the prepareGenericSearcher method.
-     *
      *
      * @group unit
      * @test
@@ -264,7 +259,6 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
     /**
      * Test the prepareGenericSearcher method.
-     *
      *
      * @group unit
      * @test

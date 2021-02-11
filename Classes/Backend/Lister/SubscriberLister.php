@@ -51,13 +51,13 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
      */
     protected function getSearchColumns()
     {
-        return array(
+        return [
             'SUBSCRIBER.uid',
             'SUBSCRIBER.first_name',
             'SUBSCRIBER.last_name',
             'SUBSCRIBER.email',
             'SUBSCRIBER.categories',
-        );
+        ];
     }
 
     /**
@@ -71,18 +71,18 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
         $filter = $this->getFilter();
 
         // override the disabled filter
-        $data['disabled'] = array(
+        $data['disabled'] = [
             'field' => \Tx_Rnbase_Backend_Utility::getFuncMenu(
                 $this->getOptions()->getPid(),
                 'SET['.$this->getListerId().'Disabled]',
                 $filter->getProperty('disabled'),
-                array(
+                [
                     0 => '###LABEL_FILTER_STATE_0###',
                     1 => '###LABEL_FILTER_STATE_1###',
-                )
+                ]
             ),
             'label' => '###LABEL_FILTER_STATE###',
-        );
+        ];
 
         return $data;
     }
@@ -144,10 +144,10 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     protected function addDecoratorColumnEmail(
         array &$columns
     ) {
-        $columns['email'] = array(
+        $columns['email'] = [
             'title' => 'label_tableheader_email',
             'decorator' => $this->getDecorator(),
-        );
+        ];
 
         return $this;
     }
@@ -162,10 +162,10 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     protected function addDecoratorColumnName(
         array &$columns
     ) {
-        $columns['name'] = array(
+        $columns['name'] = [
             'title' => 'label_tableheader_name',
             'decorator' => $this->getDecorator(),
-        );
+        ];
 
         return $this;
     }
@@ -180,10 +180,10 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     protected function addDecoratorColumnCategories(
         array &$columns
     ) {
-        $columns['categories'] = array(
+        $columns['categories'] = [
             'title' => 'label_tableheader_categories',
             'decorator' => $this->getDecorator(),
-        );
+        ];
 
         return $this;
     }
@@ -199,10 +199,10 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     protected function addDecoratorColumnActions(
         array &$columns
     ) {
-        $columns['actions'] = array(
+        $columns['actions'] = [
             'title' => 'label_tableheader_actions',
             'decorator' => $this->getDecorator(),
-        );
+        ];
 
         return $this;
     }

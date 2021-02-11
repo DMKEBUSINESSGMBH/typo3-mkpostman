@@ -52,17 +52,16 @@ class SubscribeViewTest extends \DMK\Mkpostman\Tests\BaseTestCase
     /**
      * Test the getMainSubpart method.
      *
-     *
      * @group unit
      * @test
      */
     public function testGetMainSubpart()
     {
-        $configuration = $this->createConfigurations(array(), 'mkpostman');
+        $configuration = $this->createConfigurations([], 'mkpostman');
 
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
-            array('getConfigurations')
+            ['getConfigurations']
         );
         $action
             ->expects(self::exactly(2))
@@ -71,7 +70,7 @@ class SubscribeViewTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
         $view = $this->getMock(
             'DMK\\Mkpostman\\View\\SubscribeView',
-            array('getController')
+            ['getController']
         );
         $view
             ->expects(self::exactly(2))

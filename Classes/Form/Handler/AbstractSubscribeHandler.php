@@ -99,7 +99,7 @@ abstract class AbstractSubscribeHandler extends AbstractFormHandler implements S
      * @return \DMK\Mkpostman\Domain\Model\SubscriberModel
      */
     protected function findOrCreateSubscriber(
-        array $data = array()
+        array $data = []
     ) {
         $repo = $this->getSubscriberRepository();
 
