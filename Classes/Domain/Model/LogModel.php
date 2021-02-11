@@ -94,9 +94,7 @@ class LogModel extends \Tx_Rnbase_Domain_Model_Base
         SubscriberModel $subscriber
     ) {
         if (!$subscriber->isPersisted()) {
-            throw new \Exception(
-                'The subscriber has to ber persisted to append a log'
-            );
+            throw new \Exception('The subscriber has to ber persisted to append a log');
         }
 
         $this->setSubscriberId($subscriber->getUid());

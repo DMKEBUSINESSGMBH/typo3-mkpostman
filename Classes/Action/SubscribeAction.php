@@ -205,9 +205,7 @@ class SubscribeAction extends AbstractAction
         $handler = \tx_rnbase::makeInstance($handlerClass, $this);
 
         if (!$handler instanceof \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface) {
-            throw new \LogicException(
-                'Invalid subscribe form handler found.'
-            );
+            throw new \LogicException('Invalid subscribe form handler found.');
         }
 
         $handler->handleForm();

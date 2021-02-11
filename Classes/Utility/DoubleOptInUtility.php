@@ -61,10 +61,7 @@ class DoubleOptInUtility
         }
 
         if (!$subscriberOrActivationKey instanceof SubscriberModel) {
-            throw new \BadMethodCallException(
-                'No valid subscriber model given for double opt in',
-                1464951846
-            );
+            throw new \BadMethodCallException('No valid subscriber model given for double opt in', 1464951846);
         }
 
         $this->subscriber = $subscriberOrActivationKey;
@@ -201,14 +198,10 @@ class DoubleOptInUtility
         $subscriber = $this->getSubscriber();
 
         if (!$subscriber->isPersisted()) {
-            throw new \Exception(
-                'The subscriber has to ber persisted to create an activation key'
-            );
+            throw new \Exception('The subscriber has to ber persisted to create an activation key');
         }
         if (!$subscriber->getEmail()) {
-            throw new \Exception(
-                'The subscriber neds a email to create an activation key'
-            );
+            throw new \Exception('The subscriber neds a email to create an activation key');
         }
 
         if (!$subscriber->getConfirmstring()) {
@@ -247,14 +240,10 @@ class DoubleOptInUtility
         $subscriber = $this->getSubscriber();
 
         if (!$subscriber->isPersisted()) {
-            throw new \Exception(
-                'The subscriber has to ber persisted to create an activation key'
-            );
+            throw new \Exception('The subscriber has to ber persisted to create an activation key');
         }
         if (!$subscriber->getEmail()) {
-            throw new \Exception(
-                'The subscriber needs a email to create an activation key'
-            );
+            throw new \Exception('The subscriber needs a email to create an activation key');
         }
 
         if (!$subscriber->getConfirmstring()) {

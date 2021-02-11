@@ -136,7 +136,7 @@ final class Factory
      * @return \DMK\Mkpostman\Mail\Receiver\SubscriberReceiver
      */
     public static function getSubscriberMailReceiver(
-        \DMK\Mkpostman\Domain\Model\SubscriberModel $subscriber
+        Domain\Model\SubscriberModel $subscriber
     ) {
         return \tx_rnbase::makeInstance(
             'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',

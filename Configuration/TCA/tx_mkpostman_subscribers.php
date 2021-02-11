@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') or die('Access denied.');
+defined('TYPO3_MODE') or exit('Access denied.');
 
 return call_user_func(
     function () {
