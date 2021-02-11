@@ -1,7 +1,7 @@
 {
     "name": "dmk/mkpostman",
-    "version": "9.1.2",
     "type": "typo3-cms-extension",
+    "description": "E-mail marketing system for the TYPO3 CMS",
     "keywords": [
         "TYPO3 CMS",
         "newsletter",
@@ -18,15 +18,16 @@
     ],
     "require": {
         "typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
-        "digedag/rn-base": ">=1.10",
-        "dmk/mkmailer": "~3.0 || >=9.0"
+        "digedag/rn-base": "^1.10",
+        "dmk/mkmailer": "~3.0 || ^9.0"
     },
     "require-dev": {
-        "dmk/mkforms": "~3.0 || >=9.5",
-        "dmk/mklib": "~3.0 || >=9.5",
+        "dmk/mkforms": "~3.0 || ^9.5",
+        "dmk/mklib": "~3.0 || ^9.5",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
         "namelesscoder/typo3-repository-client": "^1.2",
         "nimut/testing-framework": "^1.1 || ^2.0 || ^4.0",
-        "friendsofphp/php-cs-fixer": "2.14.*",
+        "friendsofphp/php-cs-fixer": "^2.15",
         "mikey179/vfsstream": "^1.4",
         "phpunit/phpunit": "^4.7 || ^7.0"
     },
@@ -66,17 +67,31 @@
             "mkdir -p .Build/Web/typo3conf/ext/",
             "[ -L .Build/Web/typo3conf/ext/mkpostman ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/mkpostman"
         ],
+        "lint:php": [
+            "[ -e .Build/bin/parallel-lint ] || composer update",
+            ".Build/bin/parallel-lint ./Classes"
+        ],
+        "lint": [
+            "@lint:php"
+        ],
+        "test:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update --ansi",
+            ".Build/bin/php-cs-fixer fix -v --dry-run --diff --diff-format udiff --ansi"
+        ],
+        "test:phpunit": [
+            "[ -e .Build/bin/phpunit ] || composer update --ansi",
+            "export TYPO3_PATH_WEB=$PWD/.Build/Web && .Build/bin/phpunit -c phpunit.xml.dist --colors=always"
+        ],
         "test": [
-            "[ -e .Build/bin/phpunit ] || composer update",
-            "TYPO3_PATH_WEB=.Build/Web .Build/bin/phpunit --colors -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit"
+            "@test:phpcs",
+            "@test:phpunit"
         ],
-        "cs-fix": [
-            "[ -e .Build/bin/php-cs-fixer ] || composer update",
-            ".Build/bin/php-cs-fixer fix "
+        "fix:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update --ansi",
+            ".Build/bin/php-cs-fixer fix -v"
         ],
-        "analyse": [
-            "[ -e .Build/bin/php-cs-fixer ] || composer update",
-            ".Build/bin/php-cs-fixer fix -v --dry-run --diff"
+        "fix": [
+            "@fix:phpcs"
         ]
     },
     "extra": {
