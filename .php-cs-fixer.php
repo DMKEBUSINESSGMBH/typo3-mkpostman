@@ -6,7 +6,10 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
 ;
 
-return PhpCsFixer\Config::create()
+$config = new \PhpCsFixer\Config();
+
+return $config
+    ->setCacheFile('.Build/.php_cs.cache')
     ->setFinder($finder)
     ->setRules([
         '@PSR2' => true,
