@@ -28,7 +28,7 @@ namespace DMK\Mkpostman\Utility;
 \tx_rnbase::load('Tx_Rnbase_Interface_Singleton');
 
 /**
- * MK Postman crypt utility.
+ * MK Postman tca utility.
  *
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -39,7 +39,17 @@ class TcaUtility
     public function getLogsForSubscriber($PA, $fObj)
     {
         $subscriberId = (int) $PA['row']['uid'];
+
+        if (0 === $subscriberId) {
+            return '';
+        }
+
         $subscriber = \DMK\Mkpostman\Factory::getSubscriberRepository()->findByUid($subscriberId);
+
+        if (null === $subscriber) {
+            return '';
+        }
+
         $logs = \DMK\Mkpostman\Factory::getLogRepository()->findBySubscriber($subscriber);
 
         $logDesc = [];
