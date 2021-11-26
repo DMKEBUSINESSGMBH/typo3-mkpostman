@@ -56,6 +56,14 @@ class SubscribeHandler extends AbstractSubscribeHandler
         // prefill with current fe user data
         $this->getSubscriber()->setProperty($this->getFeUserData());
 
+        $honeyPot = '';
+        if ($this->getConfigurations()->getInt($this->getConfId().'activateHoneyPot')) {
+            $name = $this->getConfigurations()->get($this->getConfId().'honeyPotFieldName');
+            $honeyPot = '<fieldset>
+<input type="text" autocomplete="off" tabindex="-1" id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>
+</fieldset>';
+        }
+
         // now check if there are a submit
         if ($this->getParameters()->get('subscribe')) {
             $data = $this->getParameters()->get('subscriber');
@@ -73,6 +81,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
                 'errorcount' => count($this->validationErrors),
                 'errors' => $this->validationErrors,
                 'options' => $this->getFormSelectOptions(),
+                'honeyPot' => $honeyPot
             ]
         );
 
@@ -111,6 +120,13 @@ class SubscribeHandler extends AbstractSubscribeHandler
         if (($minCats = $this->getConfigurations()->getInt($this->getConfId().'requiredcategoriesmin')) > 0) {
             if (empty($data['categories']) || !is_array($data['categories']) || count($data['categories']) < $minCats) {
                 $this->setFieldInvalid('categories', null, ['%requiredmin%' => $minCats]);
+            }
+        }
+
+        if ($this->getConfigurations()->getInt($this->getConfId().'activateHoneyPot')) {
+            $name = $this->getConfigurations()->get($this->getConfId().'honeyPotFieldName');
+            if (!empty($data[$name])) {
+                $this->setFieldInvalid('honeypot');
             }
         }
 

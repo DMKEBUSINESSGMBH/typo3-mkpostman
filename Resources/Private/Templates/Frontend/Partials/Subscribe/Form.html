@@ -1,6 +1,10 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	  data-namespace-typo3-fluid="true">
-
+    <f:if condition="{form.errors.honeypot}">
+        <f:then>
+            {form.errors.honeypot}
+        </f:then>
+    </f:if>
     <f:form object="{subscriber}" objectName="mkpostman[subscriber]" actionUri="" method="post">
 
         <fieldset>
@@ -18,7 +22,7 @@
                 <f:form.textfield property="last_name" />
             </label>
         </fieldset>
-
+        <f:format.raw>{form.honeyPot}</f:format.raw>
         <fieldset>
             <f:if condition="{form.errors.email}">
                 <f:then>
