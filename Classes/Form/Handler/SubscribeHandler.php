@@ -81,7 +81,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
                 'errorcount' => count($this->validationErrors),
                 'errors' => $this->validationErrors,
                 'options' => $this->getFormSelectOptions(),
-                'honeyPot' => $honeyPot
+                'honeyPot' => $honeyPot,
             ]
         );
 
