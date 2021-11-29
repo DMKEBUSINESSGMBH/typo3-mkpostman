@@ -265,7 +265,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $configurations->expects($this->exactly(3))->method('getCfgOrLL')->willReturn('tranlsated message');
         $configurations->expects($this->exactly(1))->method('get')->willReturn('field');
 
-
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
