@@ -22,7 +22,13 @@
                 <f:form.textfield property="last_name" />
             </label>
         </fieldset>
-        <f:format.raw>{form.honeyPot}</f:format.raw>
+        <f:if condition="{form.honeyPot}">
+            <f:then>
+                <div style="opacity: 0;position: absolute;top: 0;left: 0;height: 0;width: 0;z-index: -1;">
+                    <f:format.raw>{form.honeyPot}</f:format.raw>
+                </div>
+            </f:then>
+        </f:if>
         <fieldset>
             <f:if condition="{form.errors.email}">
                 <f:then>
