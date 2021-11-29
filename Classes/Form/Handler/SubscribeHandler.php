@@ -57,11 +57,11 @@ class SubscribeHandler extends AbstractSubscribeHandler
         $this->getSubscriber()->setProperty($this->getFeUserData());
 
         $honeyPot = '';
-        if ($this->getConfigurations()->getInt($this->getConfId().'activateHoneyPot')) {
-            $name = $this->getConfigurations()->get($this->getConfId().'honeyPotFieldName');
-            $honeyPot = '<fieldset>
+        if ($this->isHoneyputEnabled()) {
+            $name = $this->getHoneypotFieldName();
+            $honeyPot = '
 <input type="text" autocomplete="off" tabindex="-1" id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>
-</fieldset>';
+';
         }
 
         // now check if there are a submit
@@ -123,8 +123,8 @@ class SubscribeHandler extends AbstractSubscribeHandler
             }
         }
 
-        if ($this->getConfigurations()->getInt($this->getConfId().'activateHoneyPot')) {
-            $name = $this->getConfigurations()->get($this->getConfId().'honeyPotFieldName');
+        if ($this->isHoneyputEnabled()) {
+            $name = $this->getHoneypotFieldName();
             if (!empty($data[$name])) {
                 $this->setFieldInvalid('honeypot');
             }
@@ -146,6 +146,26 @@ class SubscribeHandler extends AbstractSubscribeHandler
             $this->getConfigurations()->getCfgOrLL($label),
             $args
         );
+    }
+
+    /**
+     * Marks a field as invalid and adds translated error message.
+     *
+     * @return string
+     */
+    protected function getHoneypotFieldName()
+    {
+        return $this->getConfigurations()->get($this->getConfId().'honeypotFieldname');
+    }
+
+    /**
+     * Marks a field as invalid and adds translated error message.
+     *
+     * @return bool
+     */
+    protected function isHoneyputEnabled()
+    {
+        return (bool) $this->getConfigurations()->getInt($this->getConfId().'honeypot');
     }
 
     /**
