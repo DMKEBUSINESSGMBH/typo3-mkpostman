@@ -67,7 +67,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'getFormSelectOptions',
                 'getConfigurations',
                 'getConfId',
-                'isHoneyputEnabled',
+                'isHoneypotEnabled',
             ],
             [],
             '',
@@ -83,7 +83,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will(self::returnValue([]));
         $handler
             ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
-            ->method('isHoneyputEnabled')
+            ->method('isHoneypotEnabled')
             ->will($this->returnValue(false));
 
         $handler->handleForm();
@@ -113,7 +113,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'getFormSelectOptions',
                 'getConfigurations',
                 'getConfId',
-                'isHoneyputEnabled',
+                'isHoneypotEnabled',
                 'getHoneypotFieldName',
             ],
             [],
@@ -130,7 +130,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will(self::returnValue([]));
         $handler
             ->expects($this->exactly(1))
-            ->method('isHoneyputEnabled')
+            ->method('isHoneypotEnabled')
             ->will($this->returnValue(true));
         $handler
             ->expects($this->exactly(1))
@@ -172,7 +172,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
                 'getFormSelectOptions',
                 'getConfigurations',
                 'getConfId',
-                'isHoneyputEnabled',
+                'isHoneypotEnabled',
             ],
             [],
             '',
@@ -188,7 +188,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will(self::returnValue($userdata));
         $handler
             ->expects($this->exactly(1))
-            ->method('isHoneyputEnabled')
+            ->method('isHoneypotEnabled')
             ->will($this->returnValue(false));
 
         $handler->handleForm();
@@ -270,7 +270,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getConfigurations', 'getConfId', 'isHoneyputEnabled', 'getHoneypotFieldName'],
+            ['getConfigurations', 'getConfId', 'isHoneypotEnabled', 'getHoneypotFieldName'],
             [],
             '',
             false
@@ -286,7 +286,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->will($this->returnValue($configurations));
         $handler
             ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
-            ->method('isHoneyputEnabled')
+            ->method('isHoneypotEnabled')
             ->will($this->returnValue(true));
         $handler
             ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
@@ -330,7 +330,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getConfigurations', 'getConfId', 'setFieldInvalid', 'isHoneyputEnabled', 'getHoneypotFieldName'],
+            ['getConfigurations', 'getConfId', 'setFieldInvalid', 'isHoneypotEnabled', 'getHoneypotFieldName'],
             [],
             '',
             false
@@ -354,7 +354,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             );
         $handler
             ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
-            ->method('isHoneyputEnabled')
+            ->method('isHoneypotEnabled')
             ->will($this->returnValue(true));
         $handler
             ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen

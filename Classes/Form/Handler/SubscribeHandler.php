@@ -57,7 +57,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
         $this->getSubscriber()->setProperty($this->getFeUserData());
 
         $honeyPot = '';
-        if ($this->isHoneyputEnabled()) {
+        if ($this->isHoneypotEnabled()) {
             $name = $this->getHoneypotFieldName();
             $honeyPot = '
 <input type="text" autocomplete="off" tabindex="-1" id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>
@@ -123,7 +123,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
             }
         }
 
-        if ($this->isHoneyputEnabled()) {
+        if ($this->isHoneypotEnabled()) {
             $name = $this->getHoneypotFieldName();
             if (!empty($data[$name])) {
                 $this->setFieldInvalid('honeypot');
@@ -163,7 +163,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
      *
      * @return bool
      */
-    protected function isHoneyputEnabled()
+    protected function isHoneypotEnabled()
     {
         return (bool) $this->getConfigurations()->getInt($this->getConfId().'honeypot');
     }
