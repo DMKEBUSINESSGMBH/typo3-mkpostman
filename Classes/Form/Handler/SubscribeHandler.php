@@ -149,7 +149,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * Marks a field as invalid and adds translated error message.
+     * returns the configured name for the honeypot field.
      *
      * @return string
      */
@@ -159,7 +159,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     }
 
     /**
-     * Marks a field as invalid and adds translated error message.
+     * Checks if the honypot field is enabled.
      *
      * @return bool
      */
