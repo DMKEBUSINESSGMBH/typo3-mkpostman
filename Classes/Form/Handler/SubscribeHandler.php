@@ -59,9 +59,8 @@ class SubscribeHandler extends AbstractSubscribeHandler
         $honeyPot = '';
         if ($this->isHoneypotEnabled()) {
             $name = $this->getHoneypotFieldName();
-            $honeyPot = '
-<input type="text" autocomplete="off" tabindex="-1" id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>
-';
+            $honeyPot = '<input type="text" autocomplete="off" tabindex="-1" '.
+                'id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>';
         }
 
         // now check if there are a submit
