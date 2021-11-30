@@ -60,7 +60,15 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'],
+            [
+                'getFeUserData',
+                'getParameters',
+                'setToView',
+                'getFormSelectOptions',
+                'getConfigurations',
+                'getConfId',
+                'isHoneypotEnabled',
+            ],
             [],
             '',
             false
@@ -73,6 +81,61 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue([]));
+        $handler
+            ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
+            ->method('isHoneypotEnabled')
+            ->will($this->returnValue(false));
+
+        $handler->handleForm();
+        /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
+        $subscriber = $handler->getSubscriber();
+
+        $this->assertInstanceOf('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel', $subscriber);
+        $this->assertCount(2, $subscriber->getProperties());
+        $this->assertArrayHasKey('uid', $subscriber->getProperties());
+        $this->assertSame($subscriber->getUid(), 0);
+    }
+
+    /**
+     * Test the fillData method.
+     *
+     * @group unit
+     * @test
+     */
+    public function fillDataWithHoneyPot()
+    {
+        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
+        $handler = $this->getMock(
+            'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
+            ['getFeUserData',
+                'getParameters',
+                'setToView',
+                'getFormSelectOptions',
+                'getConfigurations',
+                'getConfId',
+                'isHoneypotEnabled',
+                'getHoneypotFieldName',
+            ],
+            [],
+            '',
+            false
+        );
+        $handler
+            ->expects(self::once())
+            ->method('getParameters')
+            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
+        $handler
+            ->expects(self::once())
+            ->method('getFeUserData')
+            ->will(self::returnValue([]));
+        $handler
+            ->expects($this->exactly(1))
+            ->method('isHoneypotEnabled')
+            ->will($this->returnValue(true));
+        $handler
+            ->expects($this->exactly(1))
+            ->method('getHoneypotFieldName')
+            ->will($this->returnValue('field'));
 
         $handler->handleForm();
         /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
@@ -102,7 +165,15 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getFeUserData', 'getParameters', 'setToView', 'getFormSelectOptions'],
+            [
+                'getFeUserData',
+                'getParameters',
+                'setToView',
+                'getFormSelectOptions',
+                'getConfigurations',
+                'getConfId',
+                'isHoneypotEnabled',
+            ],
             [],
             '',
             false
@@ -115,6 +186,10 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->expects(self::once())
             ->method('getFeUserData')
             ->will(self::returnValue($userdata));
+        $handler
+            ->expects($this->exactly(1))
+            ->method('isHoneypotEnabled')
+            ->will($this->returnValue(false));
 
         $handler->handleForm();
         /* @var $subscriber \DMK\Mkpostman\Domain\Model\SubscriberModel */
@@ -142,11 +217,13 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $postData = [
             'email' => 'foo@bar.baz',
             'categories' => [2, 4, 6],
+            'field' => '',
         ];
 
         \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
-        $configurations->expects($this->once())->method('getInt')->willReturn(1);
+        $configurations->expects($this->exactly(2))->method('getInt')->willReturn(1);
+        $configurations->expects($this->exactly(1))->method('get')->willReturn('field');
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
@@ -158,11 +235,11 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         );
 
         $handler
-            ->expects($this->once())
+            ->expects($this->exactly(3))
             ->method('getConfId')
             ->will($this->returnValue('cid'));
         $handler
-            ->expects($this->exactly(1))
+            ->expects($this->exactly(3))
             ->method('getConfigurations')
             ->will($this->returnValue($configurations));
 
@@ -182,30 +259,39 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $postData = [
             'email' => 'invalid mail',
             'categories' => [2, 4, 6],
+            'field' => 'test',
         ];
 
         \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
-        $configurations->expects($this->once())->method('getInt')->willReturn(5);
-        $configurations->expects($this->exactly(2))->method('getCfgOrLL')->willReturn('tranlsated message');
+        $configurations->expects($this->exactly(1))->method('getInt')->willReturn(5);
+        $configurations->expects($this->exactly(3))->method('getCfgOrLL')->willReturn('tranlsated message');
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getConfigurations', 'getConfId'],
+            ['getConfigurations', 'getConfId', 'isHoneypotEnabled', 'getHoneypotFieldName'],
             [],
             '',
             false
         );
 
         $handler
-            ->expects($this->once())
+            ->expects($this->exactly(1))
             ->method('getConfId')
             ->will($this->returnValue('cid'));
         $handler
-            ->expects($this->exactly(3)) // 1x config lesen, 2x label übersetzen
+            ->expects($this->exactly(4)) // 1x config lesen, 3x label übersetzen
             ->method('getConfigurations')
             ->will($this->returnValue($configurations));
+        $handler
+            ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
+            ->method('isHoneypotEnabled')
+            ->will($this->returnValue(true));
+        $handler
+            ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
+            ->method('getHoneypotFieldName')
+            ->will($this->returnValue('field'));
 
         $this->assertFalse(
             $this->callInaccessibleMethod([$handler, 'validateSubscriberData'], [$postData])
@@ -218,6 +304,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             [
                 'email' => 'tranlsated message',
                 'categories' => 'tranlsated message',
+                'honeypot' => 'tranlsated message',
             ]
         );
     }
@@ -233,36 +320,46 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $postData = [
             'email' => 'invalid mail',
             'categories' => [2, 4, 6],
+            'field' => 'test',
         ];
 
         \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
-        $configurations->expects($this->once())->method('getInt')->willReturn(5);
+        $configurations->expects($this->exactly(1))->method('getInt')->willReturn(5);
 
         \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
-            ['getConfigurations', 'getConfId', 'setFieldInvalid'],
+            ['getConfigurations', 'getConfId', 'setFieldInvalid', 'isHoneypotEnabled', 'getHoneypotFieldName'],
             [],
             '',
             false
         );
 
         $handler
-            ->expects($this->once())
+            ->expects($this->exactly(1))
             ->method('getConfId')
             ->will($this->returnValue('cid'));
         $handler
-            ->expects($this->once())
+            ->expects($this->exactly(1))
             ->method('getConfigurations')
             ->will($this->returnValue($configurations));
         $handler
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(3))
             ->method('setFieldInvalid')
             ->withConsecutive(
                 ['email'],
-                ['categories', null, ['%requiredmin%' => 5]]
+                ['categories', null, ['%requiredmin%' => 5]],
+                ['honeypot']
             );
+        $handler
+            ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
+            ->method('isHoneypotEnabled')
+            ->will($this->returnValue(true));
+        $handler
+            ->expects($this->exactly(1)) // 1x config lesen, 3x label übersetzen
+            ->method('getHoneypotFieldName')
+            ->will($this->returnValue('field'));
 
         $this->callInaccessibleMethod([$handler, 'validateSubscriberData'], [$postData]);
     }

@@ -56,6 +56,13 @@ class SubscribeHandler extends AbstractSubscribeHandler
         // prefill with current fe user data
         $this->getSubscriber()->setProperty($this->getFeUserData());
 
+        $honeyPot = '';
+        if ($this->isHoneypotEnabled()) {
+            $name = $this->getHoneypotFieldName();
+            $honeyPot = '<input type="text" autocomplete="off" tabindex="-1" '.
+                'id="mkpostman[subscriber]['.$name.']" name="mkpostman[subscriber]['.$name.']"/>';
+        }
+
         // now check if there are a submit
         if ($this->getParameters()->get('subscribe')) {
             $data = $this->getParameters()->get('subscriber');
@@ -73,6 +80,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
                 'errorcount' => count($this->validationErrors),
                 'errors' => $this->validationErrors,
                 'options' => $this->getFormSelectOptions(),
+                'honeyPot' => $honeyPot,
             ]
         );
 
@@ -114,6 +122,13 @@ class SubscribeHandler extends AbstractSubscribeHandler
             }
         }
 
+        if ($this->isHoneypotEnabled()) {
+            $name = $this->getHoneypotFieldName();
+            if (!empty($data[$name])) {
+                $this->setFieldInvalid('honeypot');
+            }
+        }
+
         return empty($this->validationErrors);
     }
 
@@ -130,6 +145,26 @@ class SubscribeHandler extends AbstractSubscribeHandler
             $this->getConfigurations()->getCfgOrLL($label),
             $args
         );
+    }
+
+    /**
+     * returns the configured name for the honeypot field.
+     *
+     * @return string
+     */
+    protected function getHoneypotFieldName()
+    {
+        return $this->getConfigurations()->get($this->getConfId().'honeypotFieldname');
+    }
+
+    /**
+     * Checks if the honypot field is enabled.
+     *
+     * @return bool
+     */
+    protected function isHoneypotEnabled()
+    {
+        return (bool) $this->getConfigurations()->getInt($this->getConfId().'honeypot');
     }
 
     /**
