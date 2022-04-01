@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Utility;
 
+use Sys25\RnBase\Domain\Model\DataModel;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,21 +26,6 @@ namespace DMK\Mkpostman\Utility;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
 
 /**
  * DoubleOptInUtility test.
@@ -87,7 +74,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->with(
                 self::callback(
                     function ($keyData) use ($that) {
-                        $that->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+                        $that->assertInstanceOf(DataModel::class, $keyData);
                         $that->assertSame('5', $keyData->getUid());
                         $that->assertSame('abcdef1234567890', $keyData->getConfirmstring());
                         $that->assertSame('123456789abcdef', $keyData->getMailHash());
@@ -245,7 +232,7 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'firstIsUid:secondIsConfirmstring:thirdIsMailHash'
         );
 
-        $this->assertInstanceOf('Tx_Rnbase_Domain_Model_Data', $keyData);
+        $this->assertInstanceOf(DataModel::class, $keyData);
         $this->assertSame('firstIsUid', $keyData->getUid());
         $this->assertSame('secondIsConfirmstring', $keyData->getConfirmstring());
         $this->assertSame('thirdIsMailHash', $keyData->getMailHash());
@@ -375,7 +362,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
         array $methods = []
     ) {
         $subscriberModel = $this->getSubscriberModel();
-        \tx_rnbase::load('DMK\\Mkpostman\\Utility\\DoubleOptInUtility');
         $util = $this->getMock(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
             array_merge(
@@ -385,7 +371,6 @@ class DoubleOptInUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
             [$subscriberModel]
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $logManager = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
         );

@@ -1,4 +1,4 @@
-includeLibs.tx_rnbase_controller = EXT:rn_base/class.tx_rnbase_controller.php
+includeLibs.tx_rnbase_controller = EXT:rn_base/Legacy/class.tx_rnbase_controller.php
 
 plugin.tx_mkpostman = USER
 plugin.tx_mkpostman {

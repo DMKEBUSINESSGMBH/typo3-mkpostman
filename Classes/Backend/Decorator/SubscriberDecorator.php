@@ -27,14 +27,12 @@ namespace DMK\Mkpostman\Backend\Decorator;
 
 use DMK\Mkpostman\Factory;
 
-\tx_rnbase::load('Tx_Rnbase_Backend_Decorator_BaseDecorator');
-
 /**
  * Subscriber lister.
  *
  * @author Michael Wagner
  */
-class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
+class SubscriberDecorator extends \Sys25\RnBase\Backend\Decorator\BaseDecorator
 {
     /**
      * Wraps the Value.
@@ -42,14 +40,14 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
      * For example a strikethrough for disabled entries.
      *
      * @param string                                $formatedValue
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $entry
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $entry
      * @param string                                $columnName
      *
      * @return string
      */
     protected function wrapValue(
         $formatedValue,
-        \Tx_Rnbase_Domain_Model_DataInterface $entry,
+        \Sys25\RnBase\Domain\Model\DataInterface $entry,
         $columnName
     ) {
         return sprintf(
@@ -63,15 +61,13 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Renders the useractions.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
      * @return string
      */
     protected function formatActionsColumn(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
-        \tx_rnbase::load('tx_rnbase_util_TCA');
-
         $return = '';
 
         $tableName = $item->getTableName();
@@ -107,12 +103,12 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Renders the label column.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
      * @return string
      */
     protected function formatEmailColumn(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
         $lastModifyDateTime = $item->getLastModifyDateTime();
         $creationDateTime = $item->getCreationDateTime();
@@ -130,16 +126,16 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Renders the label column.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
      * @return string
      */
     protected function formatNameColumn(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
         $title = array_filter(
             [
-                \tx_rnbase_util_Lang::sL(
+                \Sys25\RnBase\Utility\Language::sL(
                     'LLL:EXT:mkpostman/Resources/Private/Language/Tca.xlf:'.
                         'tx_mkpostman_subscribers.gender.'.(int) $item->getGender()
                 ),
@@ -160,12 +156,12 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Renders the label column.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
      * @return string
      */
     protected function formatCategoriesColumn(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
         $titles = [];
         if ($item->hasCategories()) {
@@ -181,12 +177,12 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Add a rudimentary log icon with only a tooltip.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
      * @return string
      */
     protected function getLogAction(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
         $logs = $this->getLogs($item);
         $logToolTip = [];
@@ -205,7 +201,7 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
 
         return sprintf(
             '<a href="#" class="btn btn-default btn-sm" title="%2$s">%1$s</a>',
-            \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon('tcarecords-tx_mkpostman_logs-default'),
+            \Sys25\RnBase\Backend\Utility\Icons::getSpriteIcon('tcarecords-tx_mkpostman_logs-default'),
             count($logs).' Log(s): '.CRLF.implode(CRLF, $logToolTip)
         );
     }
@@ -213,12 +209,12 @@ class SubscriberDecorator extends \Tx_Rnbase_Backend_Decorator_BaseDecorator
     /**
      * Returns a log collection for the subscribers.
      *
-     * @param \Tx_Rnbase_Domain_Model_DataInterface $item
+     * @param \Sys25\RnBase\Domain\Model\DataInterface $item
      *
-     * @return \Tx_Rnbase_Domain_Model_DomainInterface|null
+     * @return \Sys25\RnBase\Domain\Model\DomainModelInterface|null
      */
     protected function getLogs(
-        \Tx_Rnbase_Domain_Model_DataInterface $item
+        \Sys25\RnBase\Domain\Model\DataInterface $item
     ) {
         return \DMK\Mkpostman\Factory::getLogRepository()->findBySubscriber($item);
     }

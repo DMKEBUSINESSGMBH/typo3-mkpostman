@@ -2,6 +2,10 @@
 
 namespace DMK\Mkpostman\Mail;
 
+use Sys25\RnBase\Configuration\Processor;
+use Sys25\RnBase\Utility\Extensions;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -37,17 +41,17 @@ class ProcessorMail
     /**
      * The config object to use for mails.
      *
-     * @var \tx_rnbase_configurations
+     * @var Processor
      */
     private $configurations = null;
 
     /**
      * The Constructor.
      *
-     * @param \tx_rnbase_configurations $configurations
+     * @param Processor $configurations
      */
     public function __construct(
-        \tx_rnbase_configurations $configurations
+        Processor $configurations
     ) {
         $this->configurations = $configurations;
     }
@@ -55,7 +59,7 @@ class ProcessorMail
     /**
      * The configuration object.
      *
-     * @return \tx_rnbase_configurations
+     * @return Processor
      */
     protected function getConfigurations()
     {
@@ -75,11 +79,11 @@ class ProcessorMail
     /**
      * Is mkmailer loaded? otherwise throw exception.
      *
-     * @throws BadFunctionCallException
+     * @throws \BadFunctionCallException
      */
     protected function checkMkmailer()
     {
-        \tx_rnbase_util_Extensions::isLoaded('mkmailer', true);
+        Extensions::isLoaded('mkmailer', true);
     }
 
     /**
@@ -93,7 +97,7 @@ class ProcessorMail
         \tx_mkmailer_models_Template $template = null
     ) {
         /* @var $job \tx_mkmailer_mail_MailJob */
-        $job = \tx_rnbase::makeInstance('tx_mkmailer_mail_MailJob');
+        $job = GeneralUtility::makeInstance('tx_mkmailer_mail_MailJob');
         if ($template instanceof \tx_mkmailer_models_Template) {
             $job->setFrom($template->getFromAddress());
             // set from mail adress from rn_base configuration as fallback
@@ -122,7 +126,6 @@ class ProcessorMail
     ) {
         $this->checkMkmailer();
 
-        \tx_rnbase::load('tx_mkmailer_util_ServiceRegistry');
         $mailSrv = \tx_mkmailer_util_ServiceRegistry::getMailService();
 
         $mailJob = $this->buildJob(

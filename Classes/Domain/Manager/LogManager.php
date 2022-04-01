@@ -28,6 +28,8 @@ namespace DMK\Mkpostman\Domain\Manager;
 use DMK\Mkpostman\Domain\Model\LogModel;
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
 use DMK\Mkpostman\Factory;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\TYPO3;
 
 /**
  * Log repo.
@@ -87,7 +89,7 @@ class LogManager
         $logEntry = $repo->createNewModel();
 
         if (TYPO3_MODE == 'BE') {
-            $logEntry->setCruserId(\tx_rnbase_util_TYPO3::getBEUserUID());
+            $logEntry->setCruserId(TYPO3::getBEUserUID());
         }
 
         $logEntry->setPid($subscriber->getPid());
@@ -131,13 +133,13 @@ class LogManager
     protected function getBeUserName(
         $uid
     ) {
-        if ($uid == \tx_rnbase_util_TYPO3::getBEUserUID()) {
-            $beuser = \tx_rnbase_util_TYPO3::getBEUser();
+        if ($uid == TYPO3::getBEUserUID()) {
+            $beuser = TYPO3::getBEUser();
 
             return $beuser->user['username'];
         }
 
-        $beuser = \Tx_Rnbase_Database_Connection::getInstance()->doSelect(
+        $beuser = Connection::getInstance()->doSelect(
             'username',
             'be_users',
             ['where' => 'uid = '.(int) $uid]

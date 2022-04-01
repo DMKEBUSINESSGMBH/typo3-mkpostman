@@ -2,6 +2,10 @@
 
 namespace DMK\Mkpostman\Backend\Module;
 
+use Sys25\RnBase\Backend\Module\ExtendedModFunc;
+use Sys25\RnBase\Utility\Extensions;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,14 +29,12 @@ namespace DMK\Mkpostman\Backend\Module;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
-
 /**
  * MK Postman subscriber module.
  *
  * @author Michael Wagner
  */
-class SubscriberModule extends \tx_rnbase_mod_ExtendedModFunc
+class SubscriberModule extends ExtendedModFunc
 {
     /**
      * Method getFuncId.
@@ -52,12 +54,12 @@ class SubscriberModule extends \tx_rnbase_mod_ExtendedModFunc
     protected function getSubMenuItems()
     {
         $class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberHandler';
-        if (\tx_rnbase_util_Extensions::isLoaded('mklib')) {
+        if (Extensions::isLoaded('mklib')) {
             $class = 'DMK\\Mkpostman\\Backend\\Handler\\SubscriberExportHandler';
         }
 
         return [
-            \tx_rnbase::makeInstance($class),
+            GeneralUtility::makeInstance($class),
         ];
     }
 

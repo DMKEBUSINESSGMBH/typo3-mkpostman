@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Utility;
 
+use Sys25\RnBase\Typo3Wrapper\Core\SingletonInterface;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +27,6 @@ namespace DMK\Mkpostman\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Interface_Singleton');
-
 /**
  * MK Postman crypt utility.
  *
@@ -34,7 +34,7 @@ namespace DMK\Mkpostman\Utility;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CryptUtility implements \Tx_Rnbase_Interface_Singleton
+class CryptUtility implements SingletonInterface
 {
     /**
      * Encodes an Parameter for Url.

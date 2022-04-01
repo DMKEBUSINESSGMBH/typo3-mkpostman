@@ -2,6 +2,11 @@
 
 namespace DMK\Mkpostman\Mail\Receiver;
 
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\SimpleMarker;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,8 +29,6 @@ namespace DMK\Mkpostman\Mail\Receiver;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-\tx_rnbase::load('tx_mkmailer_receiver_BaseTemplate');
 
 /**
  * MK Postman subscriber mail receiver.
@@ -170,22 +173,22 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
     /**
      * The marker to use for rendering.
      *
-     * @return \tx_rnbase_util_SimpleMarker
+     * @return SimpleMarker
      */
     protected function getMarkerInstance()
     {
-        return \tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+        return GeneralUtility::makeInstance(SimpleMarker::class);
     }
 
     /**
      * Parse the subscriber into the mail.
      *
-     * @param string                     $mailText
-     * @param string                     $mailHtml
-     * @param string                     $mailSubject
-     * @param \tx_rnbase_util_FormatUtil $formatter
-     * @param string                     $confId
-     * @param int                        $idx         Index des Empfängers von 0 bis (getAddressCount() - 1)
+     * @param string     $mailText
+     * @param string     $mailHtml
+     * @param string     $mailSubject
+     * @param FormatUtil $formatter
+     * @param string     $confId
+     * @param int        $idx         Index des Empfängers von 0 bis (getAddressCount() - 1)
      */
     // @codingStandardsIgnoreStart (interface/abstract mistake)
     protected function addAdditionalData(
@@ -273,7 +276,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
      * @param array                      $markerArray
      * @param array                      $subpartArray
      * @param array                      $wrappedSubpartArray
-     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param FormatUtil                 $formatter
      * @param string                     $confId
      *
      * @TODO: create a marker class and move this
@@ -283,7 +286,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
         array &$markerArray,
         array &$subpartArray,
         array &$wrappedSubpartArray,
-        \tx_rnbase_util_FormatUtil $formatter,
+        FormatUtil $formatter,
         $confId
     ) {
         $doubleOptInUtil = \DMK\Mkpostman\Factory::getDoubleOptInUtility(
@@ -291,7 +294,7 @@ class SubscriberReceiver extends \tx_mkmailer_receiver_BaseTemplate
         );
 
         // prepare the activation link
-        \tx_rnbase_util_BaseMarker::initLink(
+        BaseMarker::initLink(
             $markerArray,
             $subpartArray,
             $wrappedSubpartArray,

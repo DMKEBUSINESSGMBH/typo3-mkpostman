@@ -2,6 +2,10 @@
 
 namespace DMK\Mkpostman\Backend\Lister;
 
+use Sys25\RnBase\Frontend\Marker\IListProvider;
+use Sys25\RnBase\Frontend\Marker\ListProvider;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,9 +29,6 @@ namespace DMK\Mkpostman\Backend\Lister;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('DMK\\Mkpostman\\Backend\\Lister\\SubscriberLister');
-\tx_rnbase::load('tx_mklib_mod1_export_ISearcher');
-
 /**
  * Subscriber export lister.
  *
@@ -42,14 +43,14 @@ class SubscriberExportLister extends SubscriberLister implements \tx_mklib_mod1_
      * welcher die Ausgabe der einzelnen Datensätze generiert
      * und an den Listbuilder übergeben wird.
      *
-     * @return \tx_rnbase_util_IListProvider
+     * @return IListProvider
      */
     public function getInitialisedListProvider()
     {
         list($fields, $options) = $this->getFieldsAndOptions();
 
-        /* @var $provider \tx_rnbase_util_ListProvider */
-        $provider = \tx_rnbase::makeInstance('tx_rnbase_util_ListProvider');
+        /* @var $provider ListProvider */
+        $provider = GeneralUtility::makeInstance(ListProvider::class);
         $provider->initBySearch(
             [
                 $this->getRepository(),

@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * CryptUtility test.
  *
@@ -60,7 +45,7 @@ class CryptUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function urlEncode()
     {
         /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
-        $util = \tx_rnbase::makeInstance(
+        $util = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Utility\\CryptUtility'
         );
         $encoded = $util->urlEncode($this->getTestValue());
@@ -86,7 +71,7 @@ class CryptUtilityTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $encoded
     ) {
         /* @var $util \DMK\Mkpostman\Utility\CryptUtility */
-        $util = \tx_rnbase::makeInstance(
+        $util = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Utility\\CryptUtility'
         );
 

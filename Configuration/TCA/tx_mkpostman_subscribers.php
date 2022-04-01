@@ -129,7 +129,7 @@ return call_user_func(
                 '0' => [
                     'showitem' => '
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.general,
-                        disabled, email, gender, first_name, last_name, categories, confirmstring, 
+                        disabled, email, gender, first_name, last_name, categories, confirmstring,
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.log,
                         logs,
                     ',
@@ -138,10 +138,9 @@ return call_user_func(
         ];
 
         // add the direct mail columns, if direct mail is installed
-        if (\tx_rnbase_util_Extensions::isLoaded('direct_mail')) {
+        if (\Sys25\RnBase\Utility\Extensions::isLoaded('direct_mail')) {
             $dmLllFile = 'LLL:EXT:direct_mail/Resources/Private/Language/locallang_tca.xlf:';
             $tca['columns']['module_sys_dmail_category'] = [
-                'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
                 'label' => $dmLllFile.'module_sys_dmail_group.category',
                 'config' => [
@@ -163,7 +162,6 @@ return call_user_func(
                 ],
             ];
             $tca['columns']['module_sys_dmail_html'] = [
-                'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
                 'label' => $dmLllFile.'module_sys_dmail_group.htmlemail',
                 'config' => [

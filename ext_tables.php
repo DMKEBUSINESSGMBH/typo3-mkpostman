@@ -7,11 +7,11 @@ defined('TYPO3_MODE') || exit('Access denied.');
  * *** **************** *** */
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['tx_mkpostman'] = 'pi_flexform';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['tx_mkpostman'] = 'layout,select_key,pages';
-tx_rnbase_util_Extensions::addPiFlexFormValue(
+\Sys25\RnBase\Utility\Extensions::addPiFlexFormValue(
     'tx_mkpostman',
     'FILE:EXT:mkpostman/Configuration/Flexform/Main.xml'
 );
-tx_rnbase_util_Extensions::addPlugin(
+\Sys25\RnBase\Utility\Extensions::addPlugin(
     [
         'LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.label',
         'tx_mkpostman',
@@ -20,7 +20,7 @@ tx_rnbase_util_Extensions::addPlugin(
     'list_type',
     'mkpostman'
 );
-tx_rnbase_util_Extensions::addStaticFile(
+\Sys25\RnBase\Utility\Extensions::addStaticFile(
     'mkpostman',
     'Configuration/TypoScript/Base/',
     'MK Postman (Base)'
@@ -28,13 +28,13 @@ tx_rnbase_util_Extensions::addStaticFile(
 
 if (TYPO3_MODE == 'BE') {
     // add be module ts and wizard config
-    tx_rnbase_util_Extensions::addPageTSConfig(
+    \Sys25\RnBase\Utility\Extensions::addPageTSConfig(
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:mkpostman/Configuration/TypoScript/Backend/pageTSconfig.txt">'
     );
 
-    if (tx_rnbase_util_TYPO3::isTYPO80OrHigher()) {
+    if (\Sys25\RnBase\Utility\TYPO3::isTYPO80OrHigher()) {
         // register icon
-        Tx_Rnbase_Backend_Utility_Icons::getIconRegistry()->registerIcon(
+        \Sys25\RnBase\Backend\Utility\Icons::getIconRegistry()->registerIcon(
             'ext-mkpostman-wizard-icon',
             'TYPO3\\CMS\Core\\Imaging\\IconProvider\\BitmapIconProvider',
             ['source' => 'EXT:mkpostman/ext_icon.gif']
@@ -43,7 +43,7 @@ if (TYPO3_MODE == 'BE') {
         // register wizzard the old way
         \DMK\Mkpostman\Utility\WizIconUtility::addWizicon(
             'DMK\Mkpostman\Utility\WizIconUtility',
-            tx_rnbase_util_Extensions::extPath(
+            \Sys25\RnBase\Utility\Extensions::extPath(
                 'mkpostman',
                 'Classes/Utility/WizIconUtility.php'
             )
@@ -51,7 +51,7 @@ if (TYPO3_MODE == 'BE') {
     }
 
     // register web_MkpostmanBackend
-    tx_rnbase_util_Extensions::registerModule(
+    \Sys25\RnBase\Utility\Extensions::registerModule(
         'mkpostman',
         'web',
         'backend',
@@ -67,7 +67,7 @@ if (TYPO3_MODE == 'BE') {
     );
 
     // register subscriber be module
-    tx_rnbase_util_Extensions::insertModuleFunction(
+    \Sys25\RnBase\Utility\Extensions::insertModuleFunction(
         'web_MkpostmanBackend',
         'DMK\\Mkpostman\\Backend\\Module\\SubscriberModule',
         null,

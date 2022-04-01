@@ -2,6 +2,9 @@
 
 namespace DMK\Mkpostman\Utility;
 
+use Sys25\RnBase\Utility\Extensions;
+use Sys25\RnBase\Utility\WizIcon;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +28,6 @@ namespace DMK\Mkpostman\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_util_Wizicon');
-
 /**
  * MK Postman wizard icon.
  *
@@ -34,7 +35,7 @@ namespace DMK\Mkpostman\Utility;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class WizIconUtility extends \tx_rnbase_util_Wizicon
+class WizIconUtility extends WizIcon
 {
     /**
      * Returns the plugin data.
@@ -45,7 +46,7 @@ class WizIconUtility extends \tx_rnbase_util_Wizicon
     {
         return [
             'tx_mkpostman' => [
-                'icon' => \tx_rnbase_util_Extensions::extRelPath('mkpostman').'ext_icon.gif',
+                'icon' => Extensions::extRelPath('mkpostman').'ext_icon.gif',
                 'title' => 'plugin.mkpostman.label',
                 'description' => 'plugin.mkpostman.description',
             ],
@@ -61,7 +62,7 @@ class WizIconUtility extends \tx_rnbase_util_Wizicon
     protected function getLLFile()
     {
         // @codingStandardsIgnoreEnd
-        return \tx_rnbase_util_Extensions::extPath(
+        return Extensions::extPath(
             'mkpostman',
             'Resources/Private/Language/Flexform.xlf'
         );

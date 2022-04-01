@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Subscriber model test.
  *
@@ -69,14 +54,12 @@ class SubscriberModelTest extends \DMK\Mkpostman\Tests\BaseTestCase
      * @param array  $record
      * @param string $class
      *
-     * @return tx_rnbase_model_base|PHPUnit_Framework_MockObject_MockObject
+     * @return \Sys25\RnBase\Domain\Model\BaseModel|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getModelMock(
         $record = null,
         array $methods = []
     ) {
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
-
         return $this->getModel(
             $record,
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel',

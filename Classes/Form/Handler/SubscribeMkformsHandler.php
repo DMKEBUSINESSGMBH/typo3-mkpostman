@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Form\Handler;
 
+use Sys25\RnBase\Utility\Files;
+
 /***************************************************************
  * Copyright notice
  *
@@ -142,7 +144,6 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
     public function processForm($data)
     {
         // Prepare data
-        \tx_rnbase::load('tx_mkforms_util_FormBase');
         $data = \tx_mkforms_util_FormBase::flatArray2MultipleTableStructure(
             $data,
             $this->getForm(),
@@ -160,9 +161,7 @@ class SubscribeMkformsHandler extends AbstractSubscribeHandler
      */
     public function getFormTemplate()
     {
-        \tx_rnbase::load('tx_rnbase_util_Files');
-
-        return \tx_rnbase_util_Files::getFileAbsFileName(
+        return Files::getFileAbsFileName(
             $this->getConfigurations()->get(
                 'subscribeTemplate',
                 true

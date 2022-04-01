@@ -2,6 +2,9 @@
 
 namespace DMK\Mkpostman\Form\Handler;
 
+use Sys25\RnBase\Utility\Language;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -112,7 +115,7 @@ class SubscribeHandler extends AbstractSubscribeHandler
     protected function validateSubscriberData(
         array $data
     ) {
-        if (empty($data['email']) || !\Tx_Rnbase_Utility_T3General::validEmail($data['email'])) {
+        if (empty($data['email']) || !GeneralUtility::validEmail($data['email'])) {
             $this->setFieldInvalid('email');
         }
 
@@ -176,9 +179,9 @@ class SubscribeHandler extends AbstractSubscribeHandler
     {
         return [
             'gender' => [
-                '' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_general_choose'),
-                '0' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_0'),
-                '1' => \tx_rnbase_util_Lang::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_1'),
+                '' => Language::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_general_choose'),
+                '0' => Language::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_0'),
+                '1' => Language::sL('LLL:EXT:mkpostman/Resources/Private/Language/Frontend.xlf:label_gender_1'),
             ],
         ];
     }

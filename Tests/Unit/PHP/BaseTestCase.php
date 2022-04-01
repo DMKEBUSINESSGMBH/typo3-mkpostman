@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Tests;
 
+use Sys25\RnBase\Search\SearchGeneric;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,15 +27,6 @@ namespace DMK\Mkpostman\Tests;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-\tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
-
 /**
  * Basis Testcase.
  *
@@ -41,7 +34,7 @@ if (!\class_exists('tx_rnbase')) {
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
+abstract class BaseTestCase extends \Sys25\RnBase\Testing\BaseTestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -90,13 +83,11 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
      */
     protected function getSubscriberRepository()
     {
-        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
-            'tx_rnbase_util_SearchGeneric',
+            SearchGeneric::class,
             ['search']
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository',
             ['getSearcher', 'persist', 'getDbConnection']
@@ -117,13 +108,11 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
      */
     protected function getCategoryRepository()
     {
-        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
-            'tx_rnbase_util_SearchGeneric',
+            SearchGeneric::class,
             ['search']
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository',
             ['getSearcher', 'persist']
@@ -144,13 +133,11 @@ abstract class BaseTestCase extends \tx_rnbase_tests_BaseTestCase
      */
     protected function getLogRepository()
     {
-        \tx_rnbase::load('tx_rnbase_util_SearchGeneric');
         $searcher = $this->getMock(
-            'tx_rnbase_util_SearchGeneric',
+            SearchGeneric::class,
             ['search']
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\LogRepository');
         $repo = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Repository\\LogRepository',
             ['getSearcher', 'persist']

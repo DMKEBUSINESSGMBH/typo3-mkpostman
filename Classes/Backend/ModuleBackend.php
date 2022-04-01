@@ -2,6 +2,11 @@
 
 namespace DMK\Mkpostman\Backend;
 
+use Sys25\RnBase\Backend\Module\BaseModule;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Utility\Icons;
+use Sys25\RnBase\Database\Connection;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,14 +30,12 @@ namespace DMK\Mkpostman\Backend;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_mod_BaseModule');
-
 /**
  * MK Postman backend module.
  *
  * @author Michael Wagner
  */
-class ModuleBackend extends \tx_rnbase_mod_BaseModule
+class ModuleBackend extends BaseModule
 {
     /**
      * Initializes the backend module by setting internal variables, initializing the menu.
@@ -79,26 +82,25 @@ class ModuleBackend extends \tx_rnbase_mod_BaseModule
 
         // otherwise show a linklist
         foreach ($pages as $pid => &$page) {
-            $pageinfo = \Tx_Rnbase_Backend_Utility::readPageAccess(
+            $pageinfo = BackendUtility::readPageAccess(
                 $pid,
                 $this->perms_clause
             );
-            $modUrl = \Tx_Rnbase_Backend_Utility::getModuleUrl(
+            $modUrl = BackendUtility::getModuleUrl(
                 'web_MkpostmanBackend',
-                ['id' => $pid],
-                ''
+                ['id' => $pid]
             );
             $page = '<a href="'.$modUrl.'">';
             if (0 === $pid) {
-                $page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIcon(
+                $page .= Icons::getSpriteIcon(
                     'apps-pagetree-root',
                     ['size' => 'small']
                 );
                 $page .= ' '.$GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
             } else {
-                $page .= \Tx_Rnbase_Backend_Utility_Icons::getSpriteIconForRecord(
+                $page .= Icons::getSpriteIconForRecord(
                     'pages',
-                    \Tx_Rnbase_Database_Connection::getInstance()->getRecord('pages', $pid),
+                    Connection::getInstance()->getRecord('pages', $pid),
                     'small'
                 );
                 $page .= ' '.$pageinfo['title'];
@@ -135,7 +137,7 @@ class ModuleBackend extends \tx_rnbase_mod_BaseModule
 
         $pages = array_merge(
             // get all pageids
-            \tx_rnbase_util_DB::doSelect(
+            Connection::getInstance()->doSelect(
                 'pid as pageid',
                 $repo->getEmptyModel()->getTableName(),
                 ['enablefieldsoff' => 1]

@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Backend\Handler;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,9 +26,6 @@ namespace DMK\Mkpostman\Backend\Handler;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-\tx_rnbase::load('DMK\\Mkpostman\\Backend\\Handler\\SubscriberHandler');
-\tx_rnbase::load('tx_mklib_mod1_export_IModFunc');
 
 /**
  * Subscriber handler.
@@ -84,7 +83,7 @@ class SubscriberExportHandler extends SubscriberHandler implements \tx_mklib_mod
         array &$wrappedSubpartArray = null
     ) {
         /* @var $exportHandler \tx_mklib_mod1_export_Handler */
-        $exportHandler = \tx_rnbase::makeInstance(
+        $exportHandler = GeneralUtility::makeInstance(
             'tx_mklib_mod1_export_Handler',
             $this
         );

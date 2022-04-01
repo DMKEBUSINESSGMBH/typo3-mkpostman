@@ -2,6 +2,12 @@
 
 namespace DMK\Mkpostman\View;
 
+use Sys25\RnBase\Configuration\Processor;
+use Sys25\RnBase\Frontend\Marker\BaseMarker;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Frontend\View\Marker\BaseView;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +31,6 @@ namespace DMK\Mkpostman\View;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_view_Base');
-
 /**
  * MK Postman abstract view.
  *
@@ -34,15 +38,15 @@ namespace DMK\Mkpostman\View;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class AbstractView extends \tx_rnbase_view_Base
+abstract class AbstractView extends BaseView
 {
     /**
      * Entry point for child classes.
      *
      * @param string                     $template
      * @param \ArrayObject               $viewData
-     * @param \tx_rnbase_configurations  $configurations
-     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param Processor  $configurations
+     * @param FormatUtil $formatter
      *
      * @return string
      */
@@ -52,7 +56,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
         // @codingStandardsIgnoreEnd
         $markArray = $subpartArray = $wrappedSubpartArray = [];
 
-        return \tx_rnbase_util_Templates::substituteMarkerArrayCached(
+        return Templates::substituteMarkerArrayCached(
             $this->parseTemplate(
                 $this->prepareMarkerArrays(
                     $template,
@@ -142,9 +146,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
      */
     protected function containsMarker($template, $markerPrefix)
     {
-        \tx_rnbase::load('tx_rnbase_util_BaseMarker');
-
-        return \tx_rnbase_util_BaseMarker::containsMarker(
+        return BaseMarker::containsMarker(
             $template,
             $markerPrefix.'_'
         );
@@ -153,7 +155,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
     /**
      * Returns configurations object.
      *
-     * @return tx_rnbase_configurations
+     * @return Processor
      */
     protected function getConfigurations()
     {
@@ -173,7 +175,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
     /**
      * Returns view data.
      *
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function getViewData()
     {
@@ -183,7 +185,7 @@ abstract class AbstractView extends \tx_rnbase_view_Base
     /**
      * Returns configurations object.
      *
-     * @return tx_rnbase_util_FormatUtil
+     * @return FormatUtil
      */
     protected function getFormatter()
     {

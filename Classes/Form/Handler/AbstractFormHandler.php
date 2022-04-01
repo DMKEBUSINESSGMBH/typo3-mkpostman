@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Form\Handler;
 
+use Sys25\RnBase\Frontend\Request\ParametersInterface;
+
 /***************************************************************
  * Copyright notice
  *
@@ -68,7 +70,7 @@ abstract class AbstractFormHandler
     /**
      * Returns request parameters.
      *
-     * @return \tx_rnbase_IParameters
+     * @return ParametersInterface
      */
     public function getParameters()
     {

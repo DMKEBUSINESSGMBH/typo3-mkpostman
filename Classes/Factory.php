@@ -2,6 +2,12 @@
 
 namespace DMK\Mkpostman;
 
+use Sys25\RnBase\Cache\CacheInterface;
+use Sys25\RnBase\Cache\CacheManager;
+use Sys25\RnBase\Configuration\Processor;
+use Sys25\RnBase\Domain\Model\DataModel;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -37,15 +43,15 @@ final class Factory
     /**
      * Returns a storage.
      *
-     * @return \Tx_Rnbase_Domain_Model_Data
+     * @return DataModel
      */
     private static function getStorage()
     {
         static $storage = null;
 
         if (null === $storage) {
-            $storage = \tx_rnbase::makeInstance(
-                'Tx_Rnbase_Domain_Model_Data'
+            $storage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+                DataModel::class
             );
         }
 
@@ -55,13 +61,11 @@ final class Factory
     /**
      * Returns a cache.
      *
-     * @return \tx_rnbase_cache_ICache
+     * @return CacheInterface
      */
     public static function getCache()
     {
-        \tx_rnbase::load('tx_rnbase_cache_Manager');
-
-        return \tx_rnbase_cache_Manager::getCache('mkpostman');
+        return CacheManager::getCache('mkpostman');
     }
 
     /**
@@ -71,7 +75,7 @@ final class Factory
      */
     public static function getSubscriberRepository()
     {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository'
         );
     }
@@ -83,7 +87,7 @@ final class Factory
      */
     public static function getCategoryRepository()
     {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Domain\\Repository\\CategoryRepository'
         );
     }
@@ -95,7 +99,7 @@ final class Factory
      */
     public static function getLogRepository()
     {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Domain\\Repository\\LogRepository'
         );
     }
@@ -107,7 +111,7 @@ final class Factory
      */
     public static function getLogManager()
     {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
         );
     }
@@ -115,14 +119,14 @@ final class Factory
     /**
      * Creates the mail processor.
      *
-     * @param \tx_rnbase_configurations $configurations
+     * @param Processor $configurations
      *
      * @return \DMK\Mkpostman\Mail\ProcessorMail
      */
     public static function getProcessorMail(
-        \tx_rnbase_configurations $configurations
+        Processor $configurations
     ) {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Mail\\ProcessorMail',
             $configurations
         );
@@ -138,7 +142,7 @@ final class Factory
     public static function getSubscriberMailReceiver(
         Domain\Model\SubscriberModel $subscriber
     ) {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Mail\\Receiver\\SubscriberReceiver',
             $subscriber
         );
@@ -154,7 +158,7 @@ final class Factory
     public static function getDoubleOptInUtility(
         $subscriberOrActivationKey
     ) {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Utility\\DoubleOptInUtility',
             $subscriberOrActivationKey
         );
@@ -167,7 +171,7 @@ final class Factory
      */
     public static function getCryptUtility()
     {
-        return \tx_rnbase::makeInstance(
+        return GeneralUtility::makeInstance(
             'DMK\\Mkpostman\\Utility\\CryptUtility'
         );
     }

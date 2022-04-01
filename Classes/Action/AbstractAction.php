@@ -2,6 +2,11 @@
 
 namespace DMK\Mkpostman\Action;
 
+use Sys25\RnBase\Configuration\ConfigurationInterface;
+use Sys25\RnBase\Frontend\Request\ParametersInterface;
+use Sys25\RnBase\Frontend\Request\RequestInterface;
+use Sys25\RnBase\Frontend\View\ContextInterface;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +30,6 @@ namespace DMK\Mkpostman\Action;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('tx_rnbase_action_BaseIOC');
-
 /**
  * Abstract base action.
  *
@@ -34,24 +37,59 @@ namespace DMK\Mkpostman\Action;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class AbstractAction extends \tx_rnbase_action_BaseIOC
+abstract class AbstractAction extends \Sys25\RnBase\Frontend\Controller\AbstractAction
 {
-    use \Tx_Rnbase_Domain_Model_StorageTrait;
+    use \Sys25\RnBase\Domain\Model\StorageTrait;
+
+    /**
+     * @var RequestInterface
+     */
+    private $request;
 
     /**
      * Lets do the magic.
      *
-     * @param tx_rnbase_IParameters    $parameters
-     * @param tx_rnbase_configurations $configurations
-     * @param ArrayObject              $viewdata
+     * @param RequestInterface $request
      *
      * @return string Errorstring or NULL
      */
     // @codingStandardsIgnoreStart (interface/abstract mistake)
-    protected function handleRequest(&$parameters, &$configurations, &$viewdata)
+    protected function handleRequest(RequestInterface $request)
     {
+        $this->request = $request;
+
         // @codingStandardsIgnoreEnd
         return $this->doRequest();
+    }
+
+    /**
+     * Returns request parameters.
+     *
+     * @return ParametersInterface
+     */
+    public function getParameters()
+    {
+        return $this->request->getParameters();
+    }
+
+    /**
+     * Returns configurations object.
+     *
+     * @return ConfigurationInterface
+     */
+    public function getConfigurations()
+    {
+        return $this->request->getConfigurations();
+    }
+
+    /**
+     * Returns view data.
+     *
+     * @return ContextInterface
+     */
+    public function getViewData()
+    {
+        return $this->getConfigurations()->getViewData();
     }
 
     /**

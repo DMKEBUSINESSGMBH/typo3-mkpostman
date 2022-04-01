@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Form\Handler;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Subscribtion action test.
  *
@@ -57,10 +42,8 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testFillDataWithoutUser()
     {
-        \tx_rnbase::load('tx_mkforms_forms_Base');
         $form = $this->getMock('tx_mkforms_forms_Base');
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
             ['getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'],
@@ -99,10 +82,8 @@ class SubscribeMkformsHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'email' => 'mwagner\'s mail',
         ];
 
-        \tx_rnbase::load('tx_mkforms_forms_Base');
         $form = $this->getMock('tx_mkforms_forms_Base');
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeMkformsHandler',
             ['getFeUserData', 'multipleTableStructure2FlatArray', 'getForm'],
