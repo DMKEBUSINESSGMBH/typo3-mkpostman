@@ -17,3 +17,9 @@ if (\Sys25\RnBase\Utility\TYPO3::isExtLoaded('direct_mail')) {
 // add process datamap
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] =
     'DMK\\Mkpostman\\Hook\\LogWriterHook';
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['mkpostman_subscriberlog'] = [
+    'nodeName' => 'subscriberLog',
+    'priority' => 40,
+    'class' => \DMK\Mkpostman\Utility\TcaUtility::class,
+];

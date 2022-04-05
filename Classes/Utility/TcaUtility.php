@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Utility;
 
+use TYPO3\CMS\Backend\Form\Element\AbstractFormElement;
+
 /***************************************************************
  * Copyright notice
  *
@@ -32,11 +34,19 @@ namespace DMK\Mkpostman\Utility;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class TcaUtility
+class TcaUtility extends AbstractFormElement
 {
-    public function getLogsForSubscriber($PA, $fObj)
+    public function render()
     {
-        $subscriberId = (int) $PA['row']['uid'];
+        $result = $this->initializeResultArray();
+        $result['html'] = $this->getLogsForSubscriber();
+
+        return $result;
+    }
+
+    public function getLogsForSubscriber()
+    {
+        $subscriberId = (int) $this->data['databaseRow']['uid'];
 
         if (0 === $subscriberId) {
             return '';

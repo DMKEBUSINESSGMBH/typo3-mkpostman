@@ -14,9 +14,6 @@ return [
         'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_logs.gif',
         'dividers2tabs' => true,
     ],
-    'interface' => [
-        'showRecordFieldList' => 'description',
-    ],
     'columns' => [
         'crdate' => [
             'exclude' => 1,

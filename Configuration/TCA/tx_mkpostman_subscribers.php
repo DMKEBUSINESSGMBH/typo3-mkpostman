@@ -23,9 +23,6 @@ return call_user_func(
                 'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
                 'dividers2tabs' => true,
             ],
-            'interface' => [
-                'showRecordFieldList' => 'email',
-            ],
             'columns' => [
                 'disabled' => [
                     'exclude' => 1,
@@ -120,8 +117,7 @@ return call_user_func(
                     'label' => $lllTable.'logs',
                     'config' => [
                         'type' => 'user',
-                        'size' => '20',
-                        'userFunc' => 'DMK\\Mkpostman\\Utility\\TcaUtility->getLogsForSubscriber',
+                        'renderType' => 'subscriberLog',
                     ],
                 ],
             ],
@@ -157,7 +153,7 @@ return call_user_func(
                     'size' => 5,
                     'minitems' => 0,
                     'maxitems' => 60,
-                    'renderMode' => 'checkbox',
+                    'renderType' => 'selectCheckBox',
                     'MM' => 'tx_mkpostman_subscribers_dmail_category_mm',
                 ],
             ];
