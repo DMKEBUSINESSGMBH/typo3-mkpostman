@@ -89,7 +89,7 @@ abstract class AbstractAction extends \Sys25\RnBase\Frontend\Controller\Abstract
      */
     public function getViewData()
     {
-        return $this->getConfigurations()->getViewData();
+        return $this->request->getViewContext();
     }
 
     /**

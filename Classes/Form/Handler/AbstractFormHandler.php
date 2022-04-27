@@ -85,6 +85,6 @@ abstract class AbstractFormHandler
      */
     protected function setToView($name, $data)
     {
-        $this->getConfigurations()->getViewData()->offsetSet($name, $data);
+        $this->controller->getViewData()->offsetSet($name, $data);
     }
 }
