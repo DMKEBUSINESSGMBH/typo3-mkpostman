@@ -26,6 +26,8 @@ namespace DMK\Mkpostman\Action;
  ***************************************************************/
 
 use DMK\Mkpostman\Factory;
+use DMK\Mkpostman\View\SubscribeView;
+use Sys25\RnBase\ExtBaseFluid\View\Action;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -314,10 +316,10 @@ class SubscribeAction extends AbstractAction
     protected function getViewClassName()
     {
         if ($this->isLegacyTemplate()) {
-            return 'DMK\\Mkpostman\\View\\SubscribeView';
+            return SubscribeView::class;
         }
 
-        return 'Sys25\\RnBase\\Fluid\\View\\Action';
+        return Action::class;
     }
 
     /**
