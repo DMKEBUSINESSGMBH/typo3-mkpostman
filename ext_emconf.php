@@ -4,7 +4,7 @@
 // ## Extension Manager/Repository config file for ext "hpsplaner".
 // ## #####################################################################
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['mkpostman'] = [
     'title' => 'MK Postman',
     'description' => '',
     'category' => 'misc',
