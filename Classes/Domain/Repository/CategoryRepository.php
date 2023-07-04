@@ -2,6 +2,11 @@
 
 namespace DMK\Mkpostman\Domain\Repository;
 
+use Sys25\RnBase\Domain\Collection\BaseCollection;
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use Sys25\RnBase\Search\SearchGeneric;
+use Sys25\RnBase\Utility\Arrays;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +30,6 @@ namespace DMK\Mkpostman\Domain\Repository;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
-
 /**
  * Category repo.
  *
@@ -34,7 +37,7 @@ namespace DMK\Mkpostman\Domain\Repository;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class CategoryRepository extends PersistenceRepository
 {
     /**
      * Liefert den Namen der Suchklasse.
@@ -43,7 +46,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
      */
     protected function getSearchClass()
     {
-        return 'tx_rnbase_util_SearchGeneric';
+        return SearchGeneric::class;
     }
 
     /**
@@ -83,7 +86,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
      *
      * @param int $subscriberId
      *
-     * @return \Tx_Rnbase_Domain_Collection_Base
+     * @return BaseCollection
      */
     public function findBySubscriberId(
         $subscriberId
@@ -129,8 +132,7 @@ class CategoryRepository extends \Tx_Rnbase_Domain_Repository_PersistenceReposit
             $options['searchdef'] = [];
         }
 
-        \tx_rnbase::load('tx_rnbase_util_Arrays');
-        $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
+        $options['searchdef'] = Arrays::mergeRecursiveWithOverrule(
             // default searcher config
             [
                 'usealias' => 1,

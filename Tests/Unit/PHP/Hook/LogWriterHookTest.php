@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Hook;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * LogWriterHook test.
  *
@@ -271,13 +256,11 @@ class LogWriterHookTest extends \DMK\Mkpostman\Tests\BaseTestCase
             $subscriber = $this->getSubscriberModel(['uid' => rand(100, 199)]);
         }
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Hook\\LogWriterHook');
         $hook = $this->getMock(
             'DMK\\Mkpostman\\Hook\\LogWriterHook',
             array_merge($methods, ['findSubscriberByUid', 'getLogManager'])
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $logMnager = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
         );

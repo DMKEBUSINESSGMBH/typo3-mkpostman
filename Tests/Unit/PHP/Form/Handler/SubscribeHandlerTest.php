@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Form\Handler;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Subscribtion action test.
  *
@@ -57,7 +42,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function fillDataWithoutUser()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             [
@@ -76,7 +60,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $handler
             ->expects(self::once())
             ->method('getParameters')
-            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
+            ->will($this->returnValue(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class)));
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
@@ -104,7 +88,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function fillDataWithHoneyPot()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             ['getFeUserData',
@@ -123,7 +106,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $handler
             ->expects(self::once())
             ->method('getParameters')
-            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
+            ->will($this->returnValue(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class)));
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
@@ -162,7 +145,6 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'email' => 'mwagner\'s mail',
         ];
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             [
@@ -181,7 +163,7 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $handler
             ->expects(self::once())
             ->method('getParameters')
-            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
+            ->will($this->returnValue(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class)));
         $handler
             ->expects(self::once())
             ->method('getFeUserData')
@@ -220,12 +202,10 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'field' => '',
         ];
 
-        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->exactly(2))->method('getInt')->willReturn(1);
         $configurations->expects($this->exactly(1))->method('get')->willReturn('field');
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             ['getConfigurations', 'getConfId'],
@@ -262,12 +242,10 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'field' => 'test',
         ];
 
-        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->exactly(1))->method('getInt')->willReturn(5);
         $configurations->expects($this->exactly(3))->method('getCfgOrLL')->willReturn('tranlsated message');
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             ['getConfigurations', 'getConfId', 'isHoneypotEnabled', 'getHoneypotFieldName'],
@@ -323,11 +301,9 @@ class SubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'field' => 'test',
         ];
 
-        \tx_rnbase::load('Sys25\\RnBase\\Configuration\\Processor');
         $configurations = $this->getMock('Sys25\\RnBase\\Configuration\\Processor');
         $configurations->expects($this->exactly(1))->method('getInt')->willReturn(5);
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler');
         $handler = $this->getMock(
             'DMK\\Mkpostman\\Form\\Handler\\SubscribeHandler',
             ['getConfigurations', 'getConfId', 'setFieldInvalid', 'isHoneypotEnabled', 'getHoneypotFieldName'],

@@ -2,6 +2,10 @@
 
 namespace DMK\Mkpostman\Backend\Lister;
 
+use Sys25\RnBase\Backend\Lister\AbstractLister;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Domain\Repository\SearchInterface;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,19 +29,17 @@ namespace DMK\Mkpostman\Backend\Lister;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Backend_Lister_AbstractLister');
-
 /**
  * Subscriber lister.
  *
  * @author Michael Wagner
  */
-class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
+class SubscriberLister extends AbstractLister
 {
     /**
      * The Subscriber repository.
      *
-     * @return Tx_Rnbase_Domain_Repository_InterfaceSearch
+     * @return SearchInterface
      */
     protected function getRepository()
     {
@@ -63,7 +65,7 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
     /**
      * Returns the complete search form.
      *
-     * @return string
+     * @return array
      */
     public function getSearchFormData()
     {
@@ -72,7 +74,7 @@ class SubscriberLister extends \Tx_Rnbase_Backend_Lister_AbstractLister
 
         // override the disabled filter
         $data['disabled'] = [
-            'field' => \Tx_Rnbase_Backend_Utility::getFuncMenu(
+            'field' => BackendUtility::getFuncMenu(
                 $this->getOptions()->getPid(),
                 'SET['.$this->getListerId().'Disabled]',
                 $filter->getProperty('disabled'),

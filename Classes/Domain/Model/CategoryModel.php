@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Domain\Model;
 
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,8 +27,6 @@ namespace DMK\Mkpostman\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
-
 /**
  * Category Model.
  *
@@ -34,7 +34,7 @@ namespace DMK\Mkpostman\Domain\Model;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class CategoryModel extends \Tx_Rnbase_Domain_Model_Base
+class CategoryModel extends BaseModel
 {
     /**
      * Liefert den aktuellen Tabellenname.

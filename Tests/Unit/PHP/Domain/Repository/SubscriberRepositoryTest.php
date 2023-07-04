@@ -6,9 +6,10 @@ use DMK\Mkpostman\Domain\Model\CategoryModel;
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Tx_Rnbase_Database_Connection as ConnectionInterfae;
-use Tx_Rnbase_Domain_Model_DomainInterface;
-use tx_rnbase_util_SearchGeneric as Searcher;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Collection\BaseCollection;
+use Sys25\RnBase\Domain\Model\DomainModelInterface;
+use Sys25\RnBase\Search\SearchGeneric;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -27,8 +28,8 @@ class SubscriberRepositoryTest extends TestCase
 
         GeneralUtility::purgeInstances();
         // mock connection
-        $this->connection = $this->prophesize(ConnectionInterfae::class);
-        GeneralUtility::setSingletonInstance(ConnectionInterfae::class, $this->connection->reveal());
+        $this->connection = $this->prophesize(Connection::class);
+        GeneralUtility::setSingletonInstance(Connection::class, $this->connection->reveal());
 
         // mock model instances
         $emptyModel = $this->prophesize(SubscriberModel::class);
@@ -37,8 +38,8 @@ class SubscriberRepositoryTest extends TestCase
         GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
         GeneralUtility::addInstance(SubscriberModel::class, $emptyModel->reveal());
 
-        $this->searcher = $this->prophesize(Searcher::class);
-        GeneralUtility::addInstance(Searcher::class, $this->searcher->reveal());
+        $this->searcher = $this->prophesize(SearchGeneric::class);
+        GeneralUtility::addInstance(SearchGeneric::class, $this->searcher->reveal());
     }
 
     protected function tearDown()
@@ -88,7 +89,7 @@ class SubscriberRepositoryTest extends TestCase
             'fieldname' => 'categories',
         ])->shouldBeCalled();
 
-        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+        $model = $this->prophesize(DomainModelInterface::class);
         $model->getUid()->willReturn(1);
         $categories = ['foo', 1, 2, 3];
 
@@ -103,7 +104,7 @@ class SubscriberRepositoryTest extends TestCase
      */
     public function findByUid()
     {
-        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+        $model = $this->prophesize(DomainModelInterface::class);
 
         $this->searcher->search([
             'SUBSCRIBER.uid' => [
@@ -112,7 +113,7 @@ class SubscriberRepositoryTest extends TestCase
         ], [
             'enablefieldsbe' => true,
             'limit' => 1,
-            'collection' => 'Tx_Rnbase_Domain_Collection_Base',
+            'collection' => BaseCollection::class,
             'searchdef' => [
                 'usealias' => 1,
                 'basetable' => 'subscriber_table',
@@ -141,7 +142,7 @@ class SubscriberRepositoryTest extends TestCase
      */
     public function findByEmail()
     {
-        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
+        $model = $this->prophesize(DomainModelInterface::class);
 
         $this->searcher->search([
             'SUBSCRIBER.email' => [
@@ -150,7 +151,7 @@ class SubscriberRepositoryTest extends TestCase
         ], [
             'enablefieldsbe' => true,
             'limit' => 1,
-            'collection' => 'Tx_Rnbase_Domain_Collection_Base',
+            'collection' => BaseCollection::class,
             'searchdef' => [
                 'usealias' => 1,
                 'basetable' => 'subscriber_table',
@@ -182,8 +183,8 @@ class SubscriberRepositoryTest extends TestCase
         $category = $this->prophesize(CategoryModel::class);
         $category->getUid()->willReturn(1);
 
-        $model = $this->prophesize(Tx_Rnbase_Domain_Model_DomainInterface::class);
-        $collection = new \Tx_Rnbase_Domain_Collection_Base([$model->reveal()]);
+        $model = $this->prophesize(DomainModelInterface::class);
+        $collection = new BaseCollection([$model->reveal()]);
 
         $this->searcher->search([
             'CATEGORYMM.uid_local' => [

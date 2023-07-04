@@ -23,9 +23,6 @@ return call_user_func(
                 'iconfile' => 'EXT:mkpostman/Resources/Public/Media/Icons/tx_mkpostman_subscribers.gif',
                 'dividers2tabs' => true,
             ],
-            'interface' => [
-                'showRecordFieldList' => 'email',
-            ],
             'columns' => [
                 'disabled' => [
                     'exclude' => 1,
@@ -120,8 +117,7 @@ return call_user_func(
                     'label' => $lllTable.'logs',
                     'config' => [
                         'type' => 'user',
-                        'size' => '20',
-                        'userFunc' => 'DMK\\Mkpostman\\Utility\\TcaUtility->getLogsForSubscriber',
+                        'renderType' => 'subscriberLog',
                     ],
                 ],
             ],
@@ -129,7 +125,7 @@ return call_user_func(
                 '0' => [
                     'showitem' => '
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.general,
-                        disabled, email, gender, first_name, last_name, categories, confirmstring, 
+                        disabled, email, gender, first_name, last_name, categories, confirmstring,
                         --div--;'.$lllFile.'tx_mkpostman_subscribers.tab.log,
                         logs,
                     ',
@@ -138,10 +134,9 @@ return call_user_func(
         ];
 
         // add the direct mail columns, if direct mail is installed
-        if (\tx_rnbase_util_Extensions::isLoaded('direct_mail')) {
+        if (\Sys25\RnBase\Utility\Extensions::isLoaded('direct_mail')) {
             $dmLllFile = 'LLL:EXT:direct_mail/Resources/Private/Language/locallang_tca.xlf:';
             $tca['columns']['module_sys_dmail_category'] = [
-                'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
                 'label' => $dmLllFile.'module_sys_dmail_group.category',
                 'config' => [
@@ -158,12 +153,11 @@ return call_user_func(
                     'size' => 5,
                     'minitems' => 0,
                     'maxitems' => 60,
-                    'renderMode' => 'checkbox',
+                    'renderType' => 'selectCheckBox',
                     'MM' => 'tx_mkpostman_subscribers_dmail_category_mm',
                 ],
             ];
             $tca['columns']['module_sys_dmail_html'] = [
-                'displayCond' => 'EXT:direct_mail:LOADED:TRUE',
                 'exclude' => 1,
                 'label' => $dmLllFile.'module_sys_dmail_group.htmlemail',
                 'config' => [

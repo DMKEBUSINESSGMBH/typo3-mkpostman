@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Domain\Manager;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Log manager test.
  *
@@ -274,7 +259,6 @@ class LogManagerTest extends \DMK\Mkpostman\Tests\BaseTestCase
     protected function getManager(
         array $methods = []
     ) {
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $manager = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager',
             array_merge(['getRepository'], $methods)

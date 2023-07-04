@@ -25,14 +25,12 @@ namespace DMK\Mkpostman\Backend\Handler;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Backend_Handler_SearchHandler');
-
 /**
  * Subscriber handler.
  *
  * @author Michael Wagner
  */
-class SubscriberHandler extends \Tx_Rnbase_Backend_Handler_SearchHandler
+class SubscriberHandler extends \Sys25\RnBase\Backend\Handler\SearchHandler
 {
     /**
      * Returns a unique ID for this handler.

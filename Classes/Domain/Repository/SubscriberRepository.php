@@ -26,11 +26,16 @@ namespace DMK\Mkpostman\Domain\Repository;
  ***************************************************************/
 
 use DMK\Mkpostman\Domain\Model\CategoryModel;
+use DMK\Mkpostman\Domain\Model\SubscriberModel;
 use Exception;
-use Tx_Rnbase_Domain_Model_Data;
-use Tx_Rnbase_Domain_Model_DomainInterface;
-
-\tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\DataModel;
+use Sys25\RnBase\Domain\Model\DomainModelInterface;
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Search\SearchGeneric;
+use Sys25\RnBase\Utility\Arrays;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Subscriber repo.
@@ -39,7 +44,7 @@ use Tx_Rnbase_Domain_Model_DomainInterface;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class SubscriberRepository extends PersistenceRepository
 {
     /**
      * Liefert den Namen der Suchklasse.
@@ -48,7 +53,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      */
     protected function getSearchClass()
     {
-        return 'tx_rnbase_util_SearchGeneric';
+        return SearchGeneric::class;
     }
 
     /**
@@ -56,11 +61,11 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      *
      * Wir nutzen absichtlich nicht den parent, da dieser einen statichen cache aufbaut!
      *
-     * @return  tx_rnbase_util_SearchBase
+     * @return  SearchBase
      */
     protected function getSearcher()
     {
-        return \tx_rnbase::makeInstance($this->getSearchClass());
+        return GeneralUtility::makeInstance($this->getSearchClass());
     }
 
     /**
@@ -70,19 +75,19 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      */
     protected function getWrapperClass()
     {
-        return 'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel';
+        return SubscriberModel::class;
     }
 
     /**
      * Adds the subscriber to the sys_category mm.
      *
-     * @param Tx_Rnbase_Domain_Model_DomainInterface $model
-     * @param array|Tx_Rnbase_Domain_Model_Data      $options
+     * @param DomainModelInterface $model
+     * @param array|DataModel      $options
      *
      * @throws Exception
      */
     public function addToCategories(
-        Tx_Rnbase_Domain_Model_DomainInterface $model,
+        DomainModelInterface $model,
         $categories
     ) {
         if (is_array($categories) && !empty($categories)) {
@@ -110,7 +115,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      *
      * @param int $uid
      *
-     * @return Tx_Rnbase_Domain_Model_DomainInterface|null
+     * @return DomainModelInterface|null
      */
     public function findByUid(
         $uid
@@ -132,7 +137,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      *
      * @param string $mail
      *
-     * @return DMK\Mkpostman\Domain\Model\SubscriberModel|null
+     * @return SubscriberModel|null
      */
     public function findByEmail(
         $mail
@@ -154,7 +159,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
      *
      * @param CategoryModel $category
      *
-     * @return \Tx_Rnbase_Domain_Collection_Base
+     * @return array[DomainInterface]
      */
     public function findByCategory(
         CategoryModel $category
@@ -200,8 +205,7 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
             $options['searchdef'] = [];
         }
 
-        \tx_rnbase::load('tx_rnbase_util_Arrays');
-        $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
+        $options['searchdef'] = Arrays::mergeRecursiveWithOverrule(
             // default searcher config
             [
                 'usealias' => 1,
@@ -226,10 +230,10 @@ class SubscriberRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepos
     /**
      * Provide the Database Connection.
      *
-     * @return \Tx_Rnbase_Database_Connection
+     * @return Connection
      */
     protected function getDbConnection()
     {
-        return \Tx_Rnbase_Database_Connection::getInstance();
+        return Connection::getInstance();
     }
 }

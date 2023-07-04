@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Action;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Subscribtion action test.
  *
@@ -57,7 +42,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testHandeRequestForm()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
@@ -66,7 +50,7 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
         $action
             ->expects(self::once())
             ->method('getParameters')
-            ->will($this->returnValue(\tx_rnbase::makeInstance('tx_rnbase_parameters')));
+            ->will($this->returnValue(\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class)));
         $action
             ->expects(self::never())
             ->method('handleActivation');
@@ -91,14 +75,13 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testHandeRequestActivationWithValidKey()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        /* @var $parameters \Sys25\RnBase\Frontend\Request\Parameters */
+        $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class);
         $parameters->offsetSet('key', 'valid');
         $action
             ->expects(self::once())
@@ -130,14 +113,13 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testHandeRequestActivationWithInvalidKey()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        /* @var $parameters \Sys25\RnBase\Frontend\Request\Parameters */
+        $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class);
         $parameters->offsetSet('key', 'invalid');
         $action
             ->expects(self::once())
@@ -170,14 +152,13 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testHandeRequestSuccessWithValidKey()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        /* @var $parameters \Sys25\RnBase\Frontend\Request\Parameters */
+        $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class);
         $parameters->offsetSet('success', 'referrer:7');
         $action
             ->expects(self::once())
@@ -210,14 +191,13 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testHandeRequestSuccessWithInvalidKey()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['getParameters', 'handleForm', 'handleActivation', 'handleSuccess']
         );
 
-        /* @var $parameters \tx_rnbase_parameters */
-        $parameters = \tx_rnbase::makeInstance('tx_rnbase_parameters');
+        /* @var $parameters \Sys25\RnBase\Frontend\Request\Parameters */
+        $parameters = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Sys25\RnBase\Frontend\Request\Parameters::class);
         $parameters->offsetSet('success', 'invalid');
         $action
             ->expects(self::once())
@@ -285,7 +265,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testGetConfIdShouldReturnsRightValue()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMockForAbstractClass('DMK\\Mkpostman\\Action\\SubscribeAction');
         $this->assertSame('subscribe.', $action->getConfId());
     }
@@ -298,7 +277,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testGetTemplateNameShouldReturnsRightValueForLegacyTemplate()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['isLegacyTemplate']
@@ -315,7 +293,6 @@ class SubscribeActionTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testGetViewClassShouldReturnsRightValueForLegacyTemplate()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Action\\SubscribeAction');
         $action = $this->getMock(
             'DMK\\Mkpostman\\Action\\SubscribeAction',
             ['isLegacyTemplate']

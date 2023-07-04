@@ -25,21 +25,6 @@ namespace DMK\Mkpostman\Form\Handler;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Subscribtion action test.
  *
@@ -57,8 +42,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testFindOrCreateSubscriberForNewUser()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'Mkpostman_Tests_DomainRepositorySubscriberRepository',
             \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
@@ -91,7 +74,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             'mkpostman'
         );
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
             ['getSubscriberRepository', 'getConfigurations', 'getConfId'],
@@ -137,7 +119,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testFindOrCreateSubscriberForExistingUser()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
         $subscriber = $this->getModel(
             [
                 'uid' => 5,
@@ -150,7 +131,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ],
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
         );
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'Mkpostman_Tests_DomainRepositorySubscriberRepository',
             \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
@@ -164,7 +144,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->expects(self::never())
             ->method('createNewModel');
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
             ['getSubscriberRepository', 'getConfigurations', 'getConfId'],
@@ -202,7 +181,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
      */
     public function testProcessSubscriberData()
     {
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Model\\SubscriberModel');
         $categories = [11, 10];
         $subscriber = $this->getModel(
             [
@@ -217,7 +195,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ],
             'DMK\\Mkpostman\\Domain\\Model\\SubscriberModel'
         );
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository');
         $repo = $this->getMock(
             'Mkpostman_Tests_DomainRepositorySubscriberRepository',
             \get_class_methods('DMK\\Mkpostman\\Domain\\Repository\\SubscriberRepository')
@@ -231,7 +208,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->method('addToCategories')
             ->with($this->equalTo($subscriber), $this->equalTo($categories));
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Domain\\Manager\\LogManager');
         $logManager = $this->getMock(
             'DMK\\Mkpostman\\Domain\\Manager\\LogManager'
         );
@@ -240,7 +216,6 @@ class AbstractSubscribeHandlerTest extends \DMK\Mkpostman\Tests\BaseTestCase
             ->method('createSubscribedBySubscriber')
             ->with($subscriber);
 
-        \tx_rnbase::load('DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler');
         $handler = $this->getMockForAbstract(
             'DMK\\Mkpostman\\Form\\Handler\\AbstractSubscribeHandler',
             ['findOrCreateSubscriber', 'getSubscriberRepository', 'getLogManager', 'setSubscriber'],

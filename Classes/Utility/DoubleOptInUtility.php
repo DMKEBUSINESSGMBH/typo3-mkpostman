@@ -26,6 +26,7 @@ namespace DMK\Mkpostman\Utility;
  ***************************************************************/
 
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
+use Sys25\RnBase\Domain\Model\DataModel;
 
 /**
  * MK Postman Double-Opt-In and Opt-Out utility.
@@ -70,12 +71,12 @@ class DoubleOptInUtility
     /**
      * Finds a subscriber by key.
      *
-     * @param \Tx_Rnbase_Domain_Model_Data $keyData
+     * @param DataModel $keyData
      *
      * @return SubscriberModel|null
      */
     protected function findSubscriberByKey(
-        \Tx_Rnbase_Domain_Model_Data $keyData
+        DataModel $keyData
     ) {
         if (!$keyData->getUid()) {
             return null;
@@ -162,7 +163,7 @@ class DoubleOptInUtility
      *
      * @param string $activationKey
      *
-     * @return \Tx_Rnbase_Domain_Model_Data
+     * @return DataModel
      */
     protected function decodeActivationKey(
         $activationKey
@@ -175,7 +176,7 @@ class DoubleOptInUtility
 
         list($uid, $confirmstring, $md5) = explode(':', $activationKey);
 
-        return \Tx_Rnbase_Domain_Model_Data::getInstance(
+        return DataModel::getInstance(
             [
                 'uid' => $uid,
                 'confirmstring' => $confirmstring,

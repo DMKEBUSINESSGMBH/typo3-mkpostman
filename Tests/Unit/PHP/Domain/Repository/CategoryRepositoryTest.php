@@ -2,6 +2,9 @@
 
 namespace DMK\Mkpostman\Domain\Repository;
 
+use Sys25\RnBase\Domain\Collection\BaseCollection;
+use Sys25\RnBase\Search\SearchGeneric;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,21 +28,6 @@ namespace DMK\Mkpostman\Domain\Repository;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// for non composer autoload support
-if (!\class_exists('tx_rnbase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'rn_base',
-        'class.tx_rnbase.php'
-    );
-}
-// for non composer autoload support
-if (!\class_exists('DMK\\Mkpostman\\Tests\\BaseTestCase')) {
-    require_once \tx_rnbase_util_Extensions::extPath(
-        'mkpostman',
-        'Tests/Unit/PHP/BaseTestCase.php'
-    );
-}
-
 /**
  * Category repository test.
  *
@@ -58,7 +46,7 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
     public function testGetSearchClassShouldBeGeneric()
     {
         $this->assertEquals(
-            'tx_rnbase_util_SearchGeneric',
+            SearchGeneric::class,
             $this->callInaccessibleMethod(
                 $this->getSubscriberRepository(),
                 'getSearchClass'
@@ -284,7 +272,7 @@ class CategoryRepositoryTest extends \DMK\Mkpostman\Tests\BaseTestCase
 
                         $that->assertArrayHasKey('collection', $options);
                         $that->assertEquals(
-                            'Tx_Rnbase_Domain_Collection_Base',
+                            BaseCollection::class,
                             $options['collection']
                         );
 

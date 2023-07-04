@@ -2,7 +2,12 @@
 
 namespace DMK\Mkpostman\Domain\Repository;
 
+use DMK\Mkpostman\Domain\Model\LogModel;
 use DMK\Mkpostman\Domain\Model\SubscriberModel;
+use Sys25\RnBase\Domain\Model\DomainModelInterface;
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use Sys25\RnBase\Search\SearchGeneric;
+use Sys25\RnBase\Utility\Arrays;
 
 /***************************************************************
  * Copyright notice
@@ -27,8 +32,6 @@ use DMK\Mkpostman\Domain\Model\SubscriberModel;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
-
 /**
  * Log repo.
  *
@@ -36,7 +39,7 @@ use DMK\Mkpostman\Domain\Model\SubscriberModel;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
+class LogRepository extends PersistenceRepository
 {
     /**
      * Liefert den Namen der Suchklasse.
@@ -45,7 +48,7 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
      */
     protected function getSearchClass()
     {
-        return 'tx_rnbase_util_SearchGeneric';
+        return SearchGeneric::class;
     }
 
     /**
@@ -55,7 +58,7 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
      */
     protected function getWrapperClass()
     {
-        return 'DMK\\Mkpostman\\Domain\\Model\\LogModel';
+        return LogModel::class;
     }
 
     /**
@@ -63,7 +66,7 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
      *
      * @param int $uid
      *
-     * @return \Tx_Rnbase_Domain_Model_DomainInterface|null
+     * @return DomainModelInterface|null
      */
     public function findByUid(
         $uid
@@ -82,7 +85,7 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
      *
      * @param SubscriberModel $subscriber
      *
-     * @return \Tx_Rnbase_Domain_Model_DomainInterface|null
+     * @return array[DomainInterface]
      */
     public function findBySubscriber(
         SubscriberModel $subscriber
@@ -125,8 +128,7 @@ class LogRepository extends \Tx_Rnbase_Domain_Repository_PersistenceRepository
             $options['searchdef'] = [];
         }
 
-        \tx_rnbase::load('tx_rnbase_util_Arrays');
-        $options['searchdef'] = \tx_rnbase_util_Arrays::mergeRecursiveWithOverrule(
+        $options['searchdef'] = Arrays::mergeRecursiveWithOverrule(
             // default searcher config
             [
                 'usealias' => 1,

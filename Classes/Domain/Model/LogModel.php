@@ -26,30 +26,29 @@ namespace DMK\Mkpostman\Domain\Model;
  ***************************************************************/
 
 use DMK\Mkpostman\Factory;
-
-\tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
+use Sys25\RnBase\Domain\Model\BaseModel;
 
 /**
  * Log Model.
  *
  * @method int                         getState()
- * @method Tx_Rnbase_Domain_Model_Data setState() setState(int $state)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setState() setState(int $state)
  * @method int                         getDescription()
- * @method Tx_Rnbase_Domain_Model_Data setDescription() setDescription(string $uid)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setDescription() setDescription(string $uid)
  * @method int                         getCruserId()
- * @method Tx_Rnbase_Domain_Model_Data setCruserId() setCruserId(int $uid)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setCruserId() setCruserId(int $uid)
  * @method int                         getSubscriberId()
- * @method Tx_Rnbase_Domain_Model_Data setSubscriberId() setSubscriberId(int $uid)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setSubscriberId() setSubscriberId(int $uid)
  * @method int                         getDeleted()
- * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setDeleted() setDeleted(int $deleted)
  *
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class LogModel extends \Tx_Rnbase_Domain_Model_Base
+class LogModel extends BaseModel
 {
-    use \Tx_Rnbase_Domain_Model_StorageTrait;
+    use \Sys25\RnBase\Domain\Model\StorageTrait;
 
     const STATE_SUBSCRIBED = 1;
     const STATE_ACTIVATED = 2;

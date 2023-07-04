@@ -26,6 +26,9 @@ namespace DMK\Mkpostman\Action;
  ***************************************************************/
 
 use DMK\Mkpostman\Factory;
+use DMK\Mkpostman\View\SubscribeView;
+use Sys25\RnBase\ExtBaseFluid\View\Action;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * MK Postman subscribe action.
@@ -60,8 +63,8 @@ class SubscribeAction extends AbstractAction
     /**
      * Start the dance...
      *
-     * @param \tx_rnbase_parameters     $parameters
-     * @param \tx_rnbase_configurations $configurations
+     * @param \Sys25\RnBase\Frontend\Request\Parameters     $parameters
+     * @param \Sys25\RnBase\Configuration\Processor $configurations
      * @param \ArrayObject              $viewData
      *
      * @return string|null
@@ -202,7 +205,7 @@ class SubscribeAction extends AbstractAction
         $handlerClass = $this->getConfigurations()->get($this->getTemplateName().'FormHandler');
 
         /* @var $handler \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface */
-        $handler = \tx_rnbase::makeInstance($handlerClass, $this);
+        $handler = GeneralUtility::makeInstance($handlerClass, $this);
 
         if (!$handler instanceof \DMK\Mkpostman\Form\Handler\SubscribeFormHandlerInterface) {
             throw new \LogicException('Invalid subscribe form handler found.');
@@ -313,10 +316,10 @@ class SubscribeAction extends AbstractAction
     protected function getViewClassName()
     {
         if ($this->isLegacyTemplate()) {
-            return 'DMK\\Mkpostman\\View\\SubscribeView';
+            return SubscribeView::class;
         }
 
-        return 'Sys25\\RnBase\\Fluid\\View\\Action';
+        return Action::class;
     }
 
     /**
@@ -324,7 +327,7 @@ class SubscribeAction extends AbstractAction
      *
      * @return string
      */
-    protected function getTemplateFile()
+    protected function getTemplateFile($configurations)
     {
         // use the old template from `subscribeTemplate`
         if ($this->isLegacyTemplate()) {

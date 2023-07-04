@@ -2,6 +2,8 @@
 
 namespace DMK\Mkpostman\Domain\Model;
 
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  * Copyright notice
  *
@@ -25,41 +27,39 @@ namespace DMK\Mkpostman\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-\tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
-
 /**
  * Subscriber Model.
  *
  * @method int                         getGender()
- * @method Tx_Rnbase_Domain_Model_Data setGender() setGender(int $gender)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setGender() setGender(int $gender)
  * @method bool                        hasGender()
- * @method Tx_Rnbase_Domain_Model_Data unsGender()
+ * @method \Sys25\RnBase\Domain\Model\DataModel unsGender()
  * @method string                      getFirstName()
- * @method Tx_Rnbase_Domain_Model_Data setFirstName() setFirstName(string $firstname)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setFirstName() setFirstName(string $firstname)
  * @method bool                        hasFirstName()
- * @method Tx_Rnbase_Domain_Model_Data unsFirstName()
+ * @method \Sys25\RnBase\Domain\Model\DataModel unsFirstName()
  * @method string                      getLastName()
- * @method Tx_Rnbase_Domain_Model_Data setLastName() setLastName(string $lastname)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setLastName() setLastName(string $lastname)
  * @method bool                        hasLastName()
- * @method Tx_Rnbase_Domain_Model_Data unsLastName()
+ * @method \Sys25\RnBase\Domain\Model\DataModel unsLastName()
  * @method string                      getEmail()
- * @method Tx_Rnbase_Domain_Model_Data setEmail() setEmail(string $email)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setEmail() setEmail(string $email)
  * @method bool                        hasEmail()
- * @method Tx_Rnbase_Domain_Model_Data unsEmail()
+ * @method \Sys25\RnBase\Domain\Model\DataModel unsEmail()
  * @method string                      getConfirmstring()
- * @method Tx_Rnbase_Domain_Model_Data setConfirmstring() setConfirmstring(string $confirmstring)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setConfirmstring() setConfirmstring(string $confirmstring)
  * @method bool                        hasConfirmstring()
- * @method Tx_Rnbase_Domain_Model_Data unsConfirmstring()
+ * @method \Sys25\RnBase\Domain\Model\DataModel unsConfirmstring()
  * @method int                         getDisabled()
- * @method Tx_Rnbase_Domain_Model_Data setDisabled() setDisabled(int $disabled)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setDisabled() setDisabled(int $disabled)
  * @method int                         getDeleted()
- * @method Tx_Rnbase_Domain_Model_Data setDeleted() setDeleted(int $deleted)
+ * @method \Sys25\RnBase\Domain\Model\DataModel setDeleted() setDeleted(int $deleted)
  *
  * @author Michael Wagner
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class SubscriberModel extends \Tx_Rnbase_Domain_Model_Base
+class SubscriberModel extends BaseModel
 {
     public function hasCategories()
     {
