@@ -15,7 +15,7 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['tx_mkpos
     [
         'LLL:EXT:mkpostman/Resources/Private/Language/Flexform.xlf:plugin.mkpostman.label',
         'tx_mkpostman',
-        'EXT:mkpostman/ext_icon.gif',
+        'EXT:mkpostman/Resources/Public/Icons/Extension.svg',
     ],
     'list_type',
     'mkpostman'
@@ -36,8 +36,8 @@ if (TYPO3_MODE == 'BE') {
         // register icon
         \Sys25\RnBase\Backend\Utility\Icons::getIconRegistry()->registerIcon(
             'ext-mkpostman-wizard-icon',
-            'TYPO3\\CMS\Core\\Imaging\\IconProvider\\BitmapIconProvider',
-            ['source' => 'EXT:mkpostman/ext_icon.gif']
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:mkpostman/Resources/Public/Icons/Extension.svg']
         );
     } else {
         // register wizzard the old way
@@ -61,7 +61,7 @@ if (TYPO3_MODE == 'BE') {
         [
             'access' => 'user,group',
             'routeTarget' => 'DMK\\Mkpostman\\Backend\\ModuleBackend',
-            'icon' => 'EXT:mkpostman/ext_icon.gif',
+            'icon' => 'EXT:mkpostman/Resources/Public/Icons/Extension.svg',
             'labels' => 'LLL:EXT:mkpostman/Resources/Private/Language/Backend.xlf',
         ]
     );

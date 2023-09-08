@@ -46,7 +46,7 @@ class WizIconUtility extends WizIcon
     {
         return [
             'tx_mkpostman' => [
-                'icon' => Extensions::extRelPath('mkpostman').'ext_icon.gif',
+                'icon' => Extensions::extRelPath('mkpostman').'Resources/Public/Icons/Extension.svg',
                 'title' => 'plugin.mkpostman.label',
                 'description' => 'plugin.mkpostman.description',
             ],
